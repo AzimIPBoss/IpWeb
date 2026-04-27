@@ -1,152 +1,138 @@
-/* ===== SIDEBAR TOGGLE ===== */
-const sidebar      = document.getElementById('sidebar');
-const mainWrapper  = document.getElementById('mainWrapper');
-const overlay      = document.getElementById('overlay');
-const isMobile     = () => window.innerWidth < 1024;
+/* ===== SIDEBAR ===== */
+const sidebar   = document.getElementById('sidebar');
+const mainWrap  = document.getElementById('mainWrap');
+const overlay   = document.getElementById('overlay');
+const isMobile  = () => window.innerWidth < 1024;
 
 function openSidebar() {
-  sidebar.classList.remove('collapsed');
   if (isMobile()) {
-    sidebar.classList.add('open');
-    overlay.classList.remove('hidden');
+    sidebar.classList.remove('sb-hidden');
+    sidebar.classList.add('sb-open');
+    overlay.classList.add('show');
   } else {
-    mainWrapper.classList.remove('sidebar-closed');
-    mainWrapper.classList.add('sidebar-open');
+    sidebar.classList.remove('sb-hidden');
+    mainWrap.classList.remove('sb-closed');
+    mainWrap.classList.add('sb-open');
   }
 }
 
 function closeSidebar() {
   if (isMobile()) {
-    sidebar.classList.remove('open');
-    overlay.classList.add('hidden');
+    sidebar.classList.remove('sb-open');
+    sidebar.classList.add('sb-hidden');
+    overlay.classList.remove('show');
   } else {
-    sidebar.classList.add('collapsed');
-    mainWrapper.classList.remove('sidebar-open');
-    mainWrapper.classList.add('sidebar-closed');
+    sidebar.classList.add('sb-hidden');
+    mainWrap.classList.remove('sb-open');
+    mainWrap.classList.add('sb-closed');
   }
 }
 
 function toggleSidebar() {
-  if (isMobile()) {
-    const isOpen = sidebar.classList.contains('open');
-    isOpen ? closeSidebar() : openSidebar();
-  } else {
-    const isCollapsed = sidebar.classList.contains('collapsed');
-    isCollapsed ? openSidebar() : closeSidebar();
-  }
+  const hidden = sidebar.classList.contains('sb-hidden');
+  hidden ? openSidebar() : closeSidebar();
 }
 
-/* On resize, fix state */
 window.addEventListener('resize', () => {
   if (!isMobile()) {
-    overlay.classList.add('hidden');
-    sidebar.classList.remove('open');
-    /* If sidebar was forced open on mobile, restore desktop state */
-    if (!sidebar.classList.contains('collapsed')) {
-      mainWrapper.classList.add('sidebar-open');
-      mainWrapper.classList.remove('sidebar-closed');
+    overlay.classList.remove('show');
+    if (!sidebar.classList.contains('sb-hidden')) {
+      mainWrap.classList.add('sb-open');
+      mainWrap.classList.remove('sb-closed');
     }
   }
 });
 
 /* ===== SECTION SWITCHING ===== */
 function switchSection(name) {
-  document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById('section-' + name);
-  if (target) target.classList.add('active');
-
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.toggle('active', link.dataset.section === name);
-  });
-
+  document.querySelectorAll('.pg').forEach(s => s.classList.remove('active'));
+  const t = document.getElementById('section-' + name);
+  if (t) t.classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.section === name));
   if (isMobile()) closeSidebar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* Nav link clicks */
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    switchSection(link.dataset.section);
-  });
+document.querySelectorAll('.nav-link').forEach(l => {
+  l.addEventListener('click', e => { e.preventDefault(); switchSection(l.dataset.section); });
 });
 
-/* ===== TAG FILTER ===== */
-document.querySelectorAll('.tag-link').forEach(tag => {
-  tag.addEventListener('click', e => {
+/* ===== TAG FILTER (sidebar tags) ===== */
+document.querySelectorAll('.tag-link').forEach(t => {
+  t.addEventListener('click', e => {
     e.preventDefault();
     switchSection('home');
-    const map = { trademark: 'trademark', patent: 'patent', design: 'design', portfolio: 'portfolio', gallery: 'gallery' };
-    const tabKey = map[tag.dataset.filter] || 'all';
+    const map = { trademark:'trademark', patent:'patent', design:'design', portfolio:'portfolio', gallery:'gallery' };
     setTimeout(() => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
-      filterCards(tabKey);
-    }, 50);
+      const k = map[t.dataset.filter] || 'all';
+      setTab(k); filterCards(k);
+    }, 60);
   });
 });
 
-/* ===== TAB SWITCHING ===== */
-document.querySelectorAll('.tab-btn').forEach(btn => {
+/* ===== RIGHT SIDEBAR CATEGORY FILTER ===== */
+function filterByTag(cat) {
+  switchSection('home');
+  setTimeout(() => { setTab(cat); filterCards(cat); }, 60);
+  return false;
+}
+
+/* ===== TABS ===== */
+document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    setTab(btn.dataset.tab);
     filterCards(btn.dataset.tab);
   });
 });
 
-/* ===== CARD FILTERING ===== */
+function setTab(key) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === key));
+}
+
+/* ===== FILTER CARDS ===== */
 function filterCards(tab) {
-  const featured  = document.getElementById('featuredPost');
-  const allCards  = document.querySelectorAll('#articleGrid .art-card');
-  const noResults = document.getElementById('noResults');
-  let visible = 0;
+  const featured = document.getElementById('featuredPost');
+  const items    = document.querySelectorAll('#postList .post-item');
+  const noRes    = document.getElementById('noResults');
+  let n = 0;
 
-  /* Featured post */
-  const featCat = featured ? featured.dataset.category : '';
-  const showFeat = tab === 'all' || featCat === tab;
-  if (featured) featured.style.display = showFeat ? '' : 'none';
-  if (showFeat) visible++;
-
-  /* Article cards */
-  allCards.forEach(card => {
-    const show = tab === 'all' || card.dataset.category === tab;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
+  if (featured) {
+    const show = tab === 'all' || featured.dataset.category === tab;
+    featured.style.display = show ? '' : 'none';
+    if (show) n++;
+  }
+  items.forEach(item => {
+    const show = tab === 'all' || item.dataset.category === tab;
+    item.style.display = show ? '' : 'none';
+    if (show) n++;
   });
-
-  noResults.classList.toggle('hidden', visible > 0);
+  noRes.classList.toggle('hidden', n > 0);
 }
 
 /* ===== SEARCH ===== */
 function handleSearch(val) {
   const q = val.trim().toLowerCase();
-  const featured  = document.getElementById('featuredPost');
-  const allCards  = document.querySelectorAll('#articleGrid .art-card');
-  const noResults = document.getElementById('noResults');
+  const featured = document.getElementById('featuredPost');
+  const items    = document.querySelectorAll('#postList .post-item');
+  const noRes    = document.getElementById('noResults');
+  let n = 0;
 
-  /* Reset tab highlights */
   if (!q) {
     if (featured) featured.style.display = '';
-    allCards.forEach(c => (c.style.display = ''));
-    noResults.classList.add('hidden');
+    items.forEach(i => (i.style.display = ''));
+    noRes.classList.add('hidden');
     return;
   }
-
-  let visible = 0;
-  if (featured) {
-    const show = featured.innerText.toLowerCase().includes(q);
-    featured.style.display = show ? '' : 'none';
-    if (show) visible++;
-  }
-  allCards.forEach(card => {
-    const show = card.innerText.toLowerCase().includes(q);
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
+  [featured, ...items].forEach(el => {
+    if (!el) return;
+    const show = el.innerText.toLowerCase().includes(q);
+    el.style.display = show ? '' : 'none';
+    if (show) n++;
   });
-  noResults.classList.toggle('hidden', visible > 0);
+  noRes.classList.toggle('hidden', n > 0);
 }
 
-/* ===== CONTACT FORM ===== */
+/* ===== FORM ===== */
 function handleFormSubmit(e) {
   e.preventDefault();
   showToast('Message sent! We will contact you shortly.');
@@ -155,18 +141,17 @@ function handleFormSubmit(e) {
 
 /* ===== TOAST ===== */
 function showToast(msg) {
-  const toast = document.getElementById('toast');
+  const t = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
-  toast.classList.remove('hidden');
-  setTimeout(() => toast.classList.add('hidden'), 3500);
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 3500);
 }
 
-/* ===== KEYBOARD SHORTCUT: / = focus search ===== */
+/* ===== KEYBOARD SHORTCUTS ===== */
 document.addEventListener('keydown', e => {
-  const active = document.activeElement.tagName;
-  if (e.key === '/' && active !== 'INPUT' && active !== 'TEXTAREA') {
-    e.preventDefault();
-    document.getElementById('searchInput').focus();
+  const tag = document.activeElement.tagName;
+  if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+    e.preventDefault(); document.getElementById('searchInput').focus();
   }
   if (e.key === 'Escape') {
     document.getElementById('searchInput').blur();
@@ -174,22 +159,22 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ===== CARD ENTRANCE ANIMATION ===== */
-const animObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-      animObserver.unobserve(entry.target);
+/* ===== SCROLL ENTRANCE ANIMATION ===== */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      io.unobserve(e.target);
     }
   });
 }, { threshold: 0.08 });
 
 document.querySelectorAll(
-  '.art-card, .featured-post, .service-card, .team-card, .testimonial-card, .client-card'
+  '.post-item, .post-featured, .svc-card, .tm-card, .test-card, .cl-card, .rs-widget'
 ).forEach((el, i) => {
   el.style.opacity = '0';
-  el.style.transform = 'translateY(16px)';
-  el.style.transition = `opacity 0.4s ease ${i * 0.04}s, transform 0.4s ease ${i * 0.04}s, box-shadow 0.22s ease, translateY 0.22s ease`;
-  animObserver.observe(el);
+  el.style.transform = 'translateY(14px)';
+  el.style.transition = `opacity .4s ease ${i * 0.03}s, transform .4s ease ${i * 0.03}s, box-shadow .22s, translateY .22s`;
+  io.observe(el);
 });
