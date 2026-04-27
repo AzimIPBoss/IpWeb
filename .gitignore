@@ -1,0 +1,4 @@
+.firebase/
+.env
+node_modules/
+*.log
