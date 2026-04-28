@@ -3,528 +3,431 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IPServiceBD – IP Law Firm Bangladesh</title>
+  <title>IPServiceBD – Intellectual Property Law Firm Bangladesh</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
 <div id="overlay" onclick="closeSidebar()"></div>
 
-<!-- ═══ LEFT NAV SIDEBAR ═══ -->
+<!-- ═══════════ LEFT SIDEBAR ═══════════ -->
 <aside id="sidebar" class="lsb">
-
   <div class="lsb-head">
-    <a href="#" onclick="switchSection('home');return false;" class="lsb-brand">
-      <div class="lsb-icon-wrap">
-        <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
-          <circle cx="20" cy="20" r="18.5" stroke="#0c2461" stroke-width="2.2"/>
-          <path d="M20 10c-5.52 0-10 4.48-10 10 0 3.54 1.84 6.65 4.62 8.46V30.5c0 .55.45 1 1 1h8.76c.55 0 1-.45 1-1v-2.04C28.16 26.65 30 23.54 30 20c0-5.52-4.48-10-10-10z" stroke="#0c2461" stroke-width="1.8" fill="rgba(12,36,97,0.06)"/>
-          <line x1="15.5" y1="32.5" x2="24.5" y2="32.5" stroke="#0c2461" stroke-width="1.8" stroke-linecap="round"/>
-          <line x1="17" y1="34.5" x2="23" y2="34.5" stroke="#0c2461" stroke-width="1.8" stroke-linecap="round"/>
-          <text x="20" y="22" text-anchor="middle" font-size="7" font-weight="700" fill="#0c2461" font-family="Inter,sans-serif">IP</text>
-        </svg>
-      </div>
-      <div class="lsb-brand-text">
-        <span class="lsb-name">IPServiceBD</span>
-        <span class="lsb-url">ipservicebd.com</span>
-      </div>
+    <!-- Logo: icon + name only, no redundant URL -->
+    <a href="#" onclick="switchSection('home');return false;" class="lsb-logo">
+      <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18.5" stroke="#0c2461" stroke-width="2.2"/>
+        <path d="M20 10c-5.52 0-10 4.48-10 10 0 3.54 1.84 6.65 4.62 8.46V30.5c0 .55.45 1 1 1h8.76c.55 0 1-.45 1-1v-2.04C28.16 26.65 30 23.54 30 20c0-5.52-4.48-10-10-10z" stroke="#0c2461" stroke-width="1.8" fill="rgba(12,36,97,0.07)"/>
+        <line x1="15.5" y1="32.5" x2="24.5" y2="32.5" stroke="#0c2461" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="17" y1="34.5" x2="23" y2="34.5" stroke="#0c2461" stroke-width="1.8" stroke-linecap="round"/>
+        <text x="20" y="22" text-anchor="middle" font-size="7" font-weight="700" fill="#0c2461" font-family="Inter,sans-serif">IP</text>
+      </svg>
+      <span class="lsb-name">IPServiceBD</span>
     </a>
-    <button class="lsb-close" onclick="closeSidebar()"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lsb-close-btn" onclick="closeSidebar()">
+      <i class="fa-solid fa-chevron-left fa-xs"></i>
+    </button>
   </div>
 
-  <div class="lsb-scroll">
-    <p class="lsb-section">Main Menu</p>
-    <nav>
-      <a href="#" class="lsb-link active" data-section="home"><i class="fa-solid fa-house"></i>Home</a>
-      <a href="#" class="lsb-link" data-section="about"><i class="fa-solid fa-building-columns"></i>About</a>
-      <a href="#" class="lsb-link" data-section="clients"><i class="fa-regular fa-handshake"></i>Our Clients</a>
-      <a href="#" class="lsb-link" data-section="services"><i class="fa-solid fa-scale-balanced"></i>Services &amp; Practices</a>
-      <a href="#" class="lsb-link" data-section="contact"><i class="fa-regular fa-envelope"></i>Contact Us</a>
-      <a href="#" class="lsb-link" data-section="gallery"><i class="fa-regular fa-images"></i>Gallery</a>
+  <div class="lsb-body">
+    <p class="lsb-label">Menu</p>
+    <nav class="lsb-nav">
+      <a href="#" class="lsb-item active" data-section="home">
+        <i class="fa-solid fa-house"></i><span>Home</span>
+      </a>
+      <a href="#" class="lsb-item" data-section="about">
+        <i class="fa-solid fa-building-columns"></i><span>About</span>
+      </a>
+      <a href="#" class="lsb-item" data-section="clients">
+        <i class="fa-regular fa-handshake"></i><span>Our Clients</span>
+      </a>
+      <a href="#" class="lsb-item" data-section="services">
+        <!-- RENAMED: "Our Services" -->
+        <i class="fa-solid fa-scale-balanced"></i><span>Our Services</span>
+      </a>
+      <a href="#" class="lsb-item" data-section="contact">
+        <i class="fa-regular fa-envelope"></i><span>Contact Us</span>
+      </a>
+      <a href="#" class="lsb-item" data-section="gallery">
+        <i class="fa-regular fa-images"></i><span>Gallery</span>
+      </a>
     </nav>
 
-    <p class="lsb-section" style="margin-top:24px;">Categories</p>
-    <nav>
-      <a href="#" class="lsb-tag" data-filter="trademark"><span class="lsb-dot" style="background:#2563eb"></span>Trademark Bangladesh</a>
-      <a href="#" class="lsb-tag" data-filter="patent"><span class="lsb-dot" style="background:#059669"></span>Patent Bangladesh</a>
-      <a href="#" class="lsb-tag" data-filter="design"><span class="lsb-dot" style="background:#7c3aed"></span>Design Bangladesh</a>
-      <a href="#" class="lsb-tag" data-filter="portfolio"><span class="lsb-dot" style="background:#d97706"></span>Case Study</a>
-      <a href="#" class="lsb-tag" data-filter="core-team"><span class="lsb-dot" style="background:#dc2626"></span>Core Team</a>
+    <p class="lsb-label" style="margin-top:26px">Categories</p>
+    <nav class="lsb-nav">
+      <a href="#" class="lsb-tag-item" data-filter="trademark">
+        <span class="ldot" style="background:#2563eb"></span>Trademark Bangladesh
+      </a>
+      <a href="#" class="lsb-tag-item" data-filter="patent">
+        <span class="ldot" style="background:#059669"></span>Patent Bangladesh
+      </a>
+      <a href="#" class="lsb-tag-item" data-filter="design">
+        <span class="ldot" style="background:#7c3aed"></span>Design Bangladesh
+      </a>
+      <a href="#" class="lsb-tag-item" data-filter="portfolio">
+        <span class="ldot" style="background:#d97706"></span>Case Study
+      </a>
+      <a href="#" class="lsb-tag-item" data-filter="core-team">
+        <span class="ldot" style="background:#dc2626"></span>Core Team
+      </a>
     </nav>
 
     <div class="lsb-cta">
-      <p>Get expert IP legal advice — free first consultation.</p>
-      <a href="#" onclick="switchSection('contact');return false;">Contact Us →</a>
+      <i class="fa-solid fa-phone-volume lsb-cta-icon"></i>
+      <p>Need IP legal advice?<br/>Free first consultation.</p>
+      <a href="#" onclick="switchSection('contact');return false;">Contact Us Today</a>
     </div>
   </div>
 
   <div class="lsb-foot">© 2025 IPServiceBD</div>
 </aside>
 
-<!-- ═══ MAIN ═══ -->
+<!-- ═══════════ MAIN WRAPPER ═══════════ -->
 <div id="mainWrap" class="main-wrap sb-open">
 
   <!-- TOP BAR -->
   <header class="topbar">
-    <div class="tb-left">
-      <button class="burger" onclick="toggleSidebar()">
+    <div class="tb-l">
+      <button class="burger-btn" onclick="toggleSidebar()">
         <i class="fa-solid fa-bars"></i>
       </button>
-      <div class="tb-site-name">
-        <span>IPServiceBD</span>
-        <small>Bangladesh's Trusted IP Law Firm</small>
+      <div>
+        <div class="tb-brand">IPServiceBD</div>
+        <div class="tb-sub">Bangladesh's Premier IP Law Firm</div>
       </div>
     </div>
-    <div class="tb-right">
-      <div class="tb-search-box">
+    <div class="tb-r">
+      <div class="tb-search">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input id="searchInput" type="text" placeholder="Search posts…" oninput="handleSearch(this.value)"/>
+        <input id="searchInput" type="text" placeholder="Search…"/>
       </div>
-      <button class="tb-notif"><i class="fa-regular fa-bell"></i><span class="tb-pip"></span></button>
+      <button class="tb-bell"><i class="fa-regular fa-bell"></i><span class="bell-dot"></span></button>
       <div class="tb-av">IP</div>
     </div>
   </header>
 
-  <div class="page-body">
+  <main class="pg-wrap">
 
-    <!-- ═══ HOME PAGE ═══ -->
+    <!-- ══════════════ HOME ══════════════ -->
     <section id="section-home" class="pg active">
 
-      <!-- Category Tabs -->
-      <div class="tab-strip-wrap">
-        <div class="tab-strip" id="tabBar">
-          <button class="tab active" data-tab="all">All Posts</button>
-          <button class="tab" data-tab="patent">Patent</button>
-          <button class="tab" data-tab="trademark">Trademark</button>
-          <button class="tab" data-tab="design">Design</button>
-          <button class="tab" data-tab="portfolio">Portfolio</button>
-          <button class="tab" data-tab="core-team">Core Team</button>
+      <!-- HERO BANNER -->
+      <div class="hero">
+        <div class="hero-content">
+          <span class="hero-eyebrow"><i class="fa-solid fa-star"></i> Bangladesh's Trusted IP Law Firm Since 2007</span>
+          <h1 class="hero-title">Protecting Your<br/><span>Intellectual Property</span><br/>in Bangladesh &amp; Beyond</h1>
+          <p class="hero-desc">Expert trademark, patent, design &amp; copyright registration. Full-service IP law firm dedicated to safeguarding your ideas, brands, and innovations.</p>
+          <div class="hero-btns">
+            <a href="#" onclick="switchSection('services');return false;" class="btn-primary">Our Services</a>
+            <a href="#" onclick="switchSection('contact');return false;" class="btn-secondary">Free Consultation</a>
+          </div>
+          <div class="hero-badges">
+            <div class="hb"><strong>500+</strong><span>Cases Won</span></div>
+            <div class="hb-sep"></div>
+            <div class="hb"><strong>18+</strong><span>Years Experience</span></div>
+            <div class="hb-sep"></div>
+            <div class="hb"><strong>200+</strong><span>Clients</span></div>
+            <div class="hb-sep"></div>
+            <div class="hb"><strong>98%</strong><span>Success Rate</span></div>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=700&q=85" alt="IP Law"/>
         </div>
       </div>
 
-      <!-- 2-col: posts + right sidebar -->
-      <div class="home-row">
-
-        <!-- POSTS COLUMN -->
-        <div class="posts-column">
-
-          <div id="noResults" class="no-results hidden">
-            <i class="fa-regular fa-folder-open"></i>
-            <p>No posts found.</p>
+      <!-- SERVICES OVERVIEW -->
+      <div class="section-block">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Comprehensive IP Services</h2>
+        <div class="svc-overview-grid">
+          <div class="svc-ov" onclick="switchSection('services')">
+            <div class="svc-ov-icon" style="background:#dbeafe;color:#1d4ed8"><i class="fa-solid fa-trademark"></i></div>
+            <h3>Trademark</h3>
+            <p>Registration, opposition, renewal and enforcement of trademarks in Bangladesh and internationally.</p>
+            <span class="svc-ov-link">Learn more →</span>
           </div>
+          <div class="svc-ov" onclick="switchSection('services')">
+            <div class="svc-ov-icon" style="background:#d1fae5;color:#065f46"><i class="fa-solid fa-flask"></i></div>
+            <h3>Patent</h3>
+            <p>Full patent prosecution from search to grant, including PCT international filing via WIPO.</p>
+            <span class="svc-ov-link">Learn more →</span>
+          </div>
+          <div class="svc-ov" onclick="switchSection('services')">
+            <div class="svc-ov-icon" style="background:#ede9fe;color:#5b21b6"><i class="fa-solid fa-pen-ruler"></i></div>
+            <h3>Design</h3>
+            <p>Industrial design registration protecting the visual and aesthetic aspects of your products.</p>
+            <span class="svc-ov-link">Learn more →</span>
+          </div>
+          <div class="svc-ov" onclick="switchSection('services')">
+            <div class="svc-ov-icon" style="background:#fef3c7;color:#92400e"><i class="fa-solid fa-copyright"></i></div>
+            <h3>Copyright</h3>
+            <p>Copyright registration for literary, artistic, musical, and software works under Bangladesh law.</p>
+            <span class="svc-ov-link">Learn more →</span>
+          </div>
+          <div class="svc-ov" onclick="switchSection('services')">
+            <div class="svc-ov-icon" style="background:#ffe4e6;color:#9f1239"><i class="fa-solid fa-globe"></i></div>
+            <h3>International IP</h3>
+            <p>Madrid Protocol, PCT, and Hague System filings for global protection of your IP portfolio.</p>
+            <span class="svc-ov-link">Learn more →</span>
+          </div>
+          <div class="svc-ov" onclick="switchSection('services')">
+            <div class="svc-ov-icon" style="background:#ccfbf1;color:#0f766e"><i class="fa-solid fa-gavel"></i></div>
+            <h3>IP Litigation</h3>
+            <p>Enforcement, infringement actions, cease &amp; desist, and court representation across Bangladesh.</p>
+            <span class="svc-ov-link">Learn more →</span>
+          </div>
+        </div>
+      </div>
 
-          <!-- ─── POST 1 (Featured) ─── -->
-          <article class="wp-post" data-category="trademark">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80" alt="Trademark Registration Bangladesh" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('trademark');return false;" class="wp-cat cat-trademark">Trademark</a>
-                <a href="#" class="wp-cat cat-ip">IP Law Bangladesh</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">How to Register a Trademark in Bangladesh: A Complete 2025 Guide</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Azim Uddin</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> January 12, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 5 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>A step-by-step guide on filing trademark applications under the Trademarks Act 2009 in Bangladesh. Covers required documents, official fees at DPDT, the examination process, opposition period, and estimated timelines for receiving your trademark registration certificate.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Trademark</a><a href="#">DPDT</a><a href="#">Bangladesh</a><a href="#">Brand Protection</a>
+      <!-- ABOUT STRIP -->
+      <div class="about-strip">
+        <div class="about-strip-img">
+          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80" alt="IPServiceBD Office"/>
+        </div>
+        <div class="about-strip-text">
+          <span class="section-label">About IPServiceBD</span>
+          <h2>Bangladesh's Trusted Partner for Intellectual Property</h2>
+          <p>Founded in 2007, IPServiceBD is a specialized IP law firm built on the principle of providing professional, personalized, and prompt IP services to businesses and individuals across Bangladesh and internationally.</p>
+          <p>Our team of seasoned IP attorneys has successfully handled over 500 trademark, patent, design, and copyright cases with a 98% success rate — protecting brands and innovations from startups to multinational corporations.</p>
+          <a href="#" onclick="switchSection('about');return false;" class="btn-outline">Read More About Us</a>
+        </div>
+      </div>
+
+      <!-- ══════════ PORTFOLIO RIBBON (Interactive) ══════════ -->
+      <div class="section-block">
+        <div class="section-label">Our Portfolio</div>
+        <h2 class="section-title">Selected Case Studies &amp; Achievements</h2>
+        <p class="section-desc">Click any item to view full case details.</p>
+
+        <div class="ribbon-wrap">
+          <button class="ribbon-arrow ribbon-prev" onclick="ribbonScroll(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="ribbon-viewport" id="ribbonViewport">
+            <div class="ribbon-track" id="ribbonTrack">
+
+              <div class="ribbon-card" onclick="openPortfolio(0)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80" alt="Fashion Brand"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-trademark">Trademark</span>
+                  <h4>Fashion Brand Protection</h4>
+                  <p>International trademark defence across Bangladesh, India &amp; UAE.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 2 ─── -->
-          <article class="wp-post" data-category="patent">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" alt="Patent Registration Bangladesh" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('patent');return false;" class="wp-cat cat-patent">Patent</a>
-                <a href="#" class="wp-cat cat-ip">IP Law Bangladesh</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">Patent Registration Process in Bangladesh: Step-by-Step Guide for Inventors</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Sara Ahmed</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> February 3, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 4 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>Understanding the complete process of filing a patent in Bangladesh under the Patents and Designs Act 1911. This article covers the prior art search, preparing patent specifications, filing at DPDT, the examination process, and what happens during the grant stage.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Patent</a><a href="#">DPDT</a><a href="#">Invention</a><a href="#">Bangladesh</a>
+              <div class="ribbon-card" onclick="openPortfolio(1)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&q=80" alt="Pharma Patent"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-patent">Patent</span>
+                  <h4>Pharmaceutical Innovation Patent</h4>
+                  <p>Secured patent protection for a novel drug formulation in Bangladesh.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 3 ─── -->
-          <article class="wp-post" data-category="design">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80" alt="Design Registration Bangladesh" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('design');return false;" class="wp-cat cat-design">Design</a>
-                <a href="#" class="wp-cat cat-ip">IP Law Bangladesh</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">Industrial Design Protection: What You Need to Know in Bangladesh</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Nadia Islam</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> February 18, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 3 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>Design registration protects the visual and aesthetic aspects of your product — its shape, configuration, pattern, or ornamentation. This post explains how to file for design protection under Bangladesh's Patents and Designs Act 1911 and what rights you get after registration.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Design</a><a href="#">DPDT</a><a href="#">Product Design</a><a href="#">Bangladesh</a>
+              <div class="ribbon-card" onclick="openPortfolio(2)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&q=80" alt="Product Design"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-design">Design</span>
+                  <h4>Consumer Product Design Registration</h4>
+                  <p>Registered design protection for a leading home appliance brand.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 4 ─── -->
-          <article class="wp-post" data-category="trademark">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80" alt="Trademark Opposition" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('trademark');return false;" class="wp-cat cat-trademark">Trademark</a>
-                <a href="#" class="wp-cat cat-ip">DPDT</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">Trademark Opposition &amp; Appeal Process in Bangladesh: A Practical Guide</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Rahim Khan</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> March 5, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 6 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>When a trademark application is published in the Bangladesh Trade Marks Journal, any person can file an opposition within 60 days. This article explains the grounds for opposition, the procedure for filing a notice of opposition at DPDT, and how to appeal unfavorable decisions.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Trademark Opposition</a><a href="#">DPDT</a><a href="#">IP Litigation</a>
+              <div class="ribbon-card" onclick="openPortfolio(3)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=400&q=80" alt="Madrid Protocol"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-trademark">Trademark</span>
+                  <h4>Madrid Protocol — 12 Countries</h4>
+                  <p>Single filing securing trademark protection across 12 territories via WIPO.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 5 ─── -->
-          <article class="wp-post" data-category="patent">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80" alt="Pharmaceutical Patents" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('patent');return false;" class="wp-cat cat-patent">Patent</a>
-                <a href="#" class="wp-cat cat-ip">TRIPS</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">Pharmaceutical Patents &amp; Innovation Protection in Bangladesh Post-LDC Transition</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Sara Ahmed</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> March 15, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 7 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>Bangladesh's pharmaceutical sector enjoyed a TRIPS waiver until 2033 as a Least Developed Country. With graduation to developing country status on the horizon, this article explores what changes for pharmaceutical patent protection and how local manufacturers and innovators should prepare.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Pharma Patent</a><a href="#">TRIPS</a><a href="#">LDC</a><a href="#">Bangladesh</a>
+              <div class="ribbon-card" onclick="openPortfolio(4)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80" alt="Infringement"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-portfolio">Litigation</span>
+                  <h4>Trademark Infringement Victory</h4>
+                  <p>Obtained injunction and damages against a counterfeit brand within 6 months.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 6 ─── -->
-          <article class="wp-post" data-category="portfolio">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80" alt="Case Study" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('portfolio');return false;" class="wp-cat cat-portfolio">Case Study</a>
-                <a href="#" class="wp-cat cat-ip">Enforcement</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">Case Study: Defending a Bangladeshi Fashion Brand's Trademark Rights in Three Countries</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Azim Uddin</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> April 1, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 5 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>A leading Bangladeshi fashion brand approached us after a competitor began using a confusingly similar trademark in Bangladesh, India, and the UAE simultaneously. This case study details our enforcement strategy, the legal proceedings, and the outcome that secured protection in all three jurisdictions within 8 months.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Case Study</a><a href="#">Enforcement</a><a href="#">Trademark</a><a href="#">International</a>
+              <div class="ribbon-card" onclick="openPortfolio(5)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" alt="Software Patent"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-patent">Patent</span>
+                  <h4>Software &amp; Tech Patent Portfolio</h4>
+                  <p>Built a comprehensive patent portfolio for a Bangladeshi fintech startup.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 7 ─── -->
-          <article class="wp-post" data-category="trademark">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=800&q=80" alt="Madrid Protocol" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('trademark');return false;" class="wp-cat cat-trademark">Trademark</a>
-                <a href="#" class="wp-cat cat-ip">WIPO</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">International Trademark Filing via Madrid Protocol: A Guide for Bangladeshi Businesses</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Rahim Khan</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> April 10, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 5 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>The Madrid System, administered by WIPO, allows Bangladeshi trademark owners to file a single international application and seek protection in up to 130 countries. This guide walks through the eligibility requirements, the role of DPDT as the office of origin, fees, and the examination process at WIPO.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Madrid Protocol</a><a href="#">WIPO</a><a href="#">International Trademark</a>
+              <div class="ribbon-card" onclick="openPortfolio(6)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=400&q=80" alt="Brand Audit"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-trademark">Trademark</span>
+                  <h4>Complete Brand IP Audit</h4>
+                  <p>Full IP audit and restructuring for a garments export company.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- ─── POST 8 ─── -->
-          <article class="wp-post" data-category="core-team">
-            <a href="#" class="wp-post-img-link">
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80" alt="Core Team" class="wp-post-img" loading="lazy"/>
-            </a>
-            <div class="wp-post-inner">
-              <div class="wp-post-cats">
-                <a href="#" onclick="filterTab('core-team');return false;" class="wp-cat cat-team">Core Team</a>
-              </div>
-              <h2 class="wp-post-title"><a href="#">Meet Our Lead IP Attorney: 18 Years of Protecting Intellectual Property in Bangladesh</a></h2>
-              <div class="wp-post-meta">
-                <span><i class="fa-regular fa-user"></i> <a href="#">Team IPServiceBD</a></span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-calendar"></i> April 26, 2025</span>
-                <span class="meta-sep">|</span>
-                <span><i class="fa-regular fa-clock"></i> 3 min read</span>
-              </div>
-              <div class="wp-post-excerpt">
-                <p>Our founding partner and lead IP attorney has over 18 years of experience handling trademark, patent, and design cases across Bangladesh, India, and the Middle East. With a 98% success rate across 500+ cases, he leads our team of specialist IP attorneys dedicated to protecting your intellectual assets.</p>
-              </div>
-              <div class="wp-post-footer">
-                <a href="#" class="wp-read-more">Continue reading <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                <div class="wp-post-tags">
-                  <span>Tags:</span>
-                  <a href="#">Core Team</a><a href="#">IP Attorney</a><a href="#">IPServiceBD</a>
+              <div class="ribbon-card" onclick="openPortfolio(7)">
+                <div class="rc-img"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80" alt="Copyright"/></div>
+                <div class="rc-body">
+                  <span class="rc-cat cat-design">Copyright</span>
+                  <h4>Software Copyright Registration</h4>
+                  <p>Copyright protection for a cloud-based ERP software solution.</p>
+                  <span class="rc-link">View Case →</span>
                 </div>
               </div>
-            </div>
-          </article>
 
-          <!-- Pagination -->
-          <div class="wp-pagination">
-            <a href="#" class="pg-btn active">1</a>
-            <a href="#" class="pg-btn">2</a>
-            <a href="#" class="pg-btn">3</a>
-            <a href="#" class="pg-older">Older posts <i class="fa-solid fa-angle-right"></i></a>
-          </div>
+            </div><!-- /ribbon-track -->
+          </div><!-- /ribbon-viewport -->
+          <button class="ribbon-arrow ribbon-next" onclick="ribbonScroll(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
 
-        </div><!-- /posts-column -->
+        <div class="ribbon-dots" id="ribbonDots"></div>
+        <div class="ribbon-cta">
+          <a href="#" onclick="openAllPortfolios();return false;" class="btn-primary">View All Case Studies</a>
+        </div>
+      </div>
 
-        <!-- RIGHT SIDEBAR (Mehta IP style) -->
-        <aside class="right-sidebar">
-
-          <!-- Search -->
-          <div class="rsb-box">
-            <h3 class="rsb-title">Search</h3>
-            <div class="rsb-search">
-              <input type="text" placeholder="Search…" oninput="handleSearch(this.value)"/>
-              <button><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-          </div>
-
-          <!-- About widget -->
-          <div class="rsb-box">
-            <h3 class="rsb-title">About IPServiceBD</h3>
-            <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=80" alt="Office" class="rsb-office-img" loading="lazy"/>
-            <p>Bangladesh's premier IP law firm offering trademark, patent, design &amp; copyright services since 2007.</p>
-            <a href="#" onclick="switchSection('about');return false;" class="rsb-more">Read more →</a>
-          </div>
-
-          <!-- Categories -->
-          <div class="rsb-box">
-            <h3 class="rsb-title">Categories</h3>
-            <ul class="rsb-cat-list">
-              <li><a href="#" onclick="filterTab('trademark');return false;">Trademark Bangladesh <span>(12)</span></a></li>
-              <li><a href="#" onclick="filterTab('patent');return false;">Patent Bangladesh <span>(9)</span></a></li>
-              <li><a href="#" onclick="filterTab('design');return false;">Design Bangladesh <span>(7)</span></a></li>
-              <li><a href="#" onclick="filterTab('portfolio');return false;">Case Study <span>(5)</span></a></li>
-              <li><a href="#" onclick="filterTab('core-team');return false;">Core Team <span>(4)</span></a></li>
-              <li><a href="#">Copyright <span>(6)</span></a></li>
-              <li><a href="#">IP Litigation <span>(8)</span></a></li>
-              <li><a href="#">DPDT Updates <span>(11)</span></a></li>
-              <li><a href="#">International IP <span>(5)</span></a></li>
-              <li><a href="#">WIPO <span>(4)</span></a></li>
-            </ul>
-          </div>
-
-          <!-- Recent Posts -->
-          <div class="rsb-box">
-            <h3 class="rsb-title">Recent Posts</h3>
-            <ul class="rsb-recent-list">
-              <li><a href="#"><i class="fa-solid fa-angle-right"></i>How to Register a Trademark in Bangladesh: A Complete 2025 Guide</a><span>Jan 12, 2025</span></li>
-              <li><a href="#"><i class="fa-solid fa-angle-right"></i>Patent Registration Process in Bangladesh: Step-by-Step</a><span>Feb 3, 2025</span></li>
-              <li><a href="#"><i class="fa-solid fa-angle-right"></i>Industrial Design Protection in Bangladesh</a><span>Feb 18, 2025</span></li>
-              <li><a href="#"><i class="fa-solid fa-angle-right"></i>Trademark Opposition Process in Bangladesh</a><span>Mar 5, 2025</span></li>
-              <li><a href="#"><i class="fa-solid fa-angle-right"></i>Pharmaceutical Patents Post-LDC</a><span>Mar 15, 2025</span></li>
-            </ul>
-          </div>
-
-          <!-- Tags -->
-          <div class="rsb-box">
-            <h3 class="rsb-title">Tags</h3>
-            <div class="rsb-tag-cloud">
-              <a href="#">Trademark</a><a href="#">Patent</a><a href="#">Design</a>
-              <a href="#">Copyright</a><a href="#">DPDT</a><a href="#">WIPO</a>
-              <a href="#">Madrid Protocol</a><a href="#">PCT</a><a href="#">IP Law BD</a>
-              <a href="#">Litigation</a><a href="#">LDC</a><a href="#">TRIPS</a>
-              <a href="#">Brand Protection</a><a href="#">Innovation</a>
+      <!-- TESTIMONIALS -->
+      <div class="section-block section-gray">
+        <div class="section-label">Client Feedback</div>
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="test-row">
+          <div class="test-card">
+            <div class="test-stars">★★★★★</div>
+            <blockquote>"IPServiceBD handled our entire trademark portfolio with exceptional professionalism. They secured our brand in Bangladesh and 8 other countries seamlessly."</blockquote>
+            <div class="test-author">
+              <div class="test-av" style="background:#1d4ed8">MR</div>
+              <div><strong>Mr. Rafiq</strong><span>CEO, TechBD Ltd</span></div>
             </div>
           </div>
-
-          <!-- Contact -->
-          <div class="rsb-box rsb-contact-box">
-            <h3 class="rsb-title" style="color:#fff;border-color:rgba(255,255,255,0.3)">Contact Us</h3>
-            <p class="rsb-contact-line"><i class="fa-solid fa-location-dot"></i>Gulshan 2, Dhaka 1212, Bangladesh</p>
-            <p class="rsb-contact-line"><i class="fa-solid fa-phone"></i>+880 1XXX-XXXXXX</p>
-            <p class="rsb-contact-line"><i class="fa-solid fa-envelope"></i>info@ipservicebd.com</p>
-            <p class="rsb-contact-line"><i class="fa-brands fa-linkedin-in"></i><a href="#">Follow on LinkedIn</a></p>
-            <a href="#" onclick="switchSection('contact');return false;" class="rsb-consult-btn">Free Consultation</a>
+          <div class="test-card">
+            <div class="test-stars">★★★★★</div>
+            <blockquote>"They secured our pharmaceutical patent in record time. Their deep understanding of Bangladesh's IP laws and the TRIPS framework is truly unparalleled."</blockquote>
+            <div class="test-author">
+              <div class="test-av" style="background:#059669">SK</div>
+              <div><strong>Ms. Sultana</strong><span>Director, MediCare BD</span></div>
+            </div>
           </div>
+          <div class="test-card">
+            <div class="test-stars">★★★★★</div>
+            <blockquote>"Our fashion brand is now protected in 12 countries thanks to IPServiceBD. Their Madrid Protocol expertise saved us time and money. Outstanding service."</blockquote>
+            <div class="test-author">
+              <div class="test-av" style="background:#7c3aed">FH</div>
+              <div><strong>Fahmida Hossain</strong><span>Owner, Fashion Hub BD</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        </aside>
+      <!-- CONTACT CTA STRIP -->
+      <div class="cta-strip">
+        <div>
+          <h2>Ready to Protect Your IP?</h2>
+          <p>Schedule a free consultation with our expert IP attorneys today.</p>
+        </div>
+        <div class="cta-strip-btns">
+          <a href="#" onclick="switchSection('contact');return false;" class="btn-white">Get Free Consultation</a>
+          <a href="tel:+8801000000000" class="btn-white-outline"><i class="fa-solid fa-phone"></i> Call Us Now</a>
+        </div>
+      </div>
 
-      </div><!-- /home-row -->
-    </section>
+    </section><!-- /home -->
 
-    <!-- ═══ ABOUT ═══ -->
+    <!-- ══════════════ ABOUT ══════════════ -->
     <section id="section-about" class="pg">
-      <div class="inner-pg-wrap">
-        <h1 class="pg-title">About IPServiceBD</h1>
-        <div class="about-two-col">
-          <div><img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=700&q=80" alt="Office" class="about-img" loading="lazy"/></div>
-          <div class="about-text">
+      <div class="inner-wrap">
+        <h1 class="pg-h1">About IPServiceBD</h1>
+        <div class="about-grid">
+          <div><img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=700&q=80" alt="Office" class="about-photo" loading="lazy"/></div>
+          <div class="about-copy">
             <span class="eyebrow">Who We Are</span>
-            <h2>Bangladesh's Premier Intellectual Property Law Firm</h2>
-            <p>IPServiceBD is a specialized intellectual property law firm dedicated to helping individuals, startups, and corporations protect their creative and commercial assets in Bangladesh and internationally. We provide comprehensive services covering the full spectrum of IP law.</p>
+            <h2>Bangladesh's Premier IP Law Firm</h2>
+            <p>IPServiceBD is a specialized intellectual property law firm dedicated to helping individuals, startups, and corporations protect their creative and commercial assets in Bangladesh and internationally.</p>
             <p>Founded by seasoned IP attorneys with over 18 years of combined experience, our firm has successfully handled 500+ trademark, patent, design, and copyright cases with a 98% success rate.</p>
             <div class="about-stats">
-              <div class="stat"><strong>500+</strong><span>Cases Won</span></div>
-              <div class="stat"><strong>18+</strong><span>Years Experience</span></div>
-              <div class="stat"><strong>200+</strong><span>Clients</span></div>
-              <div class="stat"><strong>98%</strong><span>Success Rate</span></div>
+              <div class="stat-item"><strong>500+</strong><span>Cases Won</span></div>
+              <div class="stat-item"><strong>18+</strong><span>Years</span></div>
+              <div class="stat-item"><strong>200+</strong><span>Clients</span></div>
+              <div class="stat-item"><strong>98%</strong><span>Success Rate</span></div>
             </div>
           </div>
         </div>
-        <h2 class="section-h2">Core Team</h2>
+        <h2 class="inner-h2">Core Team</h2>
         <div class="team-grid">
-          <div class="team-card"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Azim Uddin" loading="lazy"/><div class="tc-body"><h3>Azim Uddin</h3><p class="tc-role">Founding Partner &amp; Lead IP Attorney</p><p>18+ years specializing in trademark and patent law across South Asia and the Middle East.</p><div class="tc-links"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:azim@ipservicebd.com"><i class="fa-regular fa-envelope"></i></a></div></div></div>
-          <div class="team-card"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Sara Ahmed" loading="lazy"/><div class="tc-body"><h3>Sara Ahmed</h3><p class="tc-role">Patent Attorney</p><p>Expert in pharmaceutical and technology patents with experience at WIPO, Geneva.</p><div class="tc-links"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:sara@ipservicebd.com"><i class="fa-regular fa-envelope"></i></a></div></div></div>
-          <div class="team-card"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80" alt="Rahim Khan" loading="lazy"/><div class="tc-body"><h3>Rahim Khan</h3><p class="tc-role">Trademark Specialist</p><p>Handles international trademark filings via the Madrid Protocol and IP dispute resolution.</p><div class="tc-links"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:rahim@ipservicebd.com"><i class="fa-regular fa-envelope"></i></a></div></div></div>
+          <div class="team-card"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Azim" loading="lazy"/><div class="tc"><h3>Azim Uddin</h3><p class="tc-role">Founding Partner &amp; Lead IP Attorney</p><p>18+ years in trademark and patent law across South Asia and the Middle East.</p><div class="tc-links"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:azim@ipservicebd.com"><i class="fa-regular fa-envelope"></i></a></div></div></div>
+          <div class="team-card"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Sara" loading="lazy"/><div class="tc"><h3>Sara Ahmed</h3><p class="tc-role">Patent Attorney</p><p>Expert in pharmaceutical and technology patents with WIPO Geneva experience.</p><div class="tc-links"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:sara@ipservicebd.com"><i class="fa-regular fa-envelope"></i></a></div></div></div>
+          <div class="team-card"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80" alt="Rahim" loading="lazy"/><div class="tc"><h3>Rahim Khan</h3><p class="tc-role">Trademark Specialist</p><p>Madrid Protocol filings and IP dispute resolution across multiple jurisdictions.</p><div class="tc-links"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:rahim@ipservicebd.com"><i class="fa-regular fa-envelope"></i></a></div></div></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ CLIENTS ═══ -->
+    <!-- ══════════════ CLIENTS ══════════════ -->
     <section id="section-clients" class="pg">
-      <div class="inner-pg-wrap">
-        <h1 class="pg-title">Our Clients</h1>
-        <div class="client-logos"><div class="cl">ACME Corp</div><div class="cl">TechBD Ltd</div><div class="cl">Fashion Hub</div><div class="cl">MediCare BD</div><div class="cl">AgriTech BD</div><div class="cl">BuildCo</div><div class="cl">EduBD</div><div class="cl">RetailBD</div></div>
-        <h2 class="section-h2">What Our Clients Say</h2>
-        <div class="test-grid">
-          <div class="test-card"><div class="stars">★★★★★</div><blockquote>"IPServiceBD handled our entire trademark portfolio with exceptional professionalism. Highly recommended."</blockquote><cite><strong>Mr. Rafiq</strong> — CEO, TechBD Ltd</cite></div>
-          <div class="test-card"><div class="stars">★★★★★</div><blockquote>"They secured our pharmaceutical patent in record time. Their IP knowledge is unparalleled."</blockquote><cite><strong>Ms. Sultana</strong> — Director, MediCare BD</cite></div>
-          <div class="test-card"><div class="stars">★★★★★</div><blockquote>"Our fashion brand is now protected internationally. Their Madrid Protocol expertise is outstanding."</blockquote><cite><strong>Fahmida H.</strong> — Owner, Fashion Hub</cite></div>
+      <div class="inner-wrap">
+        <h1 class="pg-h1">Our Clients</h1>
+        <div class="client-grid">
+          <div class="cl-item">ACME Corp</div><div class="cl-item">TechBD Ltd</div>
+          <div class="cl-item">Fashion Hub</div><div class="cl-item">MediCare BD</div>
+          <div class="cl-item">AgriTech BD</div><div class="cl-item">BuildCo</div>
+          <div class="cl-item">EduBD</div><div class="cl-item">RetailBD</div>
+        </div>
+        <h2 class="inner-h2">Testimonials</h2>
+        <div class="test-row">
+          <div class="test-card"><div class="test-stars">★★★★★</div><blockquote>"IPServiceBD handled our entire trademark portfolio with exceptional professionalism."</blockquote><div class="test-author"><div class="test-av" style="background:#1d4ed8">MR</div><div><strong>Mr. Rafiq</strong><span>CEO, TechBD Ltd</span></div></div></div>
+          <div class="test-card"><div class="test-stars">★★★★★</div><blockquote>"They secured our pharmaceutical patent in record time. Truly unparalleled expertise."</blockquote><div class="test-author"><div class="test-av" style="background:#059669">SK</div><div><strong>Ms. Sultana</strong><span>Director, MediCare BD</span></div></div></div>
+          <div class="test-card"><div class="test-stars">★★★★★</div><blockquote>"Our brand is now protected in 12 countries. Their Madrid Protocol expertise saved us time and money."</blockquote><div class="test-author"><div class="test-av" style="background:#7c3aed">FH</div><div><strong>Fahmida H.</strong><span>Owner, Fashion Hub</span></div></div></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ SERVICES ═══ -->
+    <!-- ══════════════ SERVICES ══════════════ -->
     <section id="section-services" class="pg">
-      <div class="inner-pg-wrap">
-        <h1 class="pg-title">Services &amp; Practices</h1>
-        <div class="svc-grid">
-          <div class="svc-card"><div class="svc-ico" style="background:#dbeafe;color:#1d4ed8"><i class="fa-solid fa-trademark fa-xl"></i></div><h3>Trademark Registration</h3><p>Register and protect your brand under Bangladesh's Trademarks Act 2009 from search to certificate.</p><ul><li>Trademark Search</li><li>Application Filing</li><li>Opposition Response</li><li>Renewal &amp; Maintenance</li></ul></div>
-          <div class="svc-card"><div class="svc-ico" style="background:#d1fae5;color:#065f46"><i class="fa-solid fa-flask fa-xl"></i></div><h3>Patent Registration</h3><p>Protect your inventions under the Bangladesh Patents and Designs Act 1911 comprehensively.</p><ul><li>Patentability Search</li><li>Specification Drafting</li><li>Patent Filing</li><li>PCT Applications</li></ul></div>
-          <div class="svc-card"><div class="svc-ico" style="background:#ede9fe;color:#5b21b6"><i class="fa-solid fa-pen-ruler fa-xl"></i></div><h3>Design Registration</h3><p>Protect aesthetic features of your products — shapes, patterns, and colors under design law.</p><ul><li>Design Search</li><li>Application Preparation</li><li>Registration</li><li>Design Enforcement</li></ul></div>
-          <div class="svc-card"><div class="svc-ico" style="background:#fef3c7;color:#92400e"><i class="fa-solid fa-copyright fa-xl"></i></div><h3>Copyright Registration</h3><p>Register copyright for literary, artistic, musical and software works under the Copyright Act 2000.</p><ul><li>Copyright Assessment</li><li>Registration Filing</li><li>Licensing Agreements</li><li>Infringement Action</li></ul></div>
-          <div class="svc-card"><div class="svc-ico" style="background:#ffe4e6;color:#9f1239"><i class="fa-solid fa-globe fa-xl"></i></div><h3>International IP</h3><p>Global IP protection through WIPO's Madrid Protocol for trademarks and PCT for patents.</p><ul><li>Madrid Protocol Filing</li><li>PCT Applications</li><li>Hague System (Designs)</li><li>Foreign IP Prosecution</li></ul></div>
-          <div class="svc-card"><div class="svc-ico" style="background:#ccfbf1;color:#0f766e"><i class="fa-solid fa-gavel fa-xl"></i></div><h3>IP Litigation</h3><p>Aggressive enforcement of IP rights through Bangladesh courts and alternative dispute resolution.</p><ul><li>Infringement Actions</li><li>Cease &amp; Desist Letters</li><li>Court Representation</li><li>Customs IP Protection</li></ul></div>
+      <div class="inner-wrap">
+        <h1 class="pg-h1">Our Services</h1>
+        <div class="svc-full-grid">
+          <div class="svc-full-card"><div class="svc-icon" style="background:#dbeafe;color:#1d4ed8"><i class="fa-solid fa-trademark fa-xl"></i></div><h3>Trademark Registration</h3><p>Register and protect your brand name, logo, and slogan under Bangladesh's Trademarks Act 2009 from initial search through to certificate issuance.</p><ul><li>Trademark Search &amp; Analysis</li><li>Application Filing at DPDT</li><li>Opposition Response</li><li>Renewal &amp; Maintenance</li><li>International Filing (Madrid)</li></ul></div>
+          <div class="svc-full-card"><div class="svc-icon" style="background:#d1fae5;color:#065f46"><i class="fa-solid fa-flask fa-xl"></i></div><h3>Patent Registration</h3><p>Comprehensive patent prosecution services under the Bangladesh Patents and Designs Act 1911, including international filing via the PCT system.</p><ul><li>Patentability Search</li><li>Specification Drafting</li><li>Patent Filing at DPDT</li><li>PCT International Applications</li><li>Patent Licensing Support</li></ul></div>
+          <div class="svc-full-card"><div class="svc-icon" style="background:#ede9fe;color:#5b21b6"><i class="fa-solid fa-pen-ruler fa-xl"></i></div><h3>Design Registration</h3><p>Protect the aesthetic and visual aspects of your products — shapes, patterns, ornamentation — under Bangladesh's design law framework.</p><ul><li>Design Search</li><li>Application Preparation</li><li>DPDT Registration</li><li>Hague System (International)</li><li>Design Enforcement</li></ul></div>
+          <div class="svc-full-card"><div class="svc-icon" style="background:#fef3c7;color:#92400e"><i class="fa-solid fa-copyright fa-xl"></i></div><h3>Copyright Registration</h3><p>Register and protect creative works — literary, artistic, musical, dramatic, and software — under the Bangladesh Copyright Act 2000.</p><ul><li>Copyright Assessment</li><li>Registration Filing</li><li>Licensing &amp; Assignment</li><li>Infringement Action</li><li>Digital Copyright Protection</li></ul></div>
+          <div class="svc-full-card"><div class="svc-icon" style="background:#ffe4e6;color:#9f1239"><i class="fa-solid fa-globe fa-xl"></i></div><h3>International IP</h3><p>Protect your IP globally through WIPO's international systems and our network of overseas IP attorneys across 50+ countries.</p><ul><li>Madrid Protocol (Trademarks)</li><li>PCT Applications (Patents)</li><li>Hague System (Designs)</li><li>Foreign IP Prosecution</li><li>IP Portfolio Management</li></ul></div>
+          <div class="svc-full-card"><div class="svc-icon" style="background:#ccfbf1;color:#0f766e"><i class="fa-solid fa-gavel fa-xl"></i></div><h3>IP Litigation &amp; Enforcement</h3><p>Aggressive protection and enforcement of your IP rights through Bangladesh courts, customs, and alternative dispute resolution mechanisms.</p><ul><li>Infringement Actions</li><li>Cease &amp; Desist Letters</li><li>Court Representation</li><li>Customs IP Recordal</li><li>Domain Name Disputes</li></ul></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ CONTACT ═══ -->
+    <!-- ══════════════ CONTACT ══════════════ -->
     <section id="section-contact" class="pg">
-      <div class="inner-pg-wrap">
-        <h1 class="pg-title">Contact Us</h1>
-        <div class="contact-two-col">
+      <div class="inner-wrap">
+        <h1 class="pg-h1">Contact Us</h1>
+        <div class="contact-grid">
           <div>
-            <div class="ci-block">
-              <div class="ci-row"><i class="fa-solid fa-location-dot"></i><div><strong>Address</strong><p>Gulshan 2, Dhaka 1212, Bangladesh</p></div></div>
-              <div class="ci-row"><i class="fa-solid fa-phone"></i><div><strong>Phone</strong><p>+880 1XXX-XXXXXX</p></div></div>
-              <div class="ci-row"><i class="fa-solid fa-envelope"></i><div><strong>Email</strong><p>info@ipservicebd.com</p></div></div>
-              <div class="ci-row"><i class="fa-solid fa-clock"></i><div><strong>Hours</strong><p>Sun – Thu: 9:00 AM – 6:00 PM</p></div></div>
+            <div class="ci-card">
+              <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-location-dot"></i></div><div><strong>Address</strong><p>Gulshan 2, Dhaka 1212, Bangladesh</p></div></div>
+              <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-phone"></i></div><div><strong>Phone</strong><p>+880 1XXX-XXXXXX</p></div></div>
+              <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-envelope"></i></div><div><strong>Email</strong><p>info@ipservicebd.com</p></div></div>
+              <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-clock"></i></div><div><strong>Office Hours</strong><p>Sun – Thu: 9:00 AM – 6:00 PM</p></div></div>
             </div>
-            <div class="map-ph"><i class="fa-solid fa-map-location-dot"></i><p>Gulshan 2, Dhaka</p></div>
+            <div class="map-ph"><i class="fa-solid fa-map-location-dot"></i><span>Gulshan 2, Dhaka, Bangladesh</span></div>
           </div>
-          <div class="contact-form-card">
+          <div class="cf-card">
             <h2>Send Us a Message</h2>
             <form onsubmit="handleFormSubmit(event)">
-              <div class="fg"><label>Full Name</label><input type="text" placeholder="Your name" required/></div>
+              <div class="fg"><label>Full Name</label><input type="text" placeholder="Your full name" required/></div>
               <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com" required/></div>
-              <div class="fg"><label>Service</label><select><option>Trademark Registration</option><option>Patent Registration</option><option>Design Registration</option><option>Copyright</option><option>IP Litigation</option><option>International IP</option><option>Other</option></select></div>
+              <div class="fg"><label>Service Required</label>
+                <select><option>Trademark Registration</option><option>Patent Registration</option><option>Design Registration</option><option>Copyright</option><option>International IP</option><option>IP Litigation</option><option>Other</option></select>
+              </div>
               <div class="fg"><label>Message</label><textarea placeholder="Describe your IP needs…" required></textarea></div>
               <button type="submit">Send Message <i class="fa-solid fa-paper-plane"></i></button>
             </form>
@@ -533,29 +436,40 @@
       </div>
     </section>
 
-    <!-- ═══ GALLERY ═══ -->
+    <!-- ══════════════ GALLERY ══════════════ -->
     <section id="section-gallery" class="pg">
-      <div class="inner-pg-wrap">
-        <h1 class="pg-title">Gallery</h1>
+      <div class="inner-wrap">
+        <h1 class="pg-h1">Gallery</h1>
         <div class="gal-grid">
           <div class="gi gi-wide"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85" alt="Office" loading="lazy"/><div class="gi-cap">Our Office</div></div>
           <div class="gi"><img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=500&q=80" alt="Legal" loading="lazy"/><div class="gi-cap">Legal Research</div></div>
           <div class="gi"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500&q=80" alt="Team" loading="lazy"/><div class="gi-cap">Team Meeting</div></div>
           <div class="gi"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=500&q=80" alt="Conference" loading="lazy"/><div class="gi-cap">IP Conference</div></div>
-          <div class="gi"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&q=80" alt="Documents" loading="lazy"/><div class="gi-cap">Filing Documents</div></div>
-          <div class="gi"><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&q=80" alt="Award" loading="lazy"/><div class="gi-cap">Awards</div></div>
+          <div class="gi"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&q=80" alt="Docs" loading="lazy"/><div class="gi-cap">Filing Documents</div></div>
+          <div class="gi"><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&q=80" alt="Awards" loading="lazy"/><div class="gi-cap">Awards &amp; Recognition</div></div>
         </div>
       </div>
     </section>
 
-  </div><!-- /page-body -->
+  </main>
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="ft-cols">
-      <div class="ft-col ft-about"><div class="ft-logo"><svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18.5" stroke="white" stroke-width="2.2"/><path d="M20 10c-5.52 0-10 4.48-10 10 0 3.54 1.84 6.65 4.62 8.46V30.5c0 .55.45 1 1 1h8.76c.55 0 1-.45 1-1v-2.04C28.16 26.65 30 23.54 30 20c0-5.52-4.48-10-10-10z" stroke="white" stroke-width="1.8" fill="none"/><text x="20" y="22" text-anchor="middle" font-size="7" font-weight="700" fill="white" font-family="Inter,sans-serif">IP</text></svg><span>IPServiceBD</span></div><p>Bangladesh's premier intellectual property law firm, serving clients since 2007.</p><div class="ft-soc"><a href="#"><i class="fa-brands fa-facebook-f"></i></a><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="#"><i class="fa-brands fa-twitter"></i></a></div></div>
-      <div class="ft-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="switchSection('home')">Home</a></li><li><a href="#" onclick="switchSection('about')">About</a></li><li><a href="#" onclick="switchSection('services')">Services</a></li><li><a href="#" onclick="switchSection('contact')">Contact</a></li></ul></div>
-      <div class="ft-col"><h4>Services</h4><ul><li>Trademark Registration</li><li>Patent Filing</li><li>Design Protection</li><li>Copyright Registration</li><li>IP Litigation</li></ul></div>
+    <div class="ft-inner">
+      <div class="ft-col ft-brand-col">
+        <div class="ft-logo">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18.5" stroke="white" stroke-width="2.2"/><path d="M20 10c-5.52 0-10 4.48-10 10 0 3.54 1.84 6.65 4.62 8.46V30.5c0 .55.45 1 1 1h8.76c.55 0 1-.45 1-1v-2.04C28.16 26.65 30 23.54 30 20c0-5.52-4.48-10-10-10z" stroke="white" stroke-width="1.8" fill="none"/><text x="20" y="22" text-anchor="middle" font-size="7" font-weight="700" fill="white" font-family="Inter,sans-serif">IP</text></svg>
+          <span>IPServiceBD</span>
+        </div>
+        <p>Bangladesh's premier intellectual property law firm, serving businesses and individuals since 2007.</p>
+        <div class="ft-soc">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="ft-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="switchSection('home')">Home</a></li><li><a href="#" onclick="switchSection('about')">About</a></li><li><a href="#" onclick="switchSection('services')">Our Services</a></li><li><a href="#" onclick="switchSection('contact')">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Our Services</h4><ul><li>Trademark Registration</li><li>Patent Filing</li><li>Design Protection</li><li>Copyright Registration</li><li>IP Litigation</li></ul></div>
       <div class="ft-col"><h4>Contact</h4><ul><li>Gulshan 2, Dhaka 1212</li><li>info@ipservicebd.com</li><li>+880 1XXX-XXXXXX</li><li>Sun–Thu 9AM–6PM</li></ul></div>
     </div>
     <div class="ft-copy">© 2025 IPServiceBD · ipservicebd.com · All rights reserved.</div>
@@ -563,7 +477,26 @@
 
 </div><!-- /mainWrap -->
 
+<!-- ══════════════ PORTFOLIO MODAL ══════════════ -->
+<div id="portfolioModal" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePortfolio()"><i class="fa-solid fa-xmark"></i></button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ALL PORTFOLIOS MODAL -->
+<div id="allPortfoliosModal" class="modal-overlay" onclick="closeAllModal(event)">
+  <div class="modal-box modal-wide">
+    <button class="modal-close" onclick="closeAllPortfolios()"><i class="fa-solid fa-xmark"></i></button>
+    <h2 style="font-family:'Source Serif 4',serif;color:#0c2461;margin-bottom:24px;padding-bottom:14px;border-bottom:2px solid #e2e8f0">All Case Studies</h2>
+    <div id="allPortfoliosGrid" class="all-port-grid"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
 <div id="toast" class="toast hidden"><i class="fa-solid fa-circle-check"></i><span id="toastMsg"></span></div>
+
 <script src="script.js"></script>
 </body>
 </html>
