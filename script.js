@@ -178,35 +178,26 @@ function buildSlides() {
 buildSlides();
 
 /* ══════════════════════════════════════
-   INIT SWIPER
-   Continuous right→left motion (like MehtaIP ribbon)
-   + 3D coverflow: center card full, sides smaller & tilted
+   INIT SWIPER — clean card bar style
+   • One large center card
+   • Sides peek in, slightly dimmed & scaled down
+   • Continuous smooth auto-scroll (like MehtaIP ribbon)
+   • No 3D tilt — clean flat depth via CSS scale
 ══════════════════════════════════════ */
 const portfolioSwiper = new Swiper('.portfolioSwiper', {
 
-  effect:         'coverflow',
-  grabCursor:     true,
+  slidesPerView:  1.15,
   centeredSlides: true,
+  spaceBetween:   20,
   loop:           true,
-  slidesPerView:  1.3,
-  spaceBetween:   24,
+  grabCursor:     true,
 
-  /* Coverflow 3D depth */
-  coverflowEffect: {
-    rotate:      50,
-    stretch:     0,
-    depth:       260,
-    modifier:    1,
-    slideShadows: true,
-  },
-
-  /* Continuous auto-scroll — delay:0 = never stops */
-  speed:   3500,
+  /* Continuous scroll: delay 0 = never pauses between slides */
+  speed:   1200,
   autoplay: {
-    delay:                0,
+    delay:                2800,
     disableOnInteraction: false,
-    pauseOnMouseEnter:    true,  /* pause when mouse is over */
-    reverseDirection:     false, /* left → right matches MehtaIP */
+    pauseOnMouseEnter:    true,
   },
 
   navigation: {
@@ -220,14 +211,13 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
     dynamicBullets: true,
   },
 
-  keyboard:      { enabled: true },
-  freeMode:      false,
+  keyboard: { enabled: true },
 
   breakpoints: {
-    480:  { slidesPerView: 1.3, spaceBetween: 20 },
-    768:  { slidesPerView: 1.5, spaceBetween: 24 },
-    1024: { slidesPerView: 1.7, spaceBetween: 28 },
-    1280: { slidesPerView: 1.9, spaceBetween: 30 },
+    480:  { slidesPerView: 1.2,  spaceBetween: 18 },
+    768:  { slidesPerView: 1.35, spaceBetween: 22 },
+    1024: { slidesPerView: 1.5,  spaceBetween: 26 },
+    1280: { slidesPerView: 1.6,  spaceBetween: 28 },
   },
 });
 
