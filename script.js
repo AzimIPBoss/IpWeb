@@ -178,9 +178,9 @@ function buildSlides() {
 buildSlides();
 
 /* ══════════════════════════════════════
-   INIT SWIPER — 3D Coverflow
-   Center card: large & bright
-   Side cards: smaller, tilted, dimmed
+   INIT SWIPER
+   Continuous right→left motion (like MehtaIP ribbon)
+   + 3D coverflow: center card full, sides smaller & tilted
 ══════════════════════════════════════ */
 const portfolioSwiper = new Swiper('.portfolioSwiper', {
 
@@ -191,18 +191,22 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
   slidesPerView:  1.3,
   spaceBetween:   24,
 
+  /* Coverflow 3D depth */
   coverflowEffect: {
-    rotate:       45,
-    stretch:      0,
-    depth:        240,
-    modifier:     1,
-    slideShadows:  true,
+    rotate:      50,
+    stretch:     0,
+    depth:       260,
+    modifier:    1,
+    slideShadows: true,
   },
 
+  /* Continuous auto-scroll — delay:0 = never stops */
+  speed:   3500,
   autoplay: {
-    delay:                4000,
+    delay:                0,
     disableOnInteraction: false,
-    pauseOnMouseEnter:    true,
+    pauseOnMouseEnter:    true,  /* pause when mouse is over */
+    reverseDirection:     false, /* left → right matches MehtaIP */
   },
 
   navigation: {
@@ -216,13 +220,14 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
     dynamicBullets: true,
   },
 
-  keyboard: { enabled: true },
+  keyboard:      { enabled: true },
+  freeMode:      false,
 
   breakpoints: {
-    480:  { slidesPerView: 1.4, spaceBetween: 22 },
-    768:  { slidesPerView: 1.5, spaceBetween: 26 },
-    1024: { slidesPerView: 1.6, spaceBetween: 28 },
-    1280: { slidesPerView: 1.7, spaceBetween: 30 },
+    480:  { slidesPerView: 1.3, spaceBetween: 20 },
+    768:  { slidesPerView: 1.5, spaceBetween: 24 },
+    1024: { slidesPerView: 1.7, spaceBetween: 28 },
+    1280: { slidesPerView: 1.9, spaceBetween: 30 },
   },
 });
 
