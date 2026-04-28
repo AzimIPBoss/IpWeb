@@ -223,60 +223,138 @@ ul{list-style:none}
 .btn-outline:hover{background:var(--navy);color:#fff}
 
 /* ═══════════════════════════════════
-   PORTFOLIO RIBBON (Interactive)
+   PORTFOLIO SWIPER SLIDER
 ═══════════════════════════════════ */
-.ribbon-wrap{
-  position:relative;display:flex;align-items:center;gap:12px;
-  margin-bottom:18px;
+.portfolio-section{ padding-bottom:60px }
+
+.portfolioSwiper{
+  width:100%;
+  padding:20px 10px 60px !important;
+  overflow:visible !important;
 }
-.ribbon-viewport{
-  flex:1;overflow:hidden;
-  border-radius:var(--radius);
+
+/* Each slide card */
+.swiper-slide.port-slide{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  border:1px solid var(--border);
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  transition:transform .35s ease, box-shadow .35s ease;
+  user-select:none;
 }
-.ribbon-track{
-  display:flex;gap:18px;
-  transition:transform .4s cubic-bezier(.4,0,.2,1);
-  will-change:transform;
+.swiper-slide.port-slide:hover{
+  transform:translateY(-6px);
+  box-shadow:0 16px 40px rgba(12,36,97,.15);
 }
-.ribbon-card{
-  flex:0 0 calc(33.333% - 12px);
-  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-  overflow:hidden;cursor:pointer;transition:transform .22s,box-shadow .22s,border-color .22s;
+
+/* Make active slide pop */
+.swiper-slide-active.port-slide{
+  box-shadow:0 20px 50px rgba(12,36,97,.18) !important;
 }
-.ribbon-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:#c7d2fe}
-.rc-img{height:160px;overflow:hidden}
-.rc-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.ribbon-card:hover .rc-img img{transform:scale(1.07)}
-.rc-body{padding:16px}
-.rc-cat{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:9px}
+
+.port-slide-img{
+  position:relative;
+  height:200px;
+  overflow:hidden;
+}
+.port-slide-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .5s ease;
+}
+.port-slide:hover .port-slide-img img{ transform:scale(1.08) }
+
+/* Gradient overlay on image */
+.port-slide-img::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, transparent 50%, rgba(12,36,97,.7));
+}
+
+/* Category badge over image */
+.port-slide-badge{
+  position:absolute;top:14px;left:14px;z-index:2;
+  font-size:10px;font-weight:800;padding:4px 12px;
+  border-radius:20px;text-transform:uppercase;letter-spacing:.5px;
+}
+
+/* "View Case" overlay text on image */
+.port-slide-view{
+  position:absolute;bottom:12px;right:14px;z-index:2;
+  font-size:12px;font-weight:700;color:#fff;
+  display:flex;align-items:center;gap:5px;
+  opacity:0;transform:translateX(6px);
+  transition:all .25s;
+}
+.port-slide:hover .port-slide-view{opacity:1;transform:translateX(0)}
+
+.port-slide-body{ padding:18px 20px 20px }
+
+.port-slide-body h4{
+  font-family:'Source Serif 4',serif;
+  font-size:16px;font-weight:700;color:var(--navy);
+  line-height:1.4;margin-bottom:9px;
+}
+.port-slide-body p{
+  font-size:13px;color:var(--muted);
+  line-height:1.65;margin-bottom:14px;
+}
+.port-slide-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid #f0f4f8;padding-top:12px;
+}
+.port-slide-outcome{
+  font-size:11.5px;font-weight:600;color:#059669;
+  display:flex;align-items:center;gap:5px;
+}
+.port-slide-outcome i{ font-size:10px }
+.port-slide-arrow{
+  width:32px;height:32px;border-radius:50%;
+  background:#eef2ff;display:flex;align-items:center;justify-content:center;
+  color:var(--navy);font-size:13px;
+  transition:all .2s;
+}
+.port-slide:hover .port-slide-arrow{background:var(--navy);color:#fff}
+
+/* Swiper nav arrows */
+.portfolio-prev,.portfolio-next{
+  width:44px !important;height:44px !important;
+  background:#fff !important;border-radius:50% !important;
+  border:2px solid var(--border) !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.1) !important;
+  color:var(--navy) !important;
+  transition:all .2s !important;
+  top:40% !important;
+}
+.portfolio-prev:hover,.portfolio-next:hover{
+  background:var(--navy) !important;
+  color:#fff !important;
+  border-color:var(--navy) !important;
+}
+.portfolio-prev::after,.portfolio-next::after{
+  font-size:14px !important;font-weight:900 !important;
+}
+
+/* Swiper pagination dots */
+.portfolio-pagination .swiper-pagination-bullet{
+  width:8px;height:8px;
+  background:#d1d5db;opacity:1;
+  transition:all .25s;
+}
+.portfolio-pagination .swiper-pagination-bullet-active{
+  background:var(--navy);
+  width:24px;border-radius:4px;
+}
+
+.portfolio-cta{ text-align:center;margin-top:8px }
+
+/* Category badge colors */
 .cat-trademark{background:#dbeafe;color:#1e40af}
 .cat-patent{background:#d1fae5;color:#065f46}
 .cat-design{background:#ede9fe;color:#4c1d95}
 .cat-portfolio{background:#fef3c7;color:#78350f}
-.rc-body h4{font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.4}
-.rc-body p{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:12px}
-.rc-link{font-size:12.5px;font-weight:700;color:var(--blue);transition:color .15s}
-.ribbon-card:hover .rc-link{color:var(--navy)}
-
-/* Arrow buttons */
-.ribbon-arrow{
-  width:42px;height:42px;border-radius:50%;border:2px solid var(--border);
-  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  color:var(--navy);font-size:15px;flex-shrink:0;
-  transition:all .18s;box-shadow:var(--shadow);
-}
-.ribbon-arrow:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
-
-/* Dots */
-.ribbon-dots{display:flex;justify-content:center;gap:7px;margin-bottom:20px}
-.ribbon-dot{
-  width:8px;height:8px;border-radius:50%;background:#d1d5db;
-  cursor:pointer;transition:all .2s;border:none;
-}
-.ribbon-dot.active{background:var(--navy);width:22px;border-radius:4px}
-
-/* CTA below ribbon */
-.ribbon-cta{text-align:center;margin-top:4px}
 
 /* Testimonials */
 .test-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}

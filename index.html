@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
 
@@ -196,105 +198,27 @@
         </div>
       </div>
 
-      <!-- ══════════ PORTFOLIO RIBBON (Interactive) ══════════ -->
-      <div class="section-block">
+      <!-- ══════════ PORTFOLIO SLIDER (Swiper Coverflow) ══════════ -->
+      <div class="section-block portfolio-section">
         <div class="section-label">Our Portfolio</div>
         <h2 class="section-title">Selected Case Studies &amp; Achievements</h2>
-        <p class="section-desc">Click any item to view full case details.</p>
+        <p class="section-desc">Click any card to view full case details. Drag or use arrows to browse.</p>
 
-        <div class="ribbon-wrap">
-          <button class="ribbon-arrow ribbon-prev" onclick="ribbonScroll(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-          <div class="ribbon-viewport" id="ribbonViewport">
-            <div class="ribbon-track" id="ribbonTrack">
-
-              <div class="ribbon-card" onclick="openPortfolio(0)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80" alt="Fashion Brand"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-trademark">Trademark</span>
-                  <h4>Fashion Brand Protection</h4>
-                  <p>International trademark defence across Bangladesh, India &amp; UAE.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(1)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&q=80" alt="Pharma Patent"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-patent">Patent</span>
-                  <h4>Pharmaceutical Innovation Patent</h4>
-                  <p>Secured patent protection for a novel drug formulation in Bangladesh.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(2)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&q=80" alt="Product Design"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-design">Design</span>
-                  <h4>Consumer Product Design Registration</h4>
-                  <p>Registered design protection for a leading home appliance brand.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(3)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=400&q=80" alt="Madrid Protocol"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-trademark">Trademark</span>
-                  <h4>Madrid Protocol — 12 Countries</h4>
-                  <p>Single filing securing trademark protection across 12 territories via WIPO.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(4)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80" alt="Infringement"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-portfolio">Litigation</span>
-                  <h4>Trademark Infringement Victory</h4>
-                  <p>Obtained injunction and damages against a counterfeit brand within 6 months.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(5)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" alt="Software Patent"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-patent">Patent</span>
-                  <h4>Software &amp; Tech Patent Portfolio</h4>
-                  <p>Built a comprehensive patent portfolio for a Bangladeshi fintech startup.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(6)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=400&q=80" alt="Brand Audit"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-trademark">Trademark</span>
-                  <h4>Complete Brand IP Audit</h4>
-                  <p>Full IP audit and restructuring for a garments export company.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-              <div class="ribbon-card" onclick="openPortfolio(7)">
-                <div class="rc-img"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80" alt="Copyright"/></div>
-                <div class="rc-body">
-                  <span class="rc-cat cat-design">Copyright</span>
-                  <h4>Software Copyright Registration</h4>
-                  <p>Copyright protection for a cloud-based ERP software solution.</p>
-                  <span class="rc-link">View Case →</span>
-                </div>
-              </div>
-
-            </div><!-- /ribbon-track -->
-          </div><!-- /ribbon-viewport -->
-          <button class="ribbon-arrow ribbon-next" onclick="ribbonScroll(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="swiper portfolioSwiper">
+          <div class="swiper-wrapper" id="swiperSlides">
+            <!-- Slides injected by JS from portfolioData array -->
+          </div>
+          <!-- Navigation -->
+          <div class="swiper-button-prev portfolio-prev"></div>
+          <div class="swiper-button-next portfolio-next"></div>
+          <!-- Pagination -->
+          <div class="swiper-pagination portfolio-pagination"></div>
         </div>
 
-        <div class="ribbon-dots" id="ribbonDots"></div>
-        <div class="ribbon-cta">
-          <a href="#" onclick="openAllPortfolios();return false;" class="btn-primary">View All Case Studies</a>
+        <div class="portfolio-cta">
+          <a href="#" onclick="openAllPortfolios();return false;" class="btn-primary">
+            <i class="fa-solid fa-folder-open"></i> View All Case Studies
+          </a>
         </div>
       </div>
 
@@ -497,6 +421,8 @@
 <!-- TOAST -->
 <div id="toast" class="toast hidden"><i class="fa-solid fa-circle-check"></i><span id="toastMsg"></span></div>
 
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
