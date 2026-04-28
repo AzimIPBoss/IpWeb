@@ -181,59 +181,63 @@ buildSlides();
    INIT SWIPER
 ══════════════════════════════════════ */
 const portfolioSwiper = new Swiper('.portfolioSwiper', {
-  /* Layout */
-  slidesPerView:  1.15,
+
+  /* 'auto' reads slide width from CSS (.port-slide { width:58% }) */
+  slidesPerView:  'auto',
   centeredSlides: true,
-  spaceBetween:   20,
+  spaceBetween:   28,
   loop:           true,
 
-  /* Coverflow 3-D effect */
+  /* ── 3-D Coverflow: one large center, sides tilt back ── */
   effect: 'coverflow',
   coverflowEffect: {
-    rotate:       30,
-    stretch:      0,
-    depth:        120,
-    modifier:     1,
-    slideShadows:  true,
+    rotate:      42,    /* tilt angle of side slides */
+    stretch:     0,     /* extra gap stretch */
+    depth:       220,   /* how far back side slides recede (Z-axis) */
+    modifier:    1.2,   /* multiplier for effect intensity */
+    slideShadows: true, /* built-in drop shadow on tilted slides */
   },
 
-  /* Autoplay — pauses on hover automatically */
+  /* Autoplay — pauses automatically on hover */
   autoplay: {
-    delay:                3800,
+    delay:                4000,
     disableOnInteraction: false,
     pauseOnMouseEnter:    true,
   },
 
-  /* Touch & grab */
-  grabCursor:   true,
-  touchRatio:   1,
-  touchAngle:   45,
+  /* Grab & touch */
+  grabCursor:    true,
+  touchRatio:    1,
   simulateTouch: true,
 
-  /* Navigation arrows */
+  /* Arrows */
   navigation: {
     nextEl: '.portfolio-next',
     prevEl: '.portfolio-prev',
   },
 
-  /* Dot pagination */
+  /* Dots */
   pagination: {
-    el:        '.portfolio-pagination',
-    clickable: true,
+    el:             '.portfolio-pagination',
+    clickable:      true,
     dynamicBullets: true,
   },
 
-  /* Responsive breakpoints */
-  breakpoints: {
-    540:  { slidesPerView: 1.6, spaceBetween: 22 },
-    768:  { slidesPerView: 2.1, spaceBetween: 24 },
-    1024: { slidesPerView: 2.6, spaceBetween: 28 },
-    1280: { slidesPerView: 3,   spaceBetween: 28 },
-  },
-
-  /* Smooth keyboard control */
+  /* Keyboard */
   keyboard: { enabled: true },
-  a11y: true,
+
+  /* Responsive: narrow the center slide on small screens */
+  on: {
+    resize() {
+      const w = window.innerWidth;
+      const slideWidth = w < 480  ? '88%'
+                       : w < 768  ? '75%'
+                       : w < 1024 ? '65%'
+                       :            '58%';
+      document.querySelectorAll('.port-slide').forEach(s => s.style.width = slideWidth);
+      this.update();
+    }
+  },
 });
 
 /* ══════════════════════════════════════

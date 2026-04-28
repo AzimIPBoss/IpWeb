@@ -225,33 +225,46 @@ ul{list-style:none}
 /* ═══════════════════════════════════
    PORTFOLIO SWIPER SLIDER
 ═══════════════════════════════════ */
-.portfolio-section{ padding-bottom:60px }
+.portfolio-section{ padding-bottom: 60px }
 
-.portfolioSwiper{
-  width:100%;
-  padding:20px 10px 60px !important;
-  overflow:visible !important;
+.portfolioSwiper {
+  width: 100%;
+  padding: 40px 0 70px !important;
+  overflow: visible !important;
 }
 
-/* Each slide card */
-.swiper-slide.port-slide{
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
-  cursor:pointer;
-  border:1px solid var(--border);
-  box-shadow:0 4px 20px rgba(0,0,0,.08);
-  transition:transform .35s ease, box-shadow .35s ease;
-  user-select:none;
-}
-.swiper-slide.port-slide:hover{
-  transform:translateY(-6px);
-  box-shadow:0 16px 40px rgba(12,36,97,.15);
+/* slides use 'auto' width — controlled by CSS */
+.swiper-slide.port-slide {
+  width: 58%;                          /* center slide width */
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 24px rgba(0,0,0,.10);
+  transition: opacity .4s ease, filter .4s ease, box-shadow .35s ease;
+  user-select: none;
+  /* dim & desaturate side slides */
+  opacity: 0.52;
+  filter: brightness(0.82) saturate(0.7);
 }
 
-/* Make active slide pop */
-.swiper-slide-active.port-slide{
-  box-shadow:0 20px 50px rgba(12,36,97,.18) !important;
+/* Active center slide — full brightness, pops forward */
+.swiper-slide-active.port-slide {
+  opacity: 1 !important;
+  filter: brightness(1) saturate(1) !important;
+  box-shadow: 0 24px 60px rgba(12,36,97,.22) !important;
+}
+
+/* Immediate neighbours — slightly visible */
+.swiper-slide-prev.port-slide,
+.swiper-slide-next.port-slide {
+  opacity: 0.72;
+  filter: brightness(0.9) saturate(0.85);
+}
+
+.swiper-slide.port-slide:hover {
+  box-shadow: 0 20px 50px rgba(12,36,97,.18);
 }
 
 .port-slide-img{
@@ -320,21 +333,24 @@ ul{list-style:none}
 
 /* Swiper nav arrows */
 .portfolio-prev,.portfolio-next{
-  width:44px !important;height:44px !important;
+  width:50px !important;height:50px !important;
   background:#fff !important;border-radius:50% !important;
   border:2px solid var(--border) !important;
-  box-shadow:0 4px 14px rgba(0,0,0,.1) !important;
+  box-shadow:0 6px 20px rgba(0,0,0,.14) !important;
   color:var(--navy) !important;
-  transition:all .2s !important;
-  top:40% !important;
+  transition:all .22s !important;
+  top:38% !important;
 }
+.portfolio-prev{ left:4px !important }
+.portfolio-next{ right:4px !important }
 .portfolio-prev:hover,.portfolio-next:hover{
   background:var(--navy) !important;
   color:#fff !important;
   border-color:var(--navy) !important;
+  box-shadow:0 8px 28px rgba(12,36,97,.28) !important;
 }
 .portfolio-prev::after,.portfolio-next::after{
-  font-size:14px !important;font-weight:900 !important;
+  font-size:16px !important;font-weight:900 !important;
 }
 
 /* Swiper pagination dots */
