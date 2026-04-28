@@ -227,45 +227,45 @@ ul{list-style:none}
 ═══════════════════════════════════ */
 /* ── PORTFOLIO SECTION ── */
 .portfolio-section {
-  background: #0c2461;
-  padding: 48px 0 44px;
+  background: #f0f2f5;
+  padding: 48px 40px 40px;
 }
 
 .portfolioSwiper {
   width: 100%;
-  padding: 16px 0 64px !important;
+  padding: 20px 0 60px !important;
 }
 
-/* Every slide — side cards scale down */
+/* Every slide */
 .swiper-slide.port-slide {
   background: #fff;
   border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,.1);
+  border: 1px solid var(--border);
   user-select: none;
-  transform: scale(0.88);
-  opacity: 0.55;
-  transition: transform .5s ease, opacity .5s ease, box-shadow .4s ease;
-  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  opacity: 0.5;
+  filter: brightness(0.78);
+  transition: opacity .4s, filter .4s, box-shadow .3s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.07);
 }
 
-/* Active center card — full size, full brightness */
+/* Active center slide */
 .swiper-slide-active.port-slide {
-  transform: scale(1) !important;
   opacity: 1 !important;
-  box-shadow: 0 24px 64px rgba(0,0,0,.4) !important;
+  filter: brightness(1) !important;
+  box-shadow: 0 18px 50px rgba(12,36,97,.18) !important;
 }
 
-/* Immediate neighbours — slightly scaled */
+/* Direct neighbours */
 .swiper-slide-prev.port-slide,
 .swiper-slide-next.port-slide {
-  transform: scale(0.93);
   opacity: 0.72;
+  filter: brightness(0.88);
 }
 
 .swiper-slide.port-slide:hover {
-  box-shadow: 0 20px 56px rgba(0,0,0,.35) !important;
+  box-shadow: 0 14px 40px rgba(12,36,97,.14) !important;
 }
 
 .port-slide-img{
@@ -332,34 +332,35 @@ ul{list-style:none}
 }
 .port-slide:hover .port-slide-arrow{background:var(--navy);color:#fff}
 
-/* Swiper nav arrows — on dark navy background */
+/* Swiper nav arrows */
 .portfolio-prev,.portfolio-next{
   width:46px !important;height:46px !important;
-  background:rgba(255,255,255,.15) !important;border-radius:50% !important;
-  border:2px solid rgba(255,255,255,.3) !important;
-  box-shadow:0 4px 16px rgba(0,0,0,.3) !important;
-  color:#fff !important;
+  background:#fff !important;border-radius:50% !important;
+  border:2px solid var(--border) !important;
+  box-shadow:0 4px 16px rgba(0,0,0,.10) !important;
+  color:var(--navy) !important;
   transition:all .22s !important;
   top:40% !important;
 }
-.portfolio-prev{ left:12px !important }
-.portfolio-next{ right:12px !important }
+.portfolio-prev{ left:6px !important }
+.portfolio-next{ right:6px !important }
 .portfolio-prev:hover,.portfolio-next:hover{
-  background:rgba(255,255,255,.3) !important;
-  border-color:rgba(255,255,255,.6) !important;
+  background:var(--navy) !important;
+  color:#fff !important;
+  border-color:var(--navy) !important;
 }
 .portfolio-prev::after,.portfolio-next::after{
   font-size:14px !important;font-weight:900 !important;
 }
 
-/* Swiper pagination dots — white on navy */
+/* Swiper pagination dots */
 .portfolio-pagination .swiper-pagination-bullet{
   width:8px;height:8px;
-  background:rgba(255,255,255,.4);opacity:1;
+  background:#d1d5db;opacity:1;
   transition:all .25s;
 }
 .portfolio-pagination .swiper-pagination-bullet-active{
-  background:#fff;
+  background:var(--navy);
   width:24px;border-radius:4px;
 }
 

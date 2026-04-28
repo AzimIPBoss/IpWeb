@@ -178,24 +178,29 @@ function buildSlides() {
 buildSlides();
 
 /* ══════════════════════════════════════
-   INIT SWIPER — clean card bar style
-   • One large center card
-   • Sides peek in, slightly dimmed & scaled down
-   • Continuous smooth auto-scroll (like MehtaIP ribbon)
-   • No 3D tilt — clean flat depth via CSS scale
+   INIT SWIPER — 3D Coverflow
+   Continuous motion + center card full, sides smaller & tilted
 ══════════════════════════════════════ */
 const portfolioSwiper = new Swiper('.portfolioSwiper', {
 
-  slidesPerView:  1.15,
-  centeredSlides: true,
-  spaceBetween:   20,
-  loop:           true,
+  effect:         'coverflow',
   grabCursor:     true,
+  centeredSlides: true,
+  loop:           true,
+  slidesPerView:  1.3,
+  spaceBetween:   24,
+  speed:          3500,
 
-  /* Continuous scroll: delay 0 = never pauses between slides */
-  speed:   1200,
+  coverflowEffect: {
+    rotate:       50,
+    stretch:      0,
+    depth:        260,
+    modifier:     1,
+    slideShadows:  true,
+  },
+
   autoplay: {
-    delay:                2800,
+    delay:                0,
     disableOnInteraction: false,
     pauseOnMouseEnter:    true,
   },
@@ -214,10 +219,10 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
   keyboard: { enabled: true },
 
   breakpoints: {
-    480:  { slidesPerView: 1.2,  spaceBetween: 18 },
-    768:  { slidesPerView: 1.35, spaceBetween: 22 },
-    1024: { slidesPerView: 1.5,  spaceBetween: 26 },
-    1280: { slidesPerView: 1.6,  spaceBetween: 28 },
+    480:  { slidesPerView: 1.3, spaceBetween: 20 },
+    768:  { slidesPerView: 1.5, spaceBetween: 24 },
+    1024: { slidesPerView: 1.7, spaceBetween: 28 },
+    1280: { slidesPerView: 1.9, spaceBetween: 30 },
   },
 });
 
