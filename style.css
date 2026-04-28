@@ -225,46 +225,51 @@ ul{list-style:none}
 /* ═══════════════════════════════════
    PORTFOLIO SWIPER SLIDER
 ═══════════════════════════════════ */
-.portfolio-section{ padding-bottom: 60px }
+.portfolio-section { padding-bottom: 60px }
+
+/* Outer wrapper lets the coverflow side cards bleed out visually */
+.swiper-outer {
+  overflow: hidden;
+  padding: 30px 0 20px;
+  margin: 0 -40px;     /* extend to section edges */
+}
 
 .portfolioSwiper {
   width: 100%;
-  padding: 40px 0 70px !important;
-  overflow: visible !important;
+  padding-bottom: 56px !important;
 }
 
-/* slides use 'auto' width — controlled by CSS */
+/* ── Every slide ── */
 .swiper-slide.port-slide {
-  width: 58%;                          /* center slide width */
   background: #fff;
   border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
   border: 1px solid var(--border);
-  box-shadow: 0 6px 24px rgba(0,0,0,.10);
-  transition: opacity .4s ease, filter .4s ease, box-shadow .35s ease;
   user-select: none;
-  /* dim & desaturate side slides */
-  opacity: 0.52;
-  filter: brightness(0.82) saturate(0.7);
+  /* Side slides: dim + desaturate */
+  opacity: 0.55;
+  filter: brightness(0.80) saturate(0.65);
+  transition: opacity .45s ease, filter .45s ease, box-shadow .35s ease;
+  box-shadow: 0 4px 18px rgba(0,0,0,.08);
 }
 
-/* Active center slide — full brightness, pops forward */
+/* ── Center (active) slide: full brightness, pops forward ── */
 .swiper-slide-active.port-slide {
   opacity: 1 !important;
   filter: brightness(1) saturate(1) !important;
-  box-shadow: 0 24px 60px rgba(12,36,97,.22) !important;
+  box-shadow: 0 20px 56px rgba(12,36,97,.20) !important;
 }
 
-/* Immediate neighbours — slightly visible */
+/* ── Immediate neighbours: slightly visible ── */
 .swiper-slide-prev.port-slide,
 .swiper-slide-next.port-slide {
-  opacity: 0.72;
-  filter: brightness(0.9) saturate(0.85);
+  opacity: 0.70;
+  filter: brightness(0.88) saturate(0.80);
 }
 
 .swiper-slide.port-slide:hover {
-  box-shadow: 0 20px 50px rgba(12,36,97,.18);
+  box-shadow: 0 16px 44px rgba(12,36,97,.16) !important;
 }
 
 .port-slide-img{

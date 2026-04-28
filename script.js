@@ -178,65 +178,51 @@ function buildSlides() {
 buildSlides();
 
 /* ══════════════════════════════════════
-   INIT SWIPER
+   INIT SWIPER — 3D Coverflow
+   Center card: large & bright
+   Side cards: smaller, tilted, dimmed
 ══════════════════════════════════════ */
 const portfolioSwiper = new Swiper('.portfolioSwiper', {
 
-  /* 'auto' reads slide width from CSS (.port-slide { width:58% }) */
-  slidesPerView:  'auto',
+  effect:         'coverflow',
+  grabCursor:     true,
   centeredSlides: true,
-  spaceBetween:   28,
   loop:           true,
+  slidesPerView:  1.3,
+  spaceBetween:   24,
 
-  /* ── 3-D Coverflow: one large center, sides tilt back ── */
-  effect: 'coverflow',
   coverflowEffect: {
-    rotate:      42,    /* tilt angle of side slides */
-    stretch:     0,     /* extra gap stretch */
-    depth:       220,   /* how far back side slides recede (Z-axis) */
-    modifier:    1.2,   /* multiplier for effect intensity */
-    slideShadows: true, /* built-in drop shadow on tilted slides */
+    rotate:       45,
+    stretch:      0,
+    depth:        240,
+    modifier:     1,
+    slideShadows:  true,
   },
 
-  /* Autoplay — pauses automatically on hover */
   autoplay: {
     delay:                4000,
     disableOnInteraction: false,
     pauseOnMouseEnter:    true,
   },
 
-  /* Grab & touch */
-  grabCursor:    true,
-  touchRatio:    1,
-  simulateTouch: true,
-
-  /* Arrows */
   navigation: {
     nextEl: '.portfolio-next',
     prevEl: '.portfolio-prev',
   },
 
-  /* Dots */
   pagination: {
     el:             '.portfolio-pagination',
     clickable:      true,
     dynamicBullets: true,
   },
 
-  /* Keyboard */
   keyboard: { enabled: true },
 
-  /* Responsive: narrow the center slide on small screens */
-  on: {
-    resize() {
-      const w = window.innerWidth;
-      const slideWidth = w < 480  ? '88%'
-                       : w < 768  ? '75%'
-                       : w < 1024 ? '65%'
-                       :            '58%';
-      document.querySelectorAll('.port-slide').forEach(s => s.style.width = slideWidth);
-      this.update();
-    }
+  breakpoints: {
+    480:  { slidesPerView: 1.4, spaceBetween: 22 },
+    768:  { slidesPerView: 1.5, spaceBetween: 26 },
+    1024: { slidesPerView: 1.6, spaceBetween: 28 },
+    1280: { slidesPerView: 1.7, spaceBetween: 30 },
   },
 });
 
