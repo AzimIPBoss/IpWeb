@@ -19,14 +19,20 @@
   <div class="lsb-head">
     <!-- Logo: icon + name only, no redundant URL -->
     <a href="#" onclick="switchSection('home');return false;" class="lsb-logo">
-      <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-        <circle cx="20" cy="20" r="18.5" stroke="#0c2461" stroke-width="2.2"/>
-        <path d="M20 10c-5.52 0-10 4.48-10 10 0 3.54 1.84 6.65 4.62 8.46V30.5c0 .55.45 1 1 1h8.76c.55 0 1-.45 1-1v-2.04C28.16 26.65 30 23.54 30 20c0-5.52-4.48-10-10-10z" stroke="#0c2461" stroke-width="1.8" fill="rgba(12,36,97,0.07)"/>
-        <line x1="15.5" y1="32.5" x2="24.5" y2="32.5" stroke="#0c2461" stroke-width="1.8" stroke-linecap="round"/>
-        <line x1="17" y1="34.5" x2="23" y2="34.5" stroke="#0c2461" stroke-width="1.8" stroke-linecap="round"/>
-        <text x="20" y="22" text-anchor="middle" font-size="7" font-weight="700" fill="#0c2461" font-family="Inter,sans-serif">IP</text>
+      <!-- Lightbulb logo matching reference image -->
+      <svg width="34" height="44" viewBox="0 0 34 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bulb body -->
+        <path d="M17 2C9.27 2 3 8.27 3 16C3 21.12 5.72 25.6 9.83 28.22L9.83 34C9.83 34.55 10.28 35 10.83 35L23.17 35C23.72 35 24.17 34.55 24.17 34L24.17 28.22C28.28 25.6 31 21.12 31 16C31 8.27 24.73 2 17 2Z" stroke="#0c2461" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <!-- Base line 1 -->
+        <line x1="10" y1="37.5" x2="24" y2="37.5" stroke="#0c2461" stroke-width="2" stroke-linecap="round"/>
+        <!-- Base line 2 -->
+        <line x1="12.5" y1="41" x2="21.5" y2="41" stroke="#0c2461" stroke-width="2" stroke-linecap="round"/>
+        <!-- Bottom knob -->
+        <circle cx="17" cy="43.5" r="1.5" fill="#0c2461"/>
+        <!-- IP text inside bulb -->
+        <text x="17" y="20" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0c2461" font-family="Inter,sans-serif" letter-spacing="-0.5">IP</text>
       </svg>
-      <span class="lsb-name">IPServiceBD</span>
+      <span class="lsb-name">ServiceBD</span>
     </a>
     <button class="lsb-close-btn" onclick="closeSidebar()">
       <i class="fa-solid fa-chevron-left fa-xs"></i>
@@ -115,42 +121,17 @@
     <!-- ══════════════ HOME ══════════════ -->
     <section id="section-home" class="pg active">
 
-      <!-- HERO BANNER -->
-      <div class="hero">
-        <div class="hero-content">
-          <span class="hero-eyebrow"><i class="fa-solid fa-star"></i> Bangladesh's Trusted IP Law Firm Since 2007</span>
-          <h1 class="hero-title">Protecting Your<br/><span>Intellectual Property</span><br/>in Bangladesh &amp; Beyond</h1>
-          <p class="hero-desc">Expert trademark, patent, design &amp; copyright registration. Full-service IP law firm dedicated to safeguarding your ideas, brands, and innovations.</p>
-          <div class="hero-btns">
-            <a href="#" onclick="switchSection('services');return false;" class="btn-primary">Our Services</a>
-            <a href="#" onclick="switchSection('contact');return false;" class="btn-secondary">Free Consultation</a>
-          </div>
-          <div class="hero-badges">
-            <div class="hb"><strong>500+</strong><span>Cases Won</span></div>
-            <div class="hb-sep"></div>
-            <div class="hb"><strong>18+</strong><span>Years Experience</span></div>
-            <div class="hb-sep"></div>
-            <div class="hb"><strong>200+</strong><span>Clients</span></div>
-            <div class="hb-sep"></div>
-            <div class="hb"><strong>98%</strong><span>Success Rate</span></div>
-          </div>
-        </div>
-        <div class="hero-img">
-          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=700&q=85" alt="IP Law"/>
-        </div>
-      </div>
-
-      <!-- ABOUT STRIP -->
+      <!-- ABOUT STRIP — text LEFT, image RIGHT -->
       <div class="about-strip">
-        <div class="about-strip-img">
-          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80" alt="IPServiceBD Office"/>
-        </div>
         <div class="about-strip-text">
           <span class="section-label">About IPServiceBD</span>
           <h2>Bangladesh's Trusted Partner for Intellectual Property</h2>
           <p>Founded in 2007, IPServiceBD is a specialized IP law firm built on the principle of providing professional, personalized, and prompt IP services to businesses and individuals across Bangladesh and internationally.</p>
           <p>Our team of seasoned IP attorneys has successfully handled over 500 trademark, patent, design, and copyright cases with a 98% success rate — protecting brands and innovations from startups to multinational corporations.</p>
           <a href="#" onclick="switchSection('about');return false;" class="btn-outline">Read More About Us</a>
+        </div>
+        <div class="about-strip-img">
+          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80" alt="IPServiceBD Office"/>
         </div>
       </div>
 

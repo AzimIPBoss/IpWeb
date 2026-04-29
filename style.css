@@ -36,15 +36,15 @@ ul{list-style:none}
 }
 .lsb.lsb-hidden{transform:translateX(calc(-1 * var(--sb)))}
 
-/* Logo area — FIXED: just icon + name, no redundant URL */
+/* Logo area */
 .lsb-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 14px 13px;border-bottom:1px solid var(--border);flex-shrink:0;
 }
 .lsb-logo{display:flex;align-items:center;gap:10px}
 .lsb-name{
-  font-size:16px;font-weight:800;color:var(--navy);
-  letter-spacing:-.4px;line-height:1;
+  font-size:18px;font-weight:800;color:var(--navy);
+  letter-spacing:-.5px;line-height:1;
 }
 .lsb-close-btn{
   width:28px;height:28px;border-radius:6px;border:1px solid var(--border);
@@ -135,51 +135,13 @@ ul{list-style:none}
 .pg{display:none}
 .pg.active{display:block}
 
-/* ═══════════════════════════════════
-   HERO SECTION
-═══════════════════════════════════ */
-.hero{
-  display:grid;grid-template-columns:1fr 1fr;
-  min-height:480px;background:linear-gradient(135deg,var(--navy) 0%,#1e3a8a 100%);
-  overflow:hidden;
-}
-.hero-content{
-  padding:52px 44px;display:flex;flex-direction:column;justify-content:center;
-}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(255,255,255,.12);color:#bfdbfe;
-  font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;
-  margin-bottom:20px;width:fit-content;letter-spacing:.3px;
-}
-.hero-title{
-  font-family:'Source Serif 4',Georgia,serif;font-size:2.4rem;font-weight:700;
-  color:#fff;line-height:1.25;margin-bottom:16px;
-}
-.hero-title span{color:#60a5fa}
-.hero-desc{font-size:14.5px;color:#bfdbfe;line-height:1.75;margin-bottom:28px;max-width:460px}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+/* btn-primary / btn-secondary used in about strip */
 .btn-primary{
   display:inline-flex;align-items:center;gap:7px;
-  background:#fff;color:var(--navy);font-size:13.5px;font-weight:700;
+  background:var(--navy);color:#fff;font-size:13.5px;font-weight:700;
   padding:11px 24px;border-radius:7px;transition:all .18s;white-space:nowrap;
 }
-.btn-primary:hover{background:#dbeafe;transform:translateY(-1px)}
-.btn-secondary{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(255,255,255,.12);color:#fff;font-size:13.5px;font-weight:700;
-  padding:11px 24px;border-radius:7px;border:1.5px solid rgba(255,255,255,.35);
-  transition:all .18s;white-space:nowrap;
-}
-.btn-secondary:hover{background:rgba(255,255,255,.22)}
-.hero-badges{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.hb{text-align:center}
-.hb strong{display:block;font-size:1.5rem;font-weight:800;color:#fff;line-height:1.1}
-.hb span{font-size:10.5px;color:#93c5fd;font-weight:500}
-.hb-sep{width:1px;height:32px;background:rgba(255,255,255,.2)}
-.hero-img{overflow:hidden;position:relative}
-.hero-img img{width:100%;height:100%;object-fit:cover;opacity:.7}
-.hero-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--navy) 0%,transparent 40%);z-index:1}
+.btn-primary:hover{background:#1e40af;transform:translateY(-1px)}
 
 /* ═══════════════════════════════════
    SECTION BLOCKS
@@ -332,25 +294,28 @@ ul{list-style:none}
 }
 .port-slide:hover .port-slide-arrow{background:var(--navy);color:#fff}
 
-/* Swiper nav arrows */
+/* Swiper nav arrows — always on top, always clickable */
 .portfolio-prev,.portfolio-next{
-  width:46px !important;height:46px !important;
+  width:48px !important;height:48px !important;
   background:#fff !important;border-radius:50% !important;
-  border:2px solid var(--border) !important;
-  box-shadow:0 4px 16px rgba(0,0,0,.10) !important;
+  border:2px solid #dde1ea !important;
+  box-shadow:0 4px 18px rgba(0,0,0,.14) !important;
   color:var(--navy) !important;
   transition:all .22s !important;
-  top:40% !important;
+  top:42% !important;
+  z-index:10 !important;
 }
-.portfolio-prev{ left:6px !important }
-.portfolio-next{ right:6px !important }
+.portfolio-prev{ left:10px !important }
+.portfolio-next{ right:10px !important }
 .portfolio-prev:hover,.portfolio-next:hover{
   background:var(--navy) !important;
   color:#fff !important;
   border-color:var(--navy) !important;
+  box-shadow:0 6px 22px rgba(12,36,97,.25) !important;
+  transform:scale(1.08) !important;
 }
 .portfolio-prev::after,.portfolio-next::after{
-  font-size:14px !important;font-weight:900 !important;
+  font-size:15px !important;font-weight:900 !important;
 }
 
 /* Swiper pagination dots */

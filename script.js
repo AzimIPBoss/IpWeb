@@ -189,22 +189,26 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
   loop:           true,
   slidesPerView:  1.3,
   spaceBetween:   24,
-  speed:          3500,
+
+  /* Smooth, relaxed speed — not sudden */
+  speed: 900,
 
   coverflowEffect: {
-    rotate:       50,
+    rotate:       45,
     stretch:      0,
-    depth:        260,
+    depth:        220,
     modifier:     1,
     slideShadows:  true,
   },
 
+  /* Autoplay with proper delay so arrows work clearly */
   autoplay: {
-    delay:                0,
+    delay:                3500,
     disableOnInteraction: false,
     pauseOnMouseEnter:    true,
   },
 
+  /* Arrows — working navigation */
   navigation: {
     nextEl: '.portfolio-next',
     prevEl: '.portfolio-prev',
