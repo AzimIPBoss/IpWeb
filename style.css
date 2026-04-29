@@ -39,12 +39,16 @@ ul{list-style:none}
 /* Logo area */
 .lsb-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:16px 14px 13px;border-bottom:1px solid var(--border);flex-shrink:0;
+  padding:14px 14px 12px;border-bottom:1px solid var(--border);flex-shrink:0;
 }
-.lsb-logo{display:flex;align-items:center;gap:10px}
-.lsb-name{
-  font-size:18px;font-weight:800;color:var(--navy);
-  letter-spacing:-.5px;line-height:1;
+.lsb-logo{ display:flex; align-items:center; }
+.lsb-logo-img{
+  height:38px;        /* fits neatly in sidebar header */
+  width:auto;
+  display:block;
+  object-fit:contain;
+  /* Remove white background so it blends with sidebar */
+  mix-blend-mode:multiply;
 }
 .lsb-close-btn{
   width:28px;height:28px;border-radius:6px;border:1px solid var(--border);
