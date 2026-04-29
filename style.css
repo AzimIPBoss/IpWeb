@@ -187,6 +187,44 @@ ul{list-style:none}
 /* ═══════════════════════════════════
    PORTFOLIO SWIPER SLIDER
 ═══════════════════════════════════ */
+/* ── HOME TOP TABS ── */
+.home-tabs-wrap {
+  background: #fff;
+  border-bottom: 2px solid #e8edf2;
+  padding: 0 28px;
+  position: sticky;
+  top: 56px;          /* stick just below topbar */
+  z-index: 15;
+}
+.home-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.home-tabs::-webkit-scrollbar { display: none; }
+.htab {
+  flex-shrink: 0;
+  padding: 13px 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: color .18s, border-color .18s;
+  white-space: nowrap;
+}
+.htab:hover { color: var(--navy); }
+.htab.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+  font-weight: 700;
+}
+
 /* ── PORTFOLIO SECTION ── */
 .portfolio-section {
   background: #f0f2f5;
@@ -232,7 +270,7 @@ ul{list-style:none}
 
 .port-slide-img{
   position:relative;
-  height:200px;
+  height:155px;
   overflow:hidden;
 }
 .port-slide-img img{

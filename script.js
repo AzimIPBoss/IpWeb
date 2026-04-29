@@ -21,6 +21,30 @@ window.addEventListener('resize', () => {
 });
 
 /* ══════════════════════════════════════
+   HOME TABS
+══════════════════════════════════════ */
+document.querySelectorAll('.htab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.htab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+
+    /* Scroll to portfolio slider for category tabs */
+    if (['trademark','patent','design','portfolios','core-team'].includes(tab)) {
+      document.querySelector('.portfolio-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    /* Blogs tab → scroll to testimonials for now */
+    if (tab === 'blogs') {
+      document.querySelector('.section-gray')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    /* All → scroll to top of home */
+    if (tab === 'all') {
+      document.querySelector('.about-strip')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ══════════════════════════════════════
    SECTION SWITCHING
 ══════════════════════════════════════ */
 function switchSection(name) {
