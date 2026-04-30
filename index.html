@@ -69,7 +69,53 @@
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
+    <div class="tb-r">
+      <!-- Functional search -->
+      <div class="tb-search" id="searchWrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="searchInput" type="text" placeholder="Search services, cases…"
+               oninput="handleSearch(this.value)"
+               onkeydown="if(event.key==='Escape'){this.value='';handleSearch('');this.blur()}"/>
+        <button class="search-clear hidden" id="searchClear" onclick="clearSearch()">
+          <i class="fa-solid fa-xmark fa-xs"></i>
+        </button>
+      </div>
+
+      <!-- Functional notification bell -->
+      <div class="notif-wrap">
+        <button class="tb-bell" id="notifBtn" onclick="toggleNotif()" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="bell-dot" id="bellDot"></span>
+        </button>
+        <!-- Notification dropdown -->
+        <div class="notif-dropdown hidden" id="notifDropdown">
+          <div class="notif-header">
+            <span>Notifications</span>
+            <button onclick="markAllRead()">Mark all read</button>
+          </div>
+          <div class="notif-list">
+            <div class="notif-item unread">
+              <div class="notif-icon" style="background:#dbeafe;color:#1d4ed8"><i class="fa-solid fa-trademark"></i></div>
+              <div><p>New trademark filing guide published</p><small>Today</small></div>
+            </div>
+            <div class="notif-item unread">
+              <div class="notif-icon" style="background:#d1fae5;color:#065f46"><i class="fa-solid fa-flask"></i></div>
+              <div><p>PCT patent application update available</p><small>Yesterday</small></div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-icon" style="background:#ede9fe;color:#5b21b6"><i class="fa-solid fa-gavel"></i></div>
+              <div><p>New case study: Fashion brand protection</p><small>2 days ago</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
+
+  <!-- Search results overlay -->
+  <div class="search-overlay hidden" id="searchOverlay">
+    <div class="search-results" id="searchResults"></div>
+  </div>
 
   <main class="pg-wrap">
 

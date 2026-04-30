@@ -21,6 +21,102 @@ window.addEventListener('resize', () => {
 });
 
 /* ══════════════════════════════════════
+   FUNCTIONAL SEARCH
+══════════════════════════════════════ */
+const searchData = [
+  { title:'Trademark Registration', desc:'Register your brand under Bangladesh Trademarks Act 2009', icon:'fa-trademark', color:'#dbeafe', iconColor:'#1d4ed8', section:'services' },
+  { title:'Patent Registration', desc:'Protect your invention under the Patents & Designs Act 1911', icon:'fa-flask', color:'#d1fae5', iconColor:'#065f46', section:'services' },
+  { title:'Design Registration', desc:'Protect visual aspects of your products under design law', icon:'fa-pen-ruler', color:'#ede9fe', iconColor:'#5b21b6', section:'services' },
+  { title:'Copyright Registration', desc:'Register creative works under Bangladesh Copyright Act 2000', icon:'fa-copyright', color:'#fef3c7', iconColor:'#92400e', section:'services' },
+  { title:'International IP — Madrid Protocol', desc:'Protect your trademark in 130+ countries via WIPO', icon:'fa-globe', color:'#ffe4e6', iconColor:'#9f1239', section:'services' },
+  { title:'IP Litigation & Enforcement', desc:'Enforce your IP rights through Bangladesh courts', icon:'fa-gavel', color:'#ccfbf1', iconColor:'#0f766e', section:'services' },
+  { title:'Fashion Brand Protection Case', desc:'Trademark defended across Bangladesh, India & UAE', icon:'fa-shield-halved', color:'#dbeafe', iconColor:'#1d4ed8', section:'home' },
+  { title:'Pharmaceutical Innovation Patent', desc:'Patent secured for novel drug formulation', icon:'fa-flask', color:'#d1fae5', iconColor:'#065f46', section:'home' },
+  { title:'About IPServiceBD', desc:'Bangladesh IP law firm founded in 2007', icon:'fa-building-columns', color:'#f1f5f9', iconColor:'#475569', section:'about' },
+  { title:'Contact Us', desc:'Get a free consultation with our IP experts', icon:'fa-envelope', color:'#f1f5f9', iconColor:'#475569', section:'contact' },
+  { title:'Core Team', desc:'Meet our lead IP attorneys and specialists', icon:'fa-users', color:'#ede9fe', iconColor:'#5b21b6', section:'about' },
+  { title:'Our Clients', desc:'Trusted by 200+ businesses across Bangladesh', icon:'fa-handshake', color:'#d1fae5', iconColor:'#065f46', section:'clients' },
+];
+
+function handleSearch(val) {
+  const q = val.trim().toLowerCase();
+  const overlay = document.getElementById('searchOverlay');
+  const results = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('searchClear');
+
+  clearBtn.classList.toggle('hidden', !val);
+
+  if (!q) { overlay.classList.add('hidden'); return; }
+
+  const matches = searchData.filter(d =>
+    d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q)
+  );
+
+  if (matches.length === 0) {
+    results.innerHTML = `<div class="sr-empty"><i class="fa-solid fa-search" style="font-size:1.5rem;display:block;margin-bottom:8px;color:#cbd5e1"></i>No results for "<strong>${val}</strong>"</div>`;
+  } else {
+    results.innerHTML = matches.map(d => `
+      <div class="sr-item" onclick="searchGo('${d.section}')">
+        <div class="sr-icon" style="background:${d.color};color:${d.iconColor}">
+          <i class="fa-solid ${d.icon}"></i>
+        </div>
+        <div>
+          <h4>${d.title}</h4>
+          <p>${d.desc}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+  overlay.classList.remove('hidden');
+}
+
+function searchGo(section) {
+  clearSearch();
+  switchSection(section);
+}
+
+function clearSearch() {
+  const input = document.getElementById('searchInput');
+  input.value = '';
+  handleSearch('');
+  input.focus();
+}
+
+/* Close search overlay on outside click */
+document.getElementById('searchOverlay')?.addEventListener('click', clearSearch);
+
+/* Press / to focus search */
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+});
+
+/* ══════════════════════════════════════
+   NOTIFICATION BELL
+══════════════════════════════════════ */
+function toggleNotif() {
+  const dd = document.getElementById('notifDropdown');
+  dd.classList.toggle('hidden');
+}
+
+function markAllRead() {
+  document.querySelectorAll('.notif-item.unread').forEach(n => n.classList.remove('unread'));
+  document.getElementById('bellDot').classList.add('hidden');
+  document.getElementById('notifDropdown').classList.add('hidden');
+}
+
+/* Close notification dropdown on outside click */
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('notifDropdown');
+  const btn  = document.getElementById('notifBtn');
+  if (wrap && !wrap.contains(e.target) && !btn.contains(e.target)) {
+    wrap.classList.add('hidden');
+  }
+});
+
+/* ══════════════════════════════════════
    HOME TABS
 ══════════════════════════════════════ */
 document.querySelectorAll('.htab').forEach(btn => {
