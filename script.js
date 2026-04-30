@@ -241,11 +241,20 @@ document.querySelectorAll('.htab').forEach(btn => {
 /* ══════════════════════════════════════
    SECTION SWITCHING
 ══════════════════════════════════════ */
+/* Map section names to corresponding tab keys */
+const sectionTabMap = {
+  home: 'all', about: 'core-team', services: 'patent',
+  clients: 'portfolios', contact: 'contact-us', gallery: 'all'
+};
+
 function switchSection(name) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
   const t = document.getElementById('section-' + name);
   if (t) t.classList.add('active');
   document.querySelectorAll('.lsb-item').forEach(l => l.classList.toggle('active', l.dataset.section === name));
+  /* Sync active tab */
+  const tabKey = sectionTabMap[name] || 'all';
+  document.querySelectorAll('.htab').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
   if (mob()) closeSidebar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
