@@ -39,15 +39,22 @@ ul{list-style:none}
 /* Logo area */
 .lsb-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:10px 14px;border-bottom:1px solid var(--border);flex-shrink:0;
+  padding:12px 14px;border-bottom:1px solid var(--border);flex-shrink:0;
 }
-.lsb-logo{ display:flex; align-items:center; }
-.lsb-logo-img{
-  height:68px;
-  width:auto;
-  display:block;
-  object-fit:contain;
-  mix-blend-mode:multiply;
+.lsb-logo{ display:flex;align-items:center; }
+
+/* Combined logo mark: lightbulb SVG + ServiceBD text */
+.logo-mark{
+  display:flex;align-items:center;gap:6px;
+}
+.logo-text{
+  font-family:'Nunito',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  color:#0c2461;
+  letter-spacing:-.3px;
+  line-height:1;
+  white-space:nowrap;
 }
 .lsb-close-btn{
   width:28px;height:28px;border-radius:6px;border:1px solid var(--border);
