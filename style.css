@@ -43,18 +43,12 @@ ul{list-style:none}
 }
 .lsb-logo{ display:flex;align-items:center; }
 
-/* Combined logo mark: lightbulb SVG + ServiceBD text */
-.logo-mark{
-  display:flex;align-items:center;gap:6px;
-}
-.logo-text{
-  font-family:'Nunito',sans-serif;
-  font-size:22px;
-  font-weight:800;
-  color:#0c2461;
-  letter-spacing:-.3px;
-  line-height:1;
-  white-space:nowrap;
+.lsb-logo-img{
+  height:52px;
+  width:auto;
+  display:block;
+  object-fit:contain;
+  mix-blend-mode:multiply;
 }
 .lsb-close-btn{
   width:28px;height:28px;border-radius:6px;border:1px solid var(--border);
