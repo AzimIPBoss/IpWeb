@@ -49,44 +49,30 @@
       </a>
     </nav>
 
-    <div class="lsb-cta">
-      <i class="fa-solid fa-phone-volume lsb-cta-icon"></i>
-      <p>Need IP legal advice?<br/>Free first consultation.</p>
-      <a href="#" onclick="switchSection('contact');return false;">Contact Us Today</a>
+  </div><!-- /lsb-body -->
+
+  <!-- Chat panel OUTSIDE scroll area — always fully visible at bottom -->
+  <div class="sb-chat">
+    <div class="sb-chat-header">
+      <div class="sb-chat-avatar">
+        <i class="fa-solid fa-headset"></i>
+        <span class="sb-chat-online"></span>
+      </div>
+      <div class="sb-chat-title">Chat with us</div>
     </div>
-
-    <!-- ── CHAT WITH US PANEL ── -->
-    <div class="sb-chat">
-      <div class="sb-chat-header">
-        <div class="sb-chat-avatar">
-          <i class="fa-solid fa-headset"></i>
-          <span class="sb-chat-online"></span>
-        </div>
-        <div>
-          <div class="sb-chat-title">Chat with us</div>
-          <div class="sb-chat-status">We reply within minutes</div>
-        </div>
-      </div>
-
-      <div class="sb-chat-messages" id="chatMessages">
-        <!-- Welcome message -->
-        <div class="chat-msg agent">
-          <div class="chat-bubble">
-            👋 Hello! How can we help you with your IP needs today?
-          </div>
-          <span class="chat-time">IPServiceBD Team</span>
-        </div>
-      </div>
-
-      <div class="sb-chat-input">
-        <input type="text" id="chatInput" placeholder="Type a message…"
-               onkeydown="if(event.key==='Enter') sendChat()"/>
-        <button onclick="sendChat()" class="chat-send-btn">
-          <i class="fa-solid fa-paper-plane"></i>
-        </button>
+    <div class="sb-chat-messages" id="chatMessages">
+      <div class="chat-msg agent">
+        <div class="chat-bubble">👋 Hello! How can we help you with your IP needs today?</div>
+        <span class="chat-time">IPServiceBD Team</span>
       </div>
     </div>
-
+    <div class="sb-chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message…"
+             onkeydown="if(event.key==='Enter') sendChat()"/>
+      <button onclick="sendChat()" class="chat-send-btn">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
   </div>
 
 </aside>
@@ -163,6 +149,7 @@
           <button class="htab" data-tab="portfolios">Portfolio</button>
           <button class="htab" data-tab="blogs">IP Blogs</button>
           <button class="htab" data-tab="core-team">Core Team</button>
+          <button class="htab" data-tab="contact-us">Contact Us</button>
         </div>
       </div>
 

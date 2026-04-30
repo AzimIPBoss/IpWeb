@@ -82,8 +82,14 @@ function clearSearch() {
   input.focus();
 }
 
-/* Close search overlay on outside click */
-document.getElementById('searchOverlay')?.addEventListener('click', clearSearch);
+/* Close search on outside click */
+document.addEventListener('click', e => {
+  const overlay = document.getElementById('searchOverlay');
+  const searchWrap = document.getElementById('searchWrap');
+  if (overlay && searchWrap && !searchWrap.contains(e.target) && !overlay.contains(e.target)) {
+    overlay.classList.add('hidden');
+  }
+});
 
 /* Press / to focus search */
 document.addEventListener('keydown', e => {
@@ -195,26 +201,40 @@ function sendChat() {
 }
 
 /* ══════════════════════════════════════
-   HOME TABS
+   HOME TABS — each leads to a section
 ══════════════════════════════════════ */
+const tabRoutes = {
+  'all':        () => { switchSection('home'); },
+  'patent':     () => { switchSection('services'); highlightService('patent'); },
+  'trademark':  () => { switchSection('services'); highlightService('trademark'); },
+  'portfolios': () => { switchSection('clients'); },
+  'blogs':      () => { switchSection('home'); document.querySelector('.section-gray')?.scrollIntoView({behavior:'smooth',block:'start'}); },
+  'core-team':  () => { switchSection('about'); },
+  'contact-us': () => { switchSection('contact'); },
+};
+
+function highlightService(type) {
+  /* Scroll to the matching service card on the services page */
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.svc-full-card');
+    for (const card of cards) {
+      if (card.innerText.toLowerCase().includes(type)) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.outline = '2px solid var(--blue)';
+        card.style.borderRadius = '14px';
+        setTimeout(() => { card.style.outline = ''; }, 2000);
+        break;
+      }
+    }
+  }, 200);
+}
+
 document.querySelectorAll('.htab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.htab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const tab = btn.dataset.tab;
-
-    /* Scroll to portfolio slider for category tabs */
-    if (['trademark','patent','design','portfolios','core-team'].includes(tab)) {
-      document.querySelector('.portfolio-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    /* Blogs tab → scroll to testimonials for now */
-    if (tab === 'blogs') {
-      document.querySelector('.section-gray')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    /* All → scroll to top of home */
-    if (tab === 'all') {
-      document.querySelector('.about-strip')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    const route = tabRoutes[btn.dataset.tab];
+    if (route) route();
   });
 });
 
