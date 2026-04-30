@@ -117,6 +117,84 @@ document.addEventListener('click', e => {
 });
 
 /* ══════════════════════════════════════
+   SIDEBAR CHAT
+══════════════════════════════════════ */
+const chatReplies = [
+  { keys: ['trademark','brand','logo','register'],
+    reply: 'We can help with trademark registration in Bangladesh and internationally via the Madrid Protocol. Would you like to know more about the process?' },
+  { keys: ['patent','invention','product'],
+    reply: 'Our patent attorneys can guide you through the full filing process at DPDT, including PCT international applications. What type of invention do you have?' },
+  { keys: ['design','appearance','visual'],
+    reply: 'Design registration protects the look of your product. We handle both local (DPDT) and international (Hague System) design filings. Tell us more about your product.' },
+  { keys: ['copyright','music','software','book','art'],
+    reply: 'We register copyrights for literary, artistic, musical, and software works under the Bangladesh Copyright Act 2000. What type of work would you like to protect?' },
+  { keys: ['cost','price','fee','charge','how much'],
+    reply: 'Our fees depend on the type of service. Please use the Contact page or call us for a detailed quote — we offer a free first consultation! 😊' },
+  { keys: ['hello','hi','hey','good morning','good afternoon','assalamu'],
+    reply: 'Hello! 👋 Welcome to IPServiceBD. How can we assist you with your intellectual property needs today?' },
+  { keys: ['contact','call','phone','email','office'],
+    reply: 'You can reach us at info@ipservicebd.com or visit our Contact page for the full details. We\'re available Sun–Thu, 9AM–6PM.' },
+  { keys: ['urgent','fast','quick','emergency'],
+    reply: 'We understand urgency in IP matters! Please contact us directly at info@ipservicebd.com and mention it\'s urgent — our team will prioritise your case.' },
+];
+
+const defaultReplies = [
+  'Thank you for your message! Our IP specialists will get back to you shortly. You can also visit our Contact page for immediate assistance.',
+  'Great question! For detailed advice, please use our Contact page or email info@ipservicebd.com — a consultation is free!',
+  'We\'re here to help with all your IP needs. Could you tell us more so we can point you to the right service?',
+];
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const box = document.getElementById('chatMessages');
+  const now = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  /* User bubble */
+  box.innerHTML += `
+    <div class="chat-msg user">
+      <div class="chat-bubble">${msg}</div>
+      <span class="chat-time">You · ${now}</span>
+    </div>`;
+
+  input.value = '';
+  box.scrollTop = box.scrollHeight;
+
+  /* Typing indicator */
+  const typingId = 'typing-' + Date.now();
+  box.innerHTML += `
+    <div class="chat-msg agent chat-typing" id="${typingId}">
+      <div class="chat-bubble">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>`;
+  box.scrollTop = box.scrollHeight;
+
+  /* Auto-reply after delay */
+  setTimeout(() => {
+    const typingEl = document.getElementById(typingId);
+    if (typingEl) typingEl.remove();
+
+    const lower = msg.toLowerCase();
+    let reply = defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
+    for (const r of chatReplies) {
+      if (r.keys.some(k => lower.includes(k))) { reply = r.reply; break; }
+    }
+
+    box.innerHTML += `
+      <div class="chat-msg agent">
+        <div class="chat-bubble">${reply}</div>
+        <span class="chat-time">IPServiceBD Team · ${new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</span>
+      </div>`;
+    box.scrollTop = box.scrollHeight;
+  }, 1400);
+}
+
+/* ══════════════════════════════════════
    HOME TABS
 ══════════════════════════════════════ */
 document.querySelectorAll('.htab').forEach(btn => {
