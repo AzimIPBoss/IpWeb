@@ -39,15 +39,14 @@ ul{list-style:none}
 /* Logo area */
 .lsb-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:14px 14px 12px;border-bottom:1px solid var(--border);flex-shrink:0;
+  padding:10px 14px;border-bottom:1px solid var(--border);flex-shrink:0;
 }
 .lsb-logo{ display:flex; align-items:center; }
 .lsb-logo-img{
-  height:38px;        /* fits neatly in sidebar header */
+  height:52px;
   width:auto;
   display:block;
   object-fit:contain;
-  /* Remove white background so it blends with sidebar */
   mix-blend-mode:multiply;
 }
 .lsb-close-btn{
@@ -101,11 +100,11 @@ ul{list-style:none}
 ═══════════════════════════════════ */
 .topbar{
   position:sticky;top:0;z-index:20;height:var(--topbar);
-  background:#fff;border-bottom:2px solid var(--navy);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 22px;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);
+  background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  padding:0 16px;box-shadow:0 1px 4px rgba(0,0,0,.05);
 }
-.tb-l,.tb-r{display:flex;align-items:center;gap:10px}
+.tb-l{display:flex;align-items:center;gap:10px}
 .burger-btn{
   width:34px;height:34px;border-radius:7px;border:1px solid var(--border);
   background:#f8f9fa;cursor:pointer;display:flex;align-items:center;justify-content:center;
