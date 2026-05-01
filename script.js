@@ -21,48 +21,63 @@ window.addEventListener('resize', () => {
 });
 
 /* ══════════════════════════════════════
-   FUNCTIONAL SEARCH
+   SEARCH — plain word matching from page content
 ══════════════════════════════════════ */
-const searchData = [
-  { title:'Trademark Registration', desc:'Register your brand under Bangladesh Trademarks Act 2009', icon:'fa-trademark', color:'#dbeafe', iconColor:'#1d4ed8', section:'services' },
-  { title:'Patent Registration', desc:'Protect your invention under the Patents & Designs Act 1911', icon:'fa-flask', color:'#d1fae5', iconColor:'#065f46', section:'services' },
-  { title:'Design Registration', desc:'Protect visual aspects of your products under design law', icon:'fa-pen-ruler', color:'#ede9fe', iconColor:'#5b21b6', section:'services' },
-  { title:'Copyright Registration', desc:'Register creative works under Bangladesh Copyright Act 2000', icon:'fa-copyright', color:'#fef3c7', iconColor:'#92400e', section:'services' },
-  { title:'International IP — Madrid Protocol', desc:'Protect your trademark in 130+ countries via WIPO', icon:'fa-globe', color:'#ffe4e6', iconColor:'#9f1239', section:'services' },
-  { title:'IP Litigation & Enforcement', desc:'Enforce your IP rights through Bangladesh courts', icon:'fa-gavel', color:'#ccfbf1', iconColor:'#0f766e', section:'services' },
-  { title:'Fashion Brand Protection Case', desc:'Trademark defended across Bangladesh, India & UAE', icon:'fa-shield-halved', color:'#dbeafe', iconColor:'#1d4ed8', section:'home' },
-  { title:'Pharmaceutical Innovation Patent', desc:'Patent secured for novel drug formulation', icon:'fa-flask', color:'#d1fae5', iconColor:'#065f46', section:'home' },
-  { title:'About IPServiceBD', desc:'Bangladesh IP law firm founded in 2007', icon:'fa-building-columns', color:'#f1f5f9', iconColor:'#475569', section:'about' },
-  { title:'Contact Us', desc:'Get a free consultation with our IP experts', icon:'fa-envelope', color:'#f1f5f9', iconColor:'#475569', section:'contact' },
-  { title:'Core Team', desc:'Meet our lead IP attorneys and specialists', icon:'fa-users', color:'#ede9fe', iconColor:'#5b21b6', section:'about' },
-  { title:'Our Clients', desc:'Trusted by 200+ businesses across Bangladesh', icon:'fa-handshake', color:'#d1fae5', iconColor:'#065f46', section:'clients' },
-];
-
 function handleSearch(val) {
-  const q = val.trim().toLowerCase();
+  const q   = val.trim().toLowerCase();
   const overlay = document.getElementById('searchOverlay');
   const results = document.getElementById('searchResults');
   const clearBtn = document.getElementById('searchClear');
 
   clearBtn.classList.toggle('hidden', !val);
 
-  if (!q) { overlay.classList.add('hidden'); return; }
+  if (!q || q.length < 2) { overlay.classList.add('hidden'); return; }
 
-  const matches = searchData.filter(d =>
-    d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q)
-  );
+  /* Collect searchable content from all tab panes + sections */
+  const sources = [
+    ...document.querySelectorAll('.tab-card h3, .tab-card p'),
+    ...document.querySelectorAll('.blog-card h3, .blog-card p'),
+    ...document.querySelectorAll('.pg-card h4, .pg-card p'),
+    ...document.querySelectorAll('.svc-full-card h3, .svc-full-card p'),
+    ...document.querySelectorAll('.team-card h3, .tc-role, .tc p'),
+    ...document.querySelectorAll('.tab-hero h2, .tab-hero p'),
+    ...document.querySelectorAll('.about-strip h2, .about-strip p'),
+    ...document.querySelectorAll('.port-slide-body h4, .port-slide-body p'),
+  ];
+
+  const seen = new Set();
+  const matches = [];
+
+  sources.forEach(el => {
+    const text = el.innerText || el.textContent || '';
+    if (!text.toLowerCase().includes(q)) return;
+
+    /* Get the heading for this result */
+    const heading = el.tagName.match(/H\d/)
+      ? el.innerText
+      : el.closest('.tab-card, .blog-card, .pg-card, .svc-full-card, .team-card, .tab-hero, .about-strip, .port-slide-body')
+          ?.querySelector('h2,h3,h4')?.innerText || text.slice(0,60);
+
+    const desc = el.tagName.match(/H\d/)
+      ? (el.nextElementSibling?.innerText || '').slice(0,80)
+      : text.slice(0,80);
+
+    if (seen.has(heading)) return;
+    seen.add(heading);
+    matches.push({ heading, desc });
+  });
 
   if (matches.length === 0) {
-    results.innerHTML = `<div class="sr-empty"><i class="fa-solid fa-search" style="font-size:1.5rem;display:block;margin-bottom:8px;color:#cbd5e1"></i>No results for "<strong>${val}</strong>"</div>`;
+    results.innerHTML = `<div class="sr-empty">No results for "<strong>${escHtml(val)}</strong>"</div>`;
   } else {
-    results.innerHTML = matches.map(d => `
-      <div class="sr-item" onclick="searchGo('${d.section}')">
-        <div class="sr-icon" style="background:${d.color};color:${d.iconColor}">
-          <i class="fa-solid ${d.icon}"></i>
+    results.innerHTML = matches.slice(0,8).map(m => `
+      <div class="sr-item">
+        <div class="sr-icon" style="background:#eef2ff;color:#4f46e5">
+          <i class="fa-solid fa-file-lines"></i>
         </div>
         <div>
-          <h4>${d.title}</h4>
-          <p>${d.desc}</p>
+          <h4>${escHtml(m.heading)}</h4>
+          <p>${escHtml(m.desc)}…</p>
         </div>
       </div>
     `).join('');
@@ -70,32 +85,22 @@ function handleSearch(val) {
   overlay.classList.remove('hidden');
 }
 
-function searchGo(section) {
-  clearSearch();
-  switchSection(section);
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function clearSearch() {
-  const input = document.getElementById('searchInput');
-  input.value = '';
-  handleSearch('');
-  input.focus();
+  const inp = document.getElementById('searchInput');
+  if (inp) { inp.value = ''; }
+  document.getElementById('searchOverlay')?.classList.add('hidden');
+  document.getElementById('searchClear')?.classList.add('hidden');
 }
 
-/* Close search on outside click */
 document.addEventListener('click', e => {
-  const overlay = document.getElementById('searchOverlay');
-  const searchWrap = document.getElementById('searchWrap');
-  if (overlay && searchWrap && !searchWrap.contains(e.target) && !overlay.contains(e.target)) {
-    overlay.classList.add('hidden');
-  }
-});
-
-/* Press / to focus search */
-document.addEventListener('keydown', e => {
-  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
-    e.preventDefault();
-    document.getElementById('searchInput').focus();
+  const ov   = document.getElementById('searchOverlay');
+  const wrap = document.getElementById('searchWrap');
+  if (ov && wrap && !wrap.contains(e.target) && !ov.contains(e.target)) {
+    ov.classList.add('hidden');
   }
 });
 
@@ -203,58 +208,99 @@ function sendChat() {
 /* ══════════════════════════════════════
    HOME TABS — each leads to a section
 ══════════════════════════════════════ */
-const tabRoutes = {
-  'all':        () => { switchSection('home'); },
-  'patent':     () => { switchSection('services'); highlightService('patent'); },
-  'trademark':  () => { switchSection('services'); highlightService('trademark'); },
-  'portfolios': () => { switchSection('clients'); },
-  'blogs':      () => { switchSection('home'); document.querySelector('.section-gray')?.scrollIntoView({behavior:'smooth',block:'start'}); },
-  'core-team':  () => { switchSection('about'); },
-  'contact-us': () => { switchSection('contact'); },
-};
+/* ── TAB PANE SWITCHING ── */
+function switchTab(tabKey) {
+  /* Highlight the correct tab button */
+  document.querySelectorAll('.htab').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
 
-function highlightService(type) {
-  /* Scroll to the matching service card on the services page */
-  setTimeout(() => {
-    const cards = document.querySelectorAll('.svc-full-card');
-    for (const card of cards) {
-      if (card.innerText.toLowerCase().includes(type)) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        card.style.outline = '2px solid var(--blue)';
-        card.style.borderRadius = '14px';
-        setTimeout(() => { card.style.outline = ''; }, 2000);
-        break;
-      }
-    }
-  }, 200);
+  /* All tab panes live inside section-home — make sure it's visible */
+  switchSection('home');
+
+  /* Show matching pane, hide others */
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  const pane = document.getElementById('tab-' + tabKey);
+  if (pane) pane.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 document.querySelectorAll('.htab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.htab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const route = tabRoutes[btn.dataset.tab];
-    if (route) route();
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+/* Build portfolio grid inside Portfolio tab */
+function buildPortGrid() {
+  const grid = document.getElementById('portGrid');
+  if (!grid || grid.children.length > 0) return;
+  grid.innerHTML = portfolioData.map((d, i) => `
+    <div class="pg-card" onclick="openPortfolio(${i})">
+      <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+      <div class="pg-card-body">
+        <span class="bc-cat ${d.catClass}" style="margin-bottom:6px">${d.cat}</span>
+        <h4>${d.title}</h4>
+        <p>${d.shortDesc}</p>
+        <p class="pg-outcome"><i class="fa-solid fa-circle-check"></i> ${d.outcome}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* Build second swiper for Portfolio tab */
+let portfolioSwiper2;
+function initPortfolioSwiper2() {
+  if (portfolioSwiper2) return;
+  const wrap = document.getElementById('swiperSlides2');
+  if (!wrap) return;
+  wrap.innerHTML = portfolioData.map((d, i) => `
+    <div class="swiper-slide port-slide" onclick="openPortfolio(${i})">
+      <div class="port-slide-img">
+        <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+        <span class="port-slide-badge ${d.catClass}">${d.cat}</span>
+        <span class="port-slide-view">View Case <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+      </div>
+      <div class="port-slide-body">
+        <h4>${d.title}</h4>
+        <p>${d.shortDesc}</p>
+        <div class="port-slide-footer">
+          <span class="port-slide-outcome"><i class="fa-solid fa-circle-check"></i>${d.outcome}</span>
+          <span class="port-slide-arrow"><i class="fa-solid fa-arrow-right fa-xs"></i></span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  portfolioSwiper2 = new Swiper('.portfolioSwiper2', {
+    effect: 'coverflow', grabCursor: true, centeredSlides: true,
+    loop: true, slidesPerView: 1.3, spaceBetween: 24, speed: 900,
+    coverflowEffect: { rotate: 45, stretch: 0, depth: 220, modifier: 1, slideShadows: true },
+    autoplay: { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true },
+    navigation: { nextEl: '.portfolio-next2', prevEl: '.portfolio-prev2' },
+    pagination: { el: '.portfolio-pagination2', clickable: true, dynamicBullets: true },
+    breakpoints: {
+      480: { slidesPerView: 1.3 }, 768: { slidesPerView: 1.5 },
+      1024: { slidesPerView: 1.7 }, 1280: { slidesPerView: 1.9 },
+    },
   });
+}
+
+/* When Portfolio tab is clicked, build its content */
+document.querySelector('[data-tab="portfolios"]')?.addEventListener('click', () => {
+  setTimeout(() => { buildPortGrid(); initPortfolioSwiper2(); }, 50);
 });
 
 /* ══════════════════════════════════════
    SECTION SWITCHING
 ══════════════════════════════════════ */
-/* Map section names to corresponding tab keys */
-const sectionTabMap = {
-  home: 'all', about: 'core-team', services: 'patent',
-  clients: 'portfolios', contact: 'contact-us', gallery: 'all'
-};
-
 function switchSection(name) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
   const t = document.getElementById('section-' + name);
   if (t) t.classList.add('active');
   document.querySelectorAll('.lsb-item').forEach(l => l.classList.toggle('active', l.dataset.section === name));
-  /* Sync active tab */
-  const tabKey = sectionTabMap[name] || 'all';
-  document.querySelectorAll('.htab').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
+  /* If going home, preserve whichever tab pane is active (don't reset) */
+  if (name !== 'home') {
+    /* Deactivate all home tab buttons when on another page */
+    document.querySelectorAll('.htab').forEach(b => b.classList.remove('active'));
+  }
   if (mob()) closeSidebar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
