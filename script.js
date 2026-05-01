@@ -413,7 +413,7 @@ function buildPortGrid() {
   if (!grid || grid.children.length > 0) return;
   grid.innerHTML = portfolioData.map((d, i) => `
     <div class="pg-card" onclick="openPortfolio(${i})">
-      <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+      <img src="${d.img}" alt="${d.title}" loading="eager"/>
       <div class="pg-card-body">
         <span class="bc-cat ${d.catClass}" style="margin-bottom:6px">${d.cat}</span>
         <h4>${d.title}</h4>
@@ -433,7 +433,7 @@ function initPortfolioSwiper2() {
   wrap.innerHTML = portfolioData.map((d, i) => `
     <div class="swiper-slide port-slide" onclick="openPortfolio(${i})">
       <div class="port-slide-img">
-        <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+        <img src="${d.img}" alt="${d.title}" loading="eager"/>
         <span class="port-slide-badge ${d.catClass}">${d.cat}</span>
         <span class="port-slide-view">View Case <i class="fa-solid fa-arrow-right fa-xs"></i></span>
       </div>
@@ -612,7 +612,7 @@ function buildSlides() {
   wrap.innerHTML = portfolioData.map((d, i) => `
     <div class="swiper-slide port-slide" onclick="openPortfolio(${i})">
       <div class="port-slide-img">
-        <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+        <img src="${d.img}" alt="${d.title}" loading="eager"/>
         <span class="port-slide-badge ${d.catClass}">${d.cat}</span>
         <span class="port-slide-view">View Case <i class="fa-solid fa-arrow-right fa-xs"></i></span>
       </div>
