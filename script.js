@@ -40,18 +40,21 @@ function handleSearch(val) {
     return;
   }
 
-  /* Root: search only inside whatever is currently visible */
-  const root = document.querySelector('.tab-pane.active')
-            || document.querySelector('.pg.active')
-            || document.body;
+  /* Root: the entire active page section — covers tab panes + any content outside them */
+  const root = document.querySelector('.pg.active') || document.body;
 
-  /* Walk all text nodes inside root */
+  /* Walk all text nodes inside root, skipping inactive tab panes */
   const walker = document.createTreeWalker(
     root,
     NodeFilter.SHOW_TEXT,
     { acceptNode(node) {
         const tag = node.parentElement?.tagName || '';
+        /* Skip script / style / form elements */
         if (['SCRIPT','STYLE','MARK','INPUT','TEXTAREA','BUTTON'].includes(tag))
+          return NodeFilter.FILTER_REJECT;
+        /* Skip text inside a tab pane that is NOT active */
+        const pane = node.parentElement?.closest('.tab-pane');
+        if (pane && !pane.classList.contains('active'))
           return NodeFilter.FILTER_REJECT;
         if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
