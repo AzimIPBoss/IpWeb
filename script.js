@@ -48,28 +48,46 @@ const SEARCH_INDEX = [
 ];
 
 function handleSearch(val) {
-  const q = val.trim().toLowerCase();
+  const q  = val.trim().toLowerCase();
   const dd = document.getElementById('searchDropdown');
   const cl = document.getElementById('searchClear');
   if (cl) cl.classList.toggle('hidden', !val);
-  if (!q) { if(dd) dd.classList.add('hidden'); return; }
+  if (!q) { if (dd) dd.classList.add('hidden'); return; }
+
   const hits = SEARCH_INDEX.filter(d =>
     d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q)
   );
   if (!dd) return;
+
   if (hits.length === 0) {
-    dd.innerHTML = '<div class="sd-empty">No results for &ldquo;' + escH(val) + '&rdquo;</div>';
+    dd.innerHTML = `<div class="sd-empty">No results for &ldquo;${escH(val)}&rdquo;</div>`;
   } else {
-    dd.innerHTML = '<div class="sd-section">Results</div>' +
-      hits.slice(0,8).map(d =>
-        '<div class="sd-item" onclick="(' + d.go.toString() + ')();' +
-        'document.getElementById('searchDropdown').classList.add('hidden');' +
-        'document.getElementById('searchInput').value=''">' +
-        '<div class="sd-icon" style="background:' + d.bg + ';color:' + d.ic + '">' +
-        '<i class="fa-solid ' + d.icon + '"></i></div>' +
-        '<div class="sd-text"><h4>' + escH(d.title) + '</h4><p>' + escH(d.desc) + '</p></div>' +
-        '<i class="fa-solid fa-arrow-right" style="color:#cbd5e1;font-size:11px;margin-left:auto;flex-shrink:0"></i></div>'
-      ).join('');
+    dd.innerHTML = `<div class="sd-section">Results</div>` +
+      hits.slice(0, 8).map((d, i) => {
+        const idx = SEARCH_INDEX.indexOf(d);
+        return `<div class="sd-item" data-idx="${idx}">
+          <div class="sd-icon" style="background:${d.bg};color:${d.ic}">
+            <i class="fa-solid ${d.icon}"></i>
+          </div>
+          <div class="sd-text">
+            <h4>${escH(d.title)}</h4>
+            <p>${escH(d.desc)}</p>
+          </div>
+          <i class="fa-solid fa-arrow-right" style="color:#cbd5e1;font-size:11px;margin-left:auto;flex-shrink:0"></i>
+        </div>`;
+      }).join('');
+
+    /* Attach click handlers after HTML is built — avoids any quote issues */
+    dd.querySelectorAll('.sd-item[data-idx]').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx, 10);
+        SEARCH_INDEX[idx]?.go?.();
+        dd.classList.add('hidden');
+        const inp = document.getElementById('searchInput');
+        if (inp) inp.value = '';
+        if (cl) cl.classList.add('hidden');
+      });
+    });
   }
   dd.classList.remove('hidden');
 }
