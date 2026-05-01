@@ -30,7 +30,7 @@ function loadAdminData() {
         title:     item.title     || '',
         cat:       item.cat       || 'Trademark',
         catClass:  'cat-' + (item.cat || 'trademark').toLowerCase().replace(/\s+/g,'-'),
-        img:       item.img       || 'https://images.unsplash.com/photo-1507679799987?w=700&q=80',
+        img:       item.img       || 'https://images.unsplash.com/photo-1507679799987?auto=format&fit=crop&w=700&q=80',
         shortDesc: item.desc      || '',
         outcome:   item.outcome   || '',
         client:    item.client    || '',
@@ -413,7 +413,7 @@ function buildPortGrid() {
   if (!grid || grid.children.length > 0) return;
   grid.innerHTML = portfolioData.map((d, i) => `
     <div class="pg-card" onclick="openPortfolio(${i})">
-      <img src="${d.img}" alt="${d.title}" loading="eager"/>
+      <img src="${d.img}" alt="${d.title}" loading="eager" referrerpolicy="no-referrer" onerror="this.style.background='#e2e8f0';this.style.minHeight='120px'"/>
       <div class="pg-card-body">
         <span class="bc-cat ${d.catClass}" style="margin-bottom:6px">${d.cat}</span>
         <h4>${d.title}</h4>
@@ -433,7 +433,7 @@ function initPortfolioSwiper2() {
   wrap.innerHTML = portfolioData.map((d, i) => `
     <div class="swiper-slide port-slide" onclick="openPortfolio(${i})">
       <div class="port-slide-img">
-        <img src="${d.img}" alt="${d.title}" loading="eager"/>
+        <img src="${d.img}" alt="${d.title}" loading="eager" referrerpolicy="no-referrer" onerror="this.style.background='#e2e8f0';this.style.minHeight='120px'"/>
         <span class="port-slide-badge ${d.catClass}">${d.cat}</span>
         <span class="port-slide-view">View Case <i class="fa-solid fa-arrow-right fa-xs"></i></span>
       </div>
@@ -501,7 +501,7 @@ const portfolioData = [
     title:     'Fashion Brand Protection Across Three Countries',
     cat:       'Trademark',
     catClass:  'cat-trademark',
-    img:       'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'International trademark defence across Bangladesh, India & UAE.',
     outcome:   'Injunctions in 3 countries in 8 months',
     client:    'A leading Bangladeshi fashion retail brand',
@@ -514,7 +514,7 @@ const portfolioData = [
     title:     'Pharmaceutical Innovation Patent',
     cat:       'Patent',
     catClass:  'cat-patent',
-    img:       'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'Patent protection for a novel drug formulation in Bangladesh.',
     outcome:   'Patent granted, PCT in 14 countries',
     client:    'A Bangladeshi pharmaceutical manufacturing company',
@@ -527,7 +527,7 @@ const portfolioData = [
     title:     'Consumer Product Design Registration',
     cat:       'Design',
     catClass:  'cat-design',
-    img:       'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'Design protection for a leading home appliance brand.',
     outcome:   'Registered in BD + 8 export markets',
     client:    'A home appliances manufacturer',
@@ -540,7 +540,7 @@ const portfolioData = [
     title:     'Madrid Protocol — 12 Countries in One Filing',
     cat:       'Trademark',
     catClass:  'cat-trademark',
-    img:       'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'Single WIPO filing securing trademark in 12 territories.',
     outcome:   '60% cost saving vs. individual filings',
     client:    'An export-oriented garments brand',
@@ -553,7 +553,7 @@ const portfolioData = [
     title:     'Trademark Infringement — Successful Litigation',
     cat:       'Litigation',
     catClass:  'cat-portfolio',
-    img:       'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'Counterfeit operation stopped, BDT 8M damages awarded.',
     outcome:   'BDT 8M damages + full brand protection',
     client:    'An FMCG brand established in Bangladesh',
@@ -566,7 +566,7 @@ const portfolioData = [
     title:     'Fintech Software & Technology Patent Portfolio',
     cat:       'Patent',
     catClass:  'cat-patent',
-    img:       'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'Patent portfolio built for a fintech startup pre-Series B.',
     outcome:   'IP valued USD 2.4M, raised USD 8M Series B',
     client:    'A Bangladeshi fintech startup (Series A stage)',
@@ -579,7 +579,7 @@ const portfolioData = [
     title:     'Complete Brand IP Audit & Restructuring',
     cat:       'Trademark',
     catClass:  'cat-trademark',
-    img:       'https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1618556450991-2f1af64e8191?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'IP audit and consolidation for a garments export company.',
     outcome:   '35% reduction in annual IP maintenance cost',
     client:    'A major garments export company (500+ employees)',
@@ -592,7 +592,7 @@ const portfolioData = [
     title:     'Cloud ERP Software Copyright Registration',
     cat:       'Copyright',
     catClass:  'cat-design',
-    img:       'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=700&q=80',
+    img:       'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=700&q=80',
     shortDesc: 'Copyright registered, competitor product withdrawn in 60 days.',
     outcome:   'Competitor withdrew. Settlement secured.',
     client:    'A SaaS company providing ERP solutions',
@@ -612,7 +612,7 @@ function buildSlides() {
   wrap.innerHTML = portfolioData.map((d, i) => `
     <div class="swiper-slide port-slide" onclick="openPortfolio(${i})">
       <div class="port-slide-img">
-        <img src="${d.img}" alt="${d.title}" loading="eager"/>
+        <img src="${d.img}" alt="${d.title}" loading="eager" referrerpolicy="no-referrer" onerror="this.style.background='#e2e8f0';this.style.minHeight='120px'"/>
         <span class="port-slide-badge ${d.catClass}">${d.cat}</span>
         <span class="port-slide-view">View Case <i class="fa-solid fa-arrow-right fa-xs"></i></span>
       </div>
