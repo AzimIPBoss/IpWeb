@@ -8,12 +8,16 @@ function loadAdminData() {
   /* ── Contact Info ── */
   const ci = JSON.parse(localStorage.getItem('ipsbd_contact') || 'null');
   if (ci) {
-    const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
-    set('contact-addr',  ci.addr);
-    set('contact-phone', ci.phone);
-    set('contact-email', ci.email);
-    set('contact-hours', ci.hours);
-    set('contact-map',   ci.addr);
+    /* Use querySelectorAll to update EVERY element with each id (handles duplicates) */
+    const setAll = (id, val) => {
+      if (!val) return;
+      document.querySelectorAll('#' + id).forEach(el => el.textContent = val);
+    };
+    setAll('contact-addr',  ci.addr);
+    setAll('contact-phone', ci.phone);
+    setAll('contact-email', ci.email);
+    setAll('contact-hours', ci.hours);
+    setAll('contact-map',   ci.addr);
   }
 
   /* ── Portfolio ── */
@@ -97,9 +101,18 @@ function loadAdminData() {
   }
 }
 
-/* ── Also listen for storage events (admin panel open in another tab) ── */
+/* ── Reload admin data whenever user returns to this tab / page ── */
 window.addEventListener('storage', e => {
+  /* Fires when another tab writes to localStorage */
   if (e.key && e.key.startsWith('ipsbd_')) loadAdminData();
+});
+document.addEventListener('visibilitychange', () => {
+  /* Fires when user switches back to this browser tab */
+  if (!document.hidden) loadAdminData();
+});
+window.addEventListener('pageshow', () => {
+  /* Fires when user navigates back (browser back button) */
+  loadAdminData();
 });
 
 /* ══════════════════════════════════════

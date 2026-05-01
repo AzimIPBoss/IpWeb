@@ -441,7 +441,7 @@ function renderPortList() {
 
 function delPort(i) { if(confirm('Delete this case study?')) { portData.splice(i,1); renderPortList(); } }
 function addPortfolioItem() { portData.push({title:'New Case Study',cat:'Trademark',desc:'',outcome:'',client:''}); renderPortList(); }
-function savePortfolio() { localStorage.setItem('ipsbd_portfolio', JSON.stringify(portData)); showSaved('portSaveOk'); updateDashStats(); }
+function savePortfolio() { localStorage.setItem('ipsbd_portfolio', JSON.stringify(portData)); triggerSync(); showSaved('portSaveOk'); updateDashStats(); }
 
 /* ── TEAM ── */
 let teamData = [
@@ -464,7 +464,7 @@ function renderTeamList() {
 
 function delTeam(i) { if(confirm('Remove this team member?')) { teamData.splice(i,1); renderTeamList(); } }
 function addTeamMember() { teamData.push({name:'New Member',role:'',bio:''}); renderTeamList(); }
-function saveTeam() { localStorage.setItem('ipsbd_team', JSON.stringify(teamData)); showSaved('teamSaveOk'); updateDashStats(); }
+function saveTeam() { localStorage.setItem('ipsbd_team', JSON.stringify(teamData)); triggerSync(); showSaved('teamSaveOk'); updateDashStats(); }
 
 /* ── TESTIMONIALS ── */
 let testiData = [
@@ -488,7 +488,7 @@ function renderTestiList() {
 
 function delTesti(i) { if(confirm('Delete this testimonial?')) { testiData.splice(i,1); renderTestiList(); } }
 function addTesti() { testiData.push({name:'Client Name',company:'Company',stars:5,text:''}); renderTestiList(); }
-function saveTesti() { localStorage.setItem('ipsbd_testi', JSON.stringify(testiData)); showSaved('testiSaveOk'); updateDashStats(); }
+function saveTesti() { localStorage.setItem('ipsbd_testi', JSON.stringify(testiData)); triggerSync(); showSaved('testiSaveOk'); updateDashStats(); }
 
 /* ── BLOGS ── */
 let blogData = [
@@ -523,7 +523,7 @@ function renderBlogList() {
 
 function delBlog(i) { if(confirm('Delete this blog post?')) { blogData.splice(i,1); renderBlogList(); } }
 function addBlog() { blogData.push({title:'New Blog Post',cat:'Trademark',date:'May 1, 2025',read:'5 min',excerpt:''}); renderBlogList(); }
-function saveBlogs() { localStorage.setItem('ipsbd_blogs', JSON.stringify(blogData)); showSaved('blogSaveOk'); updateDashStats(); }
+function saveBlogs() { localStorage.setItem('ipsbd_blogs', JSON.stringify(blogData)); triggerSync(); showSaved('blogSaveOk'); updateDashStats(); }
 
 /* ── SERVICES ── */
 const svcData = [
@@ -548,17 +548,23 @@ function saveSvc() { localStorage.setItem('ipsbd_services', JSON.stringify(svcDa
 
 /* ── CONTACT ── */
 function saveContact() {
-  const saved = {};
   const u = document.getElementById('ci-user').value.trim();
   const p = document.getElementById('ci-pass').value;
   if (u && p) { localStorage.setItem('ipsbd_creds', JSON.stringify({user:u,pass:p})); }
   localStorage.setItem('ipsbd_contact', JSON.stringify({
-    addr: document.getElementById('ci-addr').value,
+    addr:  document.getElementById('ci-addr').value,
     phone: document.getElementById('ci-phone').value,
     email: document.getElementById('ci-email').value,
     hours: document.getElementById('ci-hours').value,
   }));
+  triggerSync();
   showSaved('contSaveOk');
+}
+
+/* ── Helper: write a sync key so main site detects the change ── */
+function triggerSync() {
+  localStorage.setItem('ipsbd_sync', Date.now().toString());
+  localStorage.removeItem('ipsbd_sync'); /* immediately remove — this fires storage event */
 }
 
 /* ── NOTIFICATION PUSH ── */
