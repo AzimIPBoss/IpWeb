@@ -88,12 +88,13 @@
       </button>
     </div>
     <div class="tb-r">
-      <!-- Functional search -->
+      <!-- Highlight-in-page search -->
       <div class="tb-search" id="searchWrap">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input id="searchInput" type="text" placeholder="Search services, cases…"
+        <input id="searchInput" type="text" placeholder="Search on this page…"
                oninput="handleSearch(this.value)"
-               onkeydown="if(event.key==='Escape'){this.value='';handleSearch('');this.blur()}"/>
+               onkeydown="if(event.key==='Escape'){clearSearch();this.blur()}"/>
+        <span class="search-count hidden" id="searchCount"></span>
         <button class="search-clear hidden" id="searchClear" onclick="clearSearch()">
           <i class="fa-solid fa-xmark fa-xs"></i>
         </button>
@@ -130,10 +131,6 @@
     </div>
   </header>
 
-  <!-- Search results overlay -->
-  <div class="search-overlay hidden" id="searchOverlay">
-    <div class="search-results" id="searchResults"></div>
-  </div>
 
   <!-- TABS: always visible on ALL pages, sticky below topbar -->
   <div class="home-tabs-wrap">

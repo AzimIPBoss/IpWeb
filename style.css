@@ -111,6 +111,26 @@ ul{list-style:none}
 /* Global hidden utility */
 .hidden { display: none !important; }
 
+/* Search highlight — yellow like browser Ctrl+F */
+mark.sh {
+  background: #fef08a;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+  outline: none;
+}
+mark.sh.sh-current {
+  background: #f97316;
+  color: #fff;
+}
+
+/* Match counter in search bar */
+.search-count {
+  font-size: 11px; font-weight: 600; color: #64748b;
+  white-space: nowrap; flex-shrink: 0;
+  background: #f1f5f9; padding: 2px 7px; border-radius: 10px;
+}
+
 /* ── FUNCTIONAL SEARCH ── */
 .tb-search{
   display:flex;align-items:center;gap:8px;

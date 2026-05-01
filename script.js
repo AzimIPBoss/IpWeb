@@ -21,88 +21,122 @@ window.addEventListener('resize', () => {
 });
 
 /* ══════════════════════════════════════
-   SEARCH — plain word matching from page content
+   SEARCH — highlight matching words on visible page
+   Works like browser Ctrl+F
 ══════════════════════════════════════ */
+let currentMatchIdx = 0;
+
 function handleSearch(val) {
-  const q   = val.trim().toLowerCase();
-  const overlay = document.getElementById('searchOverlay');
-  const results = document.getElementById('searchResults');
+  removeHighlights();
+
+  const q        = val.trim();
   const clearBtn = document.getElementById('searchClear');
+  const counter  = document.getElementById('searchCount');
 
   clearBtn.classList.toggle('hidden', !val);
 
-  if (!q || q.length < 2) { overlay.classList.add('hidden'); return; }
+  if (!q || q.length < 1) {
+    counter.classList.add('hidden');
+    return;
+  }
 
-  /* Collect searchable content from all tab panes + sections */
-  const sources = [
-    ...document.querySelectorAll('.tab-card h3, .tab-card p'),
-    ...document.querySelectorAll('.blog-card h3, .blog-card p'),
-    ...document.querySelectorAll('.pg-card h4, .pg-card p'),
-    ...document.querySelectorAll('.svc-full-card h3, .svc-full-card p'),
-    ...document.querySelectorAll('.team-card h3, .tc-role, .tc p'),
-    ...document.querySelectorAll('.tab-hero h2, .tab-hero p'),
-    ...document.querySelectorAll('.about-strip h2, .about-strip p'),
-    ...document.querySelectorAll('.port-slide-body h4, .port-slide-body p'),
-  ];
+  /* Root: search only inside whatever is currently visible */
+  const root = document.querySelector('.tab-pane.active')
+            || document.querySelector('.pg.active')
+            || document.body;
 
-  const seen = new Set();
-  const matches = [];
+  /* Walk all text nodes inside root */
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT,
+    { acceptNode(node) {
+        const tag = node.parentElement?.tagName || '';
+        if (['SCRIPT','STYLE','MARK','INPUT','TEXTAREA','BUTTON'].includes(tag))
+          return NodeFilter.FILTER_REJECT;
+        if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+    }}
+  );
 
-  sources.forEach(el => {
-    const text = el.innerText || el.textContent || '';
-    if (!text.toLowerCase().includes(q)) return;
+  const regex = new RegExp(`(${escRe(q)})`, 'gi');
+  const nodesToReplace = [];
 
-    /* Get the heading for this result */
-    const heading = el.tagName.match(/H\d/)
-      ? el.innerText
-      : el.closest('.tab-card, .blog-card, .pg-card, .svc-full-card, .team-card, .tab-hero, .about-strip, .port-slide-body')
-          ?.querySelector('h2,h3,h4')?.innerText || text.slice(0,60);
+  while (walker.nextNode()) {
+    if (regex.test(walker.currentNode.nodeValue)) {
+      nodesToReplace.push(walker.currentNode);
+    }
+    regex.lastIndex = 0;
+  }
 
-    const desc = el.tagName.match(/H\d/)
-      ? (el.nextElementSibling?.innerText || '').slice(0,80)
-      : text.slice(0,80);
-
-    if (seen.has(heading)) return;
-    seen.add(heading);
-    matches.push({ heading, desc });
+  /* Replace text nodes: wrap matches with <mark class="sh"> */
+  nodesToReplace.forEach(node => {
+    const frag = document.createDocumentFragment();
+    node.nodeValue.split(new RegExp(`(${escRe(q)})`, 'gi')).forEach(part => {
+      if (part.toLowerCase() === q.toLowerCase()) {
+        const m = document.createElement('mark');
+        m.className = 'sh';
+        m.textContent = part;
+        frag.appendChild(m);
+      } else {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    node.parentNode.replaceChild(frag, node);
   });
 
-  if (matches.length === 0) {
-    results.innerHTML = `<div class="sr-empty">No results for "<strong>${escHtml(val)}</strong>"</div>`;
-  } else {
-    results.innerHTML = matches.slice(0,8).map(m => `
-      <div class="sr-item">
-        <div class="sr-icon" style="background:#eef2ff;color:#4f46e5">
-          <i class="fa-solid fa-file-lines"></i>
-        </div>
-        <div>
-          <h4>${escHtml(m.heading)}</h4>
-          <p>${escHtml(m.desc)}…</p>
-        </div>
-      </div>
-    `).join('');
+  /* Count & show result */
+  const marks = document.querySelectorAll('mark.sh');
+  const count = marks.length;
+
+  if (count === 0) {
+    counter.textContent = 'No match';
+    counter.classList.remove('hidden');
+    counter.style.color = '#ef4444';
+    return;
   }
-  overlay.classList.remove('hidden');
+
+  counter.textContent = `${count} match${count>1?'es':''}`;
+  counter.classList.remove('hidden');
+  counter.style.color = '';
+
+  /* Highlight first match as "current" (orange) and scroll to it */
+  currentMatchIdx = 0;
+  marks[0].classList.add('sh-current');
+  marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function escHtml(s) {
-  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+/* Navigate matches with Enter key */
+document.getElementById('searchInput')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const marks = document.querySelectorAll('mark.sh');
+    if (!marks.length) return;
+    marks[currentMatchIdx]?.classList.remove('sh-current');
+    currentMatchIdx = (currentMatchIdx + 1) % marks.length;
+    marks[currentMatchIdx].classList.add('sh-current');
+    marks[currentMatchIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  if (e.key === 'Escape') { clearSearch(); e.target.blur(); }
+});
+
+function removeHighlights() {
+  document.querySelectorAll('mark.sh').forEach(m => {
+    m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
+  });
+  /* Merge adjacent text nodes */
+  document.body.normalize();
 }
 
 function clearSearch() {
+  removeHighlights();
   const inp = document.getElementById('searchInput');
-  if (inp) { inp.value = ''; }
-  document.getElementById('searchOverlay')?.classList.add('hidden');
+  if (inp) inp.value = '';
   document.getElementById('searchClear')?.classList.add('hidden');
+  document.getElementById('searchCount')?.classList.add('hidden');
 }
 
-document.addEventListener('click', e => {
-  const ov   = document.getElementById('searchOverlay');
-  const wrap = document.getElementById('searchWrap');
-  if (ov && wrap && !wrap.contains(e.target) && !ov.contains(e.target)) {
-    ov.classList.add('hidden');
-  }
-});
+function escRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 /* ══════════════════════════════════════
    NOTIFICATION BELL
