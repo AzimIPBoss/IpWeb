@@ -1,4 +1,108 @@
 /* ══════════════════════════════════════
+   ADMIN DATA LOADER
+   Reads localStorage saved by admin.html
+   and applies changes to the live site.
+══════════════════════════════════════ */
+function loadAdminData() {
+
+  /* ── Contact Info ── */
+  const ci = JSON.parse(localStorage.getItem('ipsbd_contact') || 'null');
+  if (ci) {
+    const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+    set('contact-addr',  ci.addr);
+    set('contact-phone', ci.phone);
+    set('contact-email', ci.email);
+    set('contact-hours', ci.hours);
+    set('contact-map',   ci.addr);
+  }
+
+  /* ── Portfolio ── */
+  const pd = JSON.parse(localStorage.getItem('ipsbd_portfolio') || 'null');
+  if (pd && pd.length) {
+    /* Patch portfolioData in place so slides & modals use admin data */
+    portfolioData.length = 0;
+    pd.forEach((item, i) => {
+      portfolioData.push({
+        title:     item.title     || '',
+        cat:       item.cat       || 'Trademark',
+        catClass:  'cat-' + (item.cat || 'trademark').toLowerCase().replace(/\s+/g,'-'),
+        img:       item.img       || 'https://images.unsplash.com/photo-1507679799987?w=700&q=80',
+        shortDesc: item.desc      || '',
+        outcome:   item.outcome   || '',
+        client:    item.client    || '',
+        challenge: item.challenge || '',
+        solution:  item.solution  || '',
+        result:    item.outcome   || '',
+        tags:      [item.cat]
+      });
+    });
+    buildSlides();  /* rebuild slider with new data */
+    /* Tell Swiper to re-read the updated slides */
+    try { portfolioSwiper.destroy(true, true); } catch(e) {}
+    setTimeout(() => {
+      const ps = new Swiper('.portfolioSwiper', {
+        effect:'coverflow', grabCursor:true, centeredSlides:true,
+        loop:true, slidesPerView:1.3, spaceBetween:24, speed:900,
+        coverflowEffect:{rotate:45,stretch:0,depth:220,modifier:1,slideShadows:true},
+        autoplay:{delay:3500,disableOnInteraction:false,pauseOnMouseEnter:true},
+        navigation:{nextEl:'.portfolio-next',prevEl:'.portfolio-prev'},
+        pagination:{el:'.portfolio-pagination',clickable:true,dynamicBullets:true},
+      });
+    }, 100);
+  }
+
+  /* ── Testimonials ── */
+  const td = JSON.parse(localStorage.getItem('ipsbd_testi') || 'null');
+  if (td && td.length) {
+    /* Update the auto-scroll testimonials column */
+    const wrap = document.getElementById('testiScroll');
+    if (wrap) {
+      wrap.innerHTML = td.map(t => `
+        <div class="testi-item">
+          <div class="ti-stars">${'★'.repeat(t.stars||5)}</div>
+          <p>"${t.text}"</p>
+          <div class="ti-author">
+            <div class="ti-av" style="background:#1d4ed8">${(t.name||'?')[0]}</div>
+            <div><strong>${t.name}</strong><span>${t.company}</span></div>
+          </div>
+        </div>`).join('');
+      /* Duplicate for infinite scroll */
+      wrap.innerHTML += wrap.innerHTML;
+    }
+  }
+
+  /* ── Notifications from admin push ── */
+  const an = JSON.parse(localStorage.getItem('ipsbd_notifs') || 'null');
+  if (an && an.length) {
+    an.forEach(n => {
+      const sectionMap = {
+        home:'all', patent:'patent', trademark:'trademark',
+        blogs:'blogs', portfolios:'portfolios', 'core-team':'core-team',
+        services:'services', contact:'contact', gallery:'gallery'
+      };
+      notifications.unshift({
+        icon: n.icon || 'fa-bell',
+        bg: '#dbeafe', ic: '#1d4ed8',
+        text: n.text,
+        time: n.time || 'Just now',
+        unread: true,
+        go: () => {
+          if (['patent','trademark','blogs','portfolios','core-team'].includes(n.sec)) switchTab(n.sec);
+          else switchSection(n.sec || 'home');
+        }
+      });
+    });
+    localStorage.removeItem('ipsbd_notifs'); /* clear after loading */
+    renderNotifications();
+  }
+}
+
+/* ── Also listen for storage events (admin panel open in another tab) ── */
+window.addEventListener('storage', e => {
+  if (e.key && e.key.startsWith('ipsbd_')) loadAdminData();
+});
+
+/* ══════════════════════════════════════
    SIDEBAR TOGGLE
 ══════════════════════════════════════ */
 const lsb      = document.getElementById('sidebar');
@@ -670,3 +774,6 @@ function showToast(msg) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closePortfolio(); closeAllPortfolios(); if (mob()) closeSidebar(); }
 });
+
+/* Load any data saved by admin panel */
+loadAdminData();
