@@ -423,6 +423,126 @@ mark.sh.sh-current {
 .chat-send-btn:hover{background:#1e40af;transform:scale(1.1)}
 
 /* ══════════════════════════════════
+   GOOGLE-STYLE SEARCH DROPDOWN
+══════════════════════════════════ */
+.tb-search { position: relative; }
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0; right: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.15);
+  z-index: 200;
+  overflow: hidden;
+  min-width: 340px;
+}
+.search-dropdown.hidden { display: none; }
+.sd-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px; cursor: pointer;
+  border-bottom: 1px solid #f8fafc;
+  transition: background .15s;
+  text-decoration: none; color: inherit;
+}
+.sd-item:last-child { border-bottom: none; }
+.sd-item:hover { background: #f0f4ff; }
+.sd-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.sd-text h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+.sd-text p  { font-size: 11.5px; color: #64748b; }
+.sd-section { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; padding: 8px 16px 4px; letter-spacing: .7px; border-bottom: 1px solid #f1f5f9; }
+.sd-empty { padding: 20px 16px; text-align: center; font-size: 13px; color: #94a3b8; }
+
+/* ══════════════════════════════════
+   3-COLUMN HOME LAYOUT
+══════════════════════════════════ */
+.home-3col {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 0;
+  min-height: 480px;
+  border-top: 1px solid var(--border);
+}
+.home-col {
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.home-col:last-child { border-right: none; }
+.hcol-head {
+  font-size: 12px; font-weight: 700; color: var(--navy);
+  padding: 12px 16px; background: #fff;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 7px;
+  text-transform: uppercase; letter-spacing: .6px;
+  flex-shrink: 0;
+}
+
+/* News ticker — scrolls upward automatically */
+.news-ticker-wrap {
+  flex: 1; overflow: hidden; position: relative;
+}
+.news-ticker {
+  display: flex; flex-direction: column; gap: 0;
+  animation: tickerUp 24s linear infinite;
+}
+.news-ticker:hover { animation-play-state: paused; }
+@keyframes tickerUp {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.ntick-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 11px 14px; border-bottom: 1px solid #f1f5f9;
+  cursor: pointer; transition: background .15s;
+  font-size: 12px; color: #334155; line-height: 1.4;
+}
+.ntick-item:hover { background: #f0f4ff; }
+.ntick-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.ntick-date { display: block; font-size: 10.5px; color: #94a3b8; margin-top: 3px; }
+
+/* Center slider column */
+.home-col-slider .portfolio-section { padding: 0 !important; }
+.home-col-slider .portfolioSwiper { padding-bottom: 40px !important; }
+.home-col-slider .port-slide-img { height: 110px; }
+
+/* Testimonials auto-scroll */
+.testi-scroll-wrap { flex: 1; overflow: hidden; }
+.testi-scroll {
+  display: flex; flex-direction: column; gap: 0;
+  animation: tickerUp 20s linear infinite;
+}
+.testi-scroll:hover { animation-play-state: paused; }
+.testi-item {
+  padding: 16px; border-bottom: 1px solid #f1f5f9;
+  font-size: 12.5px;
+}
+.ti-stars { color: #f59e0b; font-size: 13px; margin-bottom: 6px; letter-spacing: 2px; }
+.testi-item p { color: #444; line-height: 1.6; font-style: italic; margin-bottom: 10px; }
+.ti-author { display: flex; align-items: center; gap: 8px; }
+.ti-av {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 10px; font-weight: 700; flex-shrink: 0;
+}
+.ti-author strong { display: block; font-size: 12px; font-weight: 700; color: var(--navy); }
+.ti-author span   { font-size: 10.5px; color: #94a3b8; }
+
+@media(max-width:1100px){
+  .home-3col { grid-template-columns: 1fr 1fr; }
+  .home-col-news { display: none; }
+}
+@media(max-width:700px){
+  .home-3col { grid-template-columns: 1fr; }
+  .home-col-testi { display: none; }
+}
+
+/* ══════════════════════════════════
    TAB PANES
 ══════════════════════════════════ */
 .tab-pane { display: none; }

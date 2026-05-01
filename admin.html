@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>IPServiceBD — Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#f0f2f5;color:#1a1a2e;min-height:100vh}
+    a{text-decoration:none;color:inherit}
+
+    /* LOGIN */
+    #loginScreen{
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;padding:20px;
+    }
+    .login-card{
+      background:#fff;border-radius:16px;padding:40px;
+      width:100%;max-width:380px;box-shadow:0 8px 32px rgba(0,0,0,.12);
+      text-align:center;
+    }
+    .login-logo{font-size:2rem;margin-bottom:8px}
+    .login-card h2{font-size:1.3rem;font-weight:700;color:#0c2461;margin-bottom:4px}
+    .login-card p{font-size:13px;color:#64748b;margin-bottom:28px}
+    .login-card input{
+      width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:9px;
+      font-size:14px;outline:none;margin-bottom:14px;font-family:'Inter',sans-serif;
+    }
+    .login-card input:focus{border-color:#0c2461}
+    .login-btn{
+      width:100%;padding:12px;background:#0c2461;color:#fff;
+      border:none;border-radius:9px;font-size:14px;font-weight:700;
+      cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;
+    }
+    .login-btn:hover{background:#1e40af}
+    .login-err{color:#ef4444;font-size:12.5px;margin-top:8px}
+
+    /* ADMIN LAYOUT */
+    #adminApp{display:none}
+    .admin-wrap{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+
+    /* Sidebar */
+    .admin-sb{background:#0c2461;color:#fff;padding:0;display:flex;flex-direction:column}
+    .admin-sb-logo{padding:20px 18px;border-bottom:1px solid rgba(255,255,255,.1);font-size:15px;font-weight:700}
+    .admin-sb-logo small{display:block;font-size:10px;color:#93c5fd;font-weight:400;margin-top:2px}
+    .admin-nav a{
+      display:flex;align-items:center;gap:10px;padding:12px 18px;
+      font-size:13px;color:rgba(255,255,255,.8);transition:all .15s;cursor:pointer;
+      border-left:3px solid transparent;
+    }
+    .admin-nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+    .admin-nav a.active{background:rgba(255,255,255,.12);color:#fff;border-left-color:#60a5fa}
+    .admin-nav a i{width:16px;text-align:center}
+    .admin-sb-foot{margin-top:auto;padding:16px 18px;border-top:1px solid rgba(255,255,255,.1)}
+    .admin-sb-foot button{
+      width:100%;padding:9px;background:rgba(255,255,255,.1);color:#fff;
+      border:1px solid rgba(255,255,255,.2);border-radius:7px;font-size:12.5px;
+      cursor:pointer;font-family:'Inter',sans-serif;transition:background .18s;
+    }
+    .admin-sb-foot button:hover{background:rgba(255,255,255,.2)}
+
+    /* Main area */
+    .admin-main{padding:28px;overflow-y:auto}
+    .admin-topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:24px;
+    }
+    .admin-topbar h1{font-size:1.4rem;font-weight:800;color:#0c2461}
+    .admin-topbar p{font-size:13px;color:#64748b;margin-top:3px}
+    .save-btn{
+      display:flex;align-items:center;gap:7px;padding:10px 22px;
+      background:#059669;color:#fff;border:none;border-radius:9px;
+      font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;
+      transition:background .18s;
+    }
+    .save-btn:hover{background:#047857}
+    .save-ok{color:#059669;font-size:13px;font-weight:600;display:none}
+
+    /* Section panels */
+    .admin-section{display:none}
+    .admin-section.active{display:block}
+
+    /* Cards */
+    .edit-card{
+      background:#fff;border-radius:12px;border:1px solid #e2e8f0;
+      padding:22px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.05);
+    }
+    .edit-card-head{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;
+    }
+    .edit-card-head h3{font-size:14px;font-weight:700;color:#0c2461}
+    .del-btn{
+      padding:5px 12px;background:#fee2e2;color:#dc2626;border:none;
+      border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;
+    }
+    .del-btn:hover{background:#fecaca}
+    .add-btn{
+      display:flex;align-items:center;gap:7px;padding:10px 18px;
+      background:#eef2ff;color:#4f46e5;border:1.5px dashed #a5b4fc;
+      border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;
+      font-family:'Inter',sans-serif;transition:background .17s;width:100%;
+      justify-content:center;margin-top:6px;
+    }
+    .add-btn:hover{background:#e0e7ff}
+
+    /* Form fields */
+    .fg{margin-bottom:14px}
+    .fg label{display:block;font-size:11.5px;font-weight:700;color:#374151;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+    .fg input,.fg select,.fg textarea{
+      width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:8px;
+      font-size:13.5px;color:#333;outline:none;font-family:'Inter',sans-serif;
+      transition:border-color .2s;
+    }
+    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#0c2461}
+    .fg textarea{resize:vertical;min-height:80px}
+    .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    /* Stats bar */
+    .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+    .stat-box{background:#fff;border-radius:12px;padding:18px 20px;border:1px solid #e2e8f0;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+    .stat-box .sn{font-size:1.6rem;font-weight:800;color:#0c2461;line-height:1}
+    .stat-box .sl{font-size:12px;color:#94a3b8;margin-top:4px}
+    .stat-box i{font-size:1.2rem;margin-bottom:8px;display:block}
+
+    /* Preview link */
+    .preview-link{
+      display:inline-flex;align-items:center;gap:7px;
+      background:#f0f4ff;color:#4f46e5;padding:8px 16px;border-radius:8px;
+      font-size:13px;font-weight:600;transition:background .17s;
+    }
+    .preview-link:hover{background:#e0e7ff}
+
+    @media(max-width:768px){
+      .admin-wrap{grid-template-columns:1fr}
+      .admin-sb{display:none}
+      .stats-bar{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">🔐</div>
+    <h2>IPServiceBD Admin</h2>
+    <p>Sign in to manage website content</p>
+    <input type="text" id="loginUser" placeholder="Username" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <input type="password" id="loginPass" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <p class="login-err" id="loginErr"></p>
+    <p style="font-size:11px;color:#94a3b8;margin-top:18px">Default: admin / ipservicebd2025</p>
+  </div>
+</div>
+
+<!-- ── ADMIN APP ── -->
+<div id="adminApp">
+  <div class="admin-wrap">
+
+    <!-- Sidebar -->
+    <aside class="admin-sb">
+      <div class="admin-sb-logo">
+        IPServiceBD Admin
+        <small>Content Management</small>
+      </div>
+      <nav class="admin-nav">
+        <a class="active" onclick="showSection('dashboard')"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a onclick="showSection('portfolio')"><i class="fa-solid fa-folder-open"></i> Portfolio</a>
+        <a onclick="showSection('team')"><i class="fa-solid fa-users"></i> Core Team</a>
+        <a onclick="showSection('testimonials')"><i class="fa-solid fa-star"></i> Testimonials</a>
+        <a onclick="showSection('blogs')"><i class="fa-solid fa-newspaper"></i> Blog Posts</a>
+        <a onclick="showSection('notifications')"><i class="fa-solid fa-bell"></i> Notifications</a>
+        <a onclick="showSection('services')"><i class="fa-solid fa-scale-balanced"></i> Services</a>
+        <a onclick="showSection('contact')"><i class="fa-solid fa-envelope"></i> Contact Info</a>
+      </nav>
+      <div class="admin-sb-foot">
+        <button onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+
+      <!-- DASHBOARD -->
+      <div class="admin-section active" id="sec-dashboard">
+        <div class="admin-topbar">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back! Manage your website content below.</p>
+          </div>
+          <a href="index.html" target="_blank" class="preview-link">
+            <i class="fa-solid fa-eye"></i> Preview Site
+          </a>
+        </div>
+        <div class="stats-bar">
+          <div class="stat-box"><i class="fa-solid fa-folder-open" style="color:#d97706"></i><div class="sn" id="dPortfolio">8</div><div class="sl">Case Studies</div></div>
+          <div class="stat-box"><i class="fa-solid fa-users" style="color:#7c3aed"></i><div class="sn" id="dTeam">3</div><div class="sl">Team Members</div></div>
+          <div class="stat-box"><i class="fa-solid fa-star" style="color:#f59e0b"></i><div class="sn" id="dTesti">4</div><div class="sl">Testimonials</div></div>
+          <div class="stat-box"><i class="fa-solid fa-newspaper" style="color:#059669"></i><div class="sn" id="dBlogs">6</div><div class="sl">Blog Posts</div></div>
+        </div>
+        <div class="edit-card">
+          <div class="edit-card-head"><h3>Quick Actions</h3></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <button class="add-btn" style="width:auto;padding:10px 18px" onclick="showSection('portfolio')"><i class="fa-solid fa-plus"></i> Add Case Study</button>
+            <button class="add-btn" style="width:auto;padding:10px 18px" onclick="showSection('blogs')"><i class="fa-solid fa-plus"></i> Add Blog Post</button>
+            <button class="add-btn" style="width:auto;padding:10px 18px" onclick="showSection('notifications')"><i class="fa-solid fa-plus"></i> Push Notification</button>
+          </div>
+        </div>
+        <div class="edit-card">
+          <div class="edit-card-head"><h3>How to Use This Panel</h3></div>
+          <ul style="font-size:13px;color:#555;line-height:2;padding-left:18px">
+            <li>Edit portfolio cases, team members, testimonials, and blog posts</li>
+            <li>Changes are saved to browser storage and applied instantly</li>
+            <li>Click <strong>Save Changes</strong> in each section to apply</li>
+            <li>Use <strong>Preview Site</strong> to see changes live</li>
+            <li>Password can be changed in the Contact Info section</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PORTFOLIO -->
+      <div class="admin-section" id="sec-portfolio">
+        <div class="admin-topbar">
+          <div><h1>Portfolio / Case Studies</h1><p>Add, edit or remove case studies</p></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="save-ok" id="portSaveOk">✓ Saved!</span>
+            <button class="save-btn" onclick="savePortfolio()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+        <div id="portList"></div>
+        <button class="add-btn" onclick="addPortfolioItem()"><i class="fa-solid fa-plus"></i> Add New Case Study</button>
+      </div>
+
+      <!-- TEAM -->
+      <div class="admin-section" id="sec-team">
+        <div class="admin-topbar">
+          <div><h1>Core Team</h1><p>Manage team member profiles</p></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="save-ok" id="teamSaveOk">✓ Saved!</span>
+            <button class="save-btn" onclick="saveTeam()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+        <div id="teamList"></div>
+        <button class="add-btn" onclick="addTeamMember()"><i class="fa-solid fa-plus"></i> Add Team Member</button>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="admin-section" id="sec-testimonials">
+        <div class="admin-topbar">
+          <div><h1>Testimonials</h1><p>Manage client testimonials</p></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="save-ok" id="testiSaveOk">✓ Saved!</span>
+            <button class="save-btn" onclick="saveTesti()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+        <div id="testiList"></div>
+        <button class="add-btn" onclick="addTesti()"><i class="fa-solid fa-plus"></i> Add Testimonial</button>
+      </div>
+
+      <!-- BLOGS -->
+      <div class="admin-section" id="sec-blogs">
+        <div class="admin-topbar">
+          <div><h1>Blog Posts</h1><p>Manage IP blog articles</p></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="save-ok" id="blogSaveOk">✓ Saved!</span>
+            <button class="save-btn" onclick="saveBlogs()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+        <div id="blogList"></div>
+        <button class="add-btn" onclick="addBlog()"><i class="fa-solid fa-plus"></i> Add Blog Post</button>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div class="admin-section" id="sec-notifications">
+        <div class="admin-topbar">
+          <div><h1>Push Notification</h1><p>Send a notification that appears in the bell icon</p></div>
+        </div>
+        <div class="edit-card">
+          <div class="fg"><label>Notification Text</label><input type="text" id="notifText" placeholder="New blog: Trademark registration guide published"/></div>
+          <div class="fg-row">
+            <div class="fg"><label>Icon (Font Awesome class)</label><input type="text" id="notifIcon" placeholder="fa-newspaper" value="fa-newspaper"/></div>
+            <div class="fg"><label>Link to section</label>
+              <select id="notifSection">
+                <option value="home">Home</option>
+                <option value="patent">Patent Tab</option>
+                <option value="trademark">Trademark Tab</option>
+                <option value="blogs" selected>IP Blogs Tab</option>
+                <option value="portfolios">Portfolio Tab</option>
+                <option value="core-team">Core Team Tab</option>
+                <option value="services">Our Services</option>
+                <option value="contact">Contact</option>
+              </select>
+            </div>
+          </div>
+          <button class="save-btn" onclick="pushNotif()"><i class="fa-solid fa-bell"></i> Send Notification</button>
+          <p style="font-size:12px;color:#94a3b8;margin-top:10px">Notifications are stored in browser and shown on the main site when it's open in the same browser.</p>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="admin-section" id="sec-services">
+        <div class="admin-topbar">
+          <div><h1>Services</h1><p>Edit service descriptions</p></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="save-ok" id="svcSaveOk">✓ Saved!</span>
+            <button class="save-btn" onclick="saveSvc()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+        <div id="svcList"></div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="admin-section" id="sec-contact">
+        <div class="admin-topbar">
+          <div><h1>Contact Info</h1><p>Update contact details and admin password</p></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="save-ok" id="contSaveOk">✓ Saved!</span>
+            <button class="save-btn" onclick="saveContact()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+        <div class="edit-card">
+          <div class="edit-card-head"><h3>Contact Details</h3></div>
+          <div class="fg-row">
+            <div class="fg"><label>Address</label><input id="ci-addr" type="text" value="Gulshan 2, Dhaka 1212, Bangladesh"/></div>
+            <div class="fg"><label>Phone</label><input id="ci-phone" type="text" value="+880 1XXX-XXXXXX"/></div>
+          </div>
+          <div class="fg-row">
+            <div class="fg"><label>Email</label><input id="ci-email" type="email" value="info@ipservicebd.com"/></div>
+            <div class="fg"><label>Office Hours</label><input id="ci-hours" type="text" value="Sun – Thu: 9:00 AM – 6:00 PM"/></div>
+          </div>
+        </div>
+        <div class="edit-card">
+          <div class="edit-card-head"><h3>Change Admin Password</h3></div>
+          <div class="fg-row">
+            <div class="fg"><label>New Username</label><input id="ci-user" type="text" placeholder="admin"/></div>
+            <div class="fg"><label>New Password</label><input id="ci-pass" type="password" placeholder="new password"/></div>
+          </div>
+          <p style="font-size:12px;color:#94a3b8">Leave blank to keep current credentials.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+/* ── AUTH ── */
+const DEFAULT_CREDS = {user:'admin', pass:'ipservicebd2025'};
+
+function getCreds() {
+  const s = localStorage.getItem('ipsbd_creds');
+  return s ? JSON.parse(s) : DEFAULT_CREDS;
+}
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const c = getCreds();
+  if (u === c.user && p === c.pass) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block';
+    loadAll();
+  } else {
+    document.getElementById('loginErr').textContent = 'Invalid username or password.';
+  }
+}
+
+function doLogout() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminApp').style.display = 'none';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+/* ── SECTION NAVIGATION ── */
+function showSection(id) {
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  const link = document.querySelector('.admin-nav a[onclick*=\'' + id + '\']');
+  if (link) link.classList.add('active');
+  if (id === 'portfolio')     renderPortList();
+  if (id === 'team')          renderTeamList();
+  if (id === 'testimonials')  renderTestiList();
+  if (id === 'blogs')         renderBlogList();
+  if (id === 'services')      renderSvcList();
+}
+
+/* ── LOAD ALL ── */
+function loadAll() {
+  const pd = localStorage.getItem('ipsbd_portfolio');
+  if (pd) portData = JSON.parse(pd);
+  const td = localStorage.getItem('ipsbd_team');
+  if (td) teamData = JSON.parse(td);
+  const ti = localStorage.getItem('ipsbd_testi');
+  if (ti) testiData = JSON.parse(ti);
+  const bd = localStorage.getItem('ipsbd_blogs');
+  if (bd) blogData = JSON.parse(bd);
+  updateDashStats();
+}
+
+/* ── PORTFOLIO ── */
+let portData = [
+  {title:'Fashion Brand Protection Across Three Countries',cat:'Trademark',desc:'International trademark defence across Bangladesh, India & UAE.',outcome:'Injunctions in 3 countries in 8 months',client:'A leading Bangladeshi fashion retail brand'},
+  {title:'Pharmaceutical Innovation Patent',cat:'Patent',desc:'Patent protection for a novel drug formulation in Bangladesh.',outcome:'Patent granted, PCT in 14 countries',client:'A Bangladeshi pharmaceutical manufacturing company'},
+  {title:'Consumer Product Design Registration',cat:'Design',desc:'Design protection for a leading home appliance brand.',outcome:'Registered in BD + 8 export markets',client:'A home appliances manufacturer'},
+  {title:'Madrid Protocol — 12 Countries in One Filing',cat:'Trademark',desc:'Single WIPO filing securing trademark in 12 territories.',outcome:'60% cost saving vs. individual filings',client:'An export-oriented garments brand'},
+  {title:'Trademark Infringement — Successful Litigation',cat:'Litigation',desc:'Counterfeit operation stopped, BDT 8M damages awarded.',outcome:'BDT 8M damages + full brand protection',client:'An FMCG brand established in Bangladesh'},
+  {title:'Fintech Software & Technology Patent Portfolio',cat:'Patent',desc:'Patent portfolio built for a fintech startup pre-Series B.',outcome:'IP valued USD 2.4M, raised USD 8M Series B',client:'A Bangladeshi fintech startup (Series A stage)'},
+  {title:'Complete Brand IP Audit & Restructuring',cat:'Trademark',desc:'IP audit and consolidation for a garments export company.',outcome:'35% reduction in annual IP maintenance cost',client:'A major garments export company'},
+  {title:'Cloud ERP Software Copyright Registration',cat:'Copyright',desc:'Copyright registered, competitor product withdrawn in 60 days.',outcome:'Competitor withdrew. Settlement secured.',client:'A SaaS company providing ERP solutions'},
+];
+
+function renderPortList() {
+  document.getElementById('portList').innerHTML = portData.map((d,i) => `
+    <div class="edit-card">
+      <div class="edit-card-head">
+        <h3>Case Study #${i+1}</h3>
+        <button class="del-btn" onclick="delPort(${i})">Delete</button>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>Title</label><input value="${esc(d.title)}" oninput="portData[${i}].title=this.value"/></div>
+        <div class="fg"><label>Category</label>
+          <select onchange="portData[${i}].cat=this.value">
+            <option ${d.cat==='Trademark'?'selected':''}>Trademark</option>
+            <option ${d.cat==='Patent'?'selected':''}>Patent</option>
+            <option ${d.cat==='Design'?'selected':''}>Design</option>
+            <option ${d.cat==='Copyright'?'selected':''}>Copyright</option>
+            <option ${d.cat==='Litigation'?'selected':''}>Litigation</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>Client Description</label><input value="${esc(d.client)}" oninput="portData[${i}].client=this.value"/></div>
+      <div class="fg"><label>Short Description</label><textarea oninput="portData[${i}].desc=this.value">${esc(d.desc)}</textarea></div>
+      <div class="fg"><label>Outcome / Result</label><input value="${esc(d.outcome)}" oninput="portData[${i}].outcome=this.value"/></div>
+    </div>`).join('');
+}
+
+function delPort(i) { if(confirm('Delete this case study?')) { portData.splice(i,1); renderPortList(); } }
+function addPortfolioItem() { portData.push({title:'New Case Study',cat:'Trademark',desc:'',outcome:'',client:''}); renderPortList(); }
+function savePortfolio() { localStorage.setItem('ipsbd_portfolio', JSON.stringify(portData)); showSaved('portSaveOk'); updateDashStats(); }
+
+/* ── TEAM ── */
+let teamData = [
+  {name:'Azim Uddin',role:'Founding Partner & Lead IP Attorney',bio:'18+ years specializing in trademark and patent law across South Asia and the Middle East.'},
+  {name:'Sara Ahmed',role:'Patent Attorney',bio:'Expert in pharmaceutical and technology patents with experience at WIPO, Geneva.'},
+  {name:'Rahim Khan',role:'Trademark Specialist',bio:'Handles international trademark filings via the Madrid Protocol and IP dispute resolution.'},
+];
+
+function renderTeamList() {
+  document.getElementById('teamList').innerHTML = teamData.map((d,i) => `
+    <div class="edit-card">
+      <div class="edit-card-head"><h3>${esc(d.name)}</h3><button class="del-btn" onclick="delTeam(${i})">Delete</button></div>
+      <div class="fg-row">
+        <div class="fg"><label>Full Name</label><input value="${esc(d.name)}" oninput="teamData[${i}].name=this.value"/></div>
+        <div class="fg"><label>Role / Title</label><input value="${esc(d.role)}" oninput="teamData[${i}].role=this.value"/></div>
+      </div>
+      <div class="fg"><label>Short Bio</label><textarea oninput="teamData[${i}].bio=this.value">${esc(d.bio)}</textarea></div>
+    </div>`).join('');
+}
+
+function delTeam(i) { if(confirm('Remove this team member?')) { teamData.splice(i,1); renderTeamList(); } }
+function addTeamMember() { teamData.push({name:'New Member',role:'',bio:''}); renderTeamList(); }
+function saveTeam() { localStorage.setItem('ipsbd_team', JSON.stringify(teamData)); showSaved('teamSaveOk'); updateDashStats(); }
+
+/* ── TESTIMONIALS ── */
+let testiData = [
+  {name:'Mr. Rafiq',company:'CEO, TechBD Ltd',stars:5,text:'IPServiceBD handled our entire trademark portfolio with exceptional professionalism. They secured our brand in Bangladesh and 8 other countries seamlessly.'},
+  {name:'Ms. Sultana',company:'Director, MediCare BD',stars:5,text:'They secured our pharmaceutical patent in record time. Their deep understanding of Bangladesh\'s IP laws and the TRIPS framework is truly unparalleled.'},
+  {name:'Fahmida Hossain',company:'Owner, Fashion Hub BD',stars:5,text:'Our fashion brand is now protected in 12 countries thanks to IPServiceBD. Their Madrid Protocol expertise saved us time and money.'},
+  {name:'Karim Ahmed',company:'CEO, FinTechBD',stars:5,text:'Our fintech startup\'s patent portfolio now valued at USD 2.4M thanks to IPServiceBD\'s expert patent strategy and filing support.'},
+];
+
+function renderTestiList() {
+  document.getElementById('testiList').innerHTML = testiData.map((d,i) => `
+    <div class="edit-card">
+      <div class="edit-card-head"><h3>${esc(d.name)}</h3><button class="del-btn" onclick="delTesti(${i})">Delete</button></div>
+      <div class="fg-row">
+        <div class="fg"><label>Client Name</label><input value="${esc(d.name)}" oninput="testiData[${i}].name=this.value"/></div>
+        <div class="fg"><label>Company / Title</label><input value="${esc(d.company)}" oninput="testiData[${i}].company=this.value"/></div>
+      </div>
+      <div class="fg"><label>Testimonial Text</label><textarea oninput="testiData[${i}].text=this.value">${esc(d.text)}</textarea></div>
+    </div>`).join('');
+}
+
+function delTesti(i) { if(confirm('Delete this testimonial?')) { testiData.splice(i,1); renderTestiList(); } }
+function addTesti() { testiData.push({name:'Client Name',company:'Company',stars:5,text:''}); renderTestiList(); }
+function saveTesti() { localStorage.setItem('ipsbd_testi', JSON.stringify(testiData)); showSaved('testiSaveOk'); updateDashStats(); }
+
+/* ── BLOGS ── */
+let blogData = [
+  {title:'How to Register a Trademark in Bangladesh: 2025 Complete Guide',cat:'Trademark',date:'Jan 12, 2025',read:'5 min',excerpt:'A step-by-step guide covering required documents, fees at DPDT, examination process, and timelines.'},
+  {title:'Pharmaceutical Patents in Bangladesh Post-LDC Transition',cat:'Patent',date:'Mar 15, 2025',read:'7 min',excerpt:'Bangladesh enjoyed a TRIPS waiver until 2033. This article explores what changes for patent protection.'},
+  {title:'International Trademark Filing via Madrid Protocol',cat:'Trademark',date:'Apr 10, 2025',read:'5 min',excerpt:'How Bangladeshi businesses can protect brands in 130+ countries using the WIPO Madrid System.'},
+  {title:'Registering Product Designs Under Bangladesh Design Act 1911',cat:'Design',date:'Apr 18, 2025',read:'4 min',excerpt:'Protecting visual characteristics of your products through design registration at DPDT.'},
+  {title:'Trademark Opposition & Appeal Process in Bangladesh',cat:'Trademark',date:'Mar 5, 2025',read:'6 min',excerpt:'How to respond to trademark oppositions before the DPDT and through Bangladesh courts.'},
+  {title:'PCT International Patent Applications for Bangladeshi Inventors',cat:'Patent',date:'Apr 27, 2025',read:'6 min',excerpt:'How to file a Patent Cooperation Treaty application to protect your invention in 150+ countries.'},
+];
+
+function renderBlogList() {
+  document.getElementById('blogList').innerHTML = blogData.map((d,i) => `
+    <div class="edit-card">
+      <div class="edit-card-head"><h3>${esc(d.title)}</h3><button class="del-btn" onclick="delBlog(${i})">Delete</button></div>
+      <div class="fg"><label>Title</label><input value="${esc(d.title)}" oninput="blogData[${i}].title=this.value"/></div>
+      <div class="fg-row">
+        <div class="fg"><label>Category</label>
+          <select onchange="blogData[${i}].cat=this.value">
+            <option ${d.cat==='Trademark'?'selected':''}>Trademark</option>
+            <option ${d.cat==='Patent'?'selected':''}>Patent</option>
+            <option ${d.cat==='Design'?'selected':''}>Design</option>
+            <option ${d.cat==='Copyright'?'selected':''}>Copyright</option>
+          </select>
+        </div>
+        <div class="fg"><label>Date</label><input value="${esc(d.date)}" oninput="blogData[${i}].date=this.value"/></div>
+        <div class="fg"><label>Read Time</label><input value="${esc(d.read)}" oninput="blogData[${i}].read=this.value" placeholder="5 min"/></div>
+      </div>
+      <div class="fg"><label>Excerpt / Summary</label><textarea oninput="blogData[${i}].excerpt=this.value">${esc(d.excerpt)}</textarea></div>
+    </div>`).join('');
+}
+
+function delBlog(i) { if(confirm('Delete this blog post?')) { blogData.splice(i,1); renderBlogList(); } }
+function addBlog() { blogData.push({title:'New Blog Post',cat:'Trademark',date:'May 1, 2025',read:'5 min',excerpt:''}); renderBlogList(); }
+function saveBlogs() { localStorage.setItem('ipsbd_blogs', JSON.stringify(blogData)); showSaved('blogSaveOk'); updateDashStats(); }
+
+/* ── SERVICES ── */
+const svcData = [
+  {title:'Trademark Registration',desc:'Register and protect your brand under Bangladesh\'s Trademarks Act 2009 from initial search through to certificate issuance.'},
+  {title:'Patent Registration',desc:'Comprehensive patent prosecution services under the Bangladesh Patents and Designs Act 1911, including international filing via the PCT system.'},
+  {title:'Design Registration',desc:'Protect the aesthetic and visual aspects of your products — shapes, patterns, ornamentation — under Bangladesh\'s design law framework.'},
+  {title:'Copyright Registration',desc:'Register and protect creative works — literary, artistic, musical, dramatic, and software — under the Bangladesh Copyright Act 2000.'},
+  {title:'International IP',desc:'Protect your IP globally through WIPO\'s international systems and our network of overseas IP attorneys across 50+ countries.'},
+  {title:'IP Litigation & Enforcement',desc:'Aggressive protection and enforcement of your IP rights through Bangladesh courts, customs, and alternative dispute resolution mechanisms.'},
+];
+
+function renderSvcList() {
+  document.getElementById('svcList').innerHTML = svcData.map((d,i) => `
+    <div class="edit-card">
+      <div class="edit-card-head"><h3>${esc(d.title)}</h3></div>
+      <div class="fg"><label>Service Name</label><input value="${esc(d.title)}" oninput="svcData[${i}].title=this.value"/></div>
+      <div class="fg"><label>Description</label><textarea oninput="svcData[${i}].desc=this.value">${esc(d.desc)}</textarea></div>
+    </div>`).join('');
+}
+
+function saveSvc() { localStorage.setItem('ipsbd_services', JSON.stringify(svcData)); showSaved('svcSaveOk'); }
+
+/* ── CONTACT ── */
+function saveContact() {
+  const u = document.getElementById('ci-user').value.trim();
+  const p = document.getElementById('ci-pass').value;
+  if (u && p) { localStorage.setItem('ipsbd_creds', JSON.stringify({user:u,pass:p})); }
+  localStorage.setItem('ipsbd_contact', JSON.stringify({
+    addr: document.getElementById('ci-addr').value,
+    phone: document.getElementById('ci-phone').value,
+    email: document.getElementById('ci-email').value,
+    hours: document.getElementById('ci-hours').value,
+  }));
+  showSaved('contSaveOk');
+}
+
+/* ── NOTIFICATION PUSH ── */
+function pushNotif() {
+  const text = document.getElementById('notifText').value.trim();
+  const icon = document.getElementById('notifIcon').value.trim() || 'fa-bell';
+  const sec  = document.getElementById('notifSection').value;
+  if (!text) { alert('Please enter notification text.'); return; }
+  const stored = JSON.parse(localStorage.getItem('ipsbd_notifs')||'[]');
+  stored.unshift({text, icon, sec, time:'Just now', unread:true});
+  localStorage.setItem('ipsbd_notifs', JSON.stringify(stored.slice(0,20)));
+  alert('Notification pushed! It will appear on the main site.');
+  document.getElementById('notifText').value = '';
+}
+
+/* ── HELPERS ── */
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function showSaved(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = 'inline';
+  setTimeout(() => el.style.display = 'none', 2500);
+}
+
+function updateDashStats() {
+  document.getElementById('dPortfolio').textContent = portData.length;
+  document.getElementById('dTeam').textContent = teamData.length;
+  document.getElementById('dTesti').textContent = testiData.length;
+  document.getElementById('dBlogs').textContent = blogData.length;
+}
+</script>
+</body>
+</html>

@@ -21,146 +21,147 @@ window.addEventListener('resize', () => {
 });
 
 /* ══════════════════════════════════════
-   SEARCH — highlight matching words on visible page
-   Works like browser Ctrl+F
+   GOOGLE-STYLE SEARCH
+   Shows result links → click → navigate to page
 ══════════════════════════════════════ */
-let currentMatchIdx = 0;
+const SEARCH_INDEX = [
+  {title:'Trademark Registration',desc:'Register brand under Trademarks Act 2009 at DPDT',icon:'fa-trademark',bg:'#dbeafe',ic:'#1d4ed8',go:()=>switchSection('services')},
+  {title:'Patent Registration',desc:'Protect inventions under Bangladesh Patents & Designs Act 1911',icon:'fa-flask',bg:'#d1fae5',ic:'#065f46',go:()=>switchSection('services')},
+  {title:'Design Registration',desc:'Protect visual aspects of products under design law',icon:'fa-pen-ruler',bg:'#ede9fe',ic:'#5b21b6',go:()=>switchSection('services')},
+  {title:'Copyright Registration',desc:'Register creative works under Bangladesh Copyright Act 2000',icon:'fa-copyright',bg:'#fef3c7',ic:'#92400e',go:()=>switchSection('services')},
+  {title:'IP Litigation & Enforcement',desc:'Enforce IP rights through Bangladesh courts',icon:'fa-gavel',bg:'#ccfbf1',ic:'#0f766e',go:()=>switchSection('services')},
+  {title:'International IP — Madrid Protocol',desc:'Protect trademark in 130+ countries via WIPO',icon:'fa-globe',bg:'#ffe4e6',ic:'#9f1239',go:()=>switchSection('services')},
+  {title:'Patent Articles & Info',desc:'Browse patent services and guides',icon:'fa-flask',bg:'#d1fae5',ic:'#065f46',go:()=>switchTab('patent')},
+  {title:'Trademark Articles & Info',desc:'Browse trademark services and guides',icon:'fa-trademark',bg:'#dbeafe',ic:'#1d4ed8',go:()=>switchTab('trademark')},
+  {title:'Portfolio / Case Studies',desc:'View all our IP case studies and outcomes',icon:'fa-folder-open',bg:'#fef3c7',ic:'#92400e',go:()=>switchTab('portfolios')},
+  {title:'IP Blogs',desc:'Read IP law articles and industry updates',icon:'fa-newspaper',bg:'#f0fdf4',ic:'#15803d',go:()=>switchTab('blogs')},
+  {title:'Core Team',desc:'Meet our IP attorneys and legal specialists',icon:'fa-users',bg:'#ede9fe',ic:'#5b21b6',go:()=>switchTab('core-team')},
+  {title:'About IPServiceBD',desc:'Bangladesh IP law firm founded in 2007 — professional, personalized, prompt',icon:'fa-building-columns',bg:'#f1f5f9',ic:'#475569',go:()=>switchSection('about')},
+  {title:'Our Clients & Testimonials',desc:'Trusted by 200+ businesses across Bangladesh',icon:'fa-handshake',bg:'#d1fae5',ic:'#065f46',go:()=>switchSection('clients')},
+  {title:'Contact Us',desc:'Free consultation with our IP experts',icon:'fa-envelope',bg:'#f1f5f9',ic:'#475569',go:()=>switchSection('contact')},
+  {title:'DPDT — Bangladesh IP Registry',desc:'Department of Patents, Designs and Trade Marks, Dhaka',icon:'fa-building-government',bg:'#dbeafe',ic:'#1d4ed8',go:()=>switchSection('services')},
+  {title:'WIPO — Madrid Protocol',desc:'International trademark filing system covering 130+ countries',icon:'fa-globe',bg:'#ffe4e6',ic:'#9f1239',go:()=>switchSection('services')},
+  {title:'PCT — Patent Cooperation Treaty',desc:'International patent protection in 150+ countries',icon:'fa-flask',bg:'#d1fae5',ic:'#065f46',go:()=>switchSection('services')},
+  {title:'Providing IP services since 2007',desc:'IPServiceBD — specialized IP law firm across Bangladesh',icon:'fa-star',bg:'#fef9c3',ic:'#b45309',go:()=>switchSection('about')},
+  {title:'What Our Clients Say',desc:'Client testimonials and success stories',icon:'fa-star',bg:'#fef9c3',ic:'#b45309',go:()=>switchSection('clients')},
+  {title:'Gallery — Office & Events',desc:'Photos of our office, team events and milestones',icon:'fa-images',bg:'#fef3c7',ic:'#92400e',go:()=>switchSection('gallery')},
+];
 
 function handleSearch(val) {
-  removeHighlights();
-
-  const q        = val.trim();
-  const clearBtn = document.getElementById('searchClear');
-  const counter  = document.getElementById('searchCount');
-
-  clearBtn.classList.toggle('hidden', !val);
-
-  if (!q || q.length < 1) {
-    counter.classList.add('hidden');
-    return;
-  }
-
-  /* Root: the entire active page section — covers tab panes + any content outside them */
-  const root = document.querySelector('.pg.active') || document.body;
-
-  /* Walk all text nodes inside root, skipping inactive tab panes */
-  const walker = document.createTreeWalker(
-    root,
-    NodeFilter.SHOW_TEXT,
-    { acceptNode(node) {
-        const tag = node.parentElement?.tagName || '';
-        /* Skip script / style / form elements */
-        if (['SCRIPT','STYLE','MARK','INPUT','TEXTAREA','BUTTON'].includes(tag))
-          return NodeFilter.FILTER_REJECT;
-        /* Skip text inside a tab pane that is NOT active */
-        const pane = node.parentElement?.closest('.tab-pane');
-        if (pane && !pane.classList.contains('active'))
-          return NodeFilter.FILTER_REJECT;
-        if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        return NodeFilter.FILTER_ACCEPT;
-    }}
+  const q = val.trim().toLowerCase();
+  const dd = document.getElementById('searchDropdown');
+  const cl = document.getElementById('searchClear');
+  if (cl) cl.classList.toggle('hidden', !val);
+  if (!q) { if(dd) dd.classList.add('hidden'); return; }
+  const hits = SEARCH_INDEX.filter(d =>
+    d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q)
   );
-
-  const regex = new RegExp(`(${escRe(q)})`, 'gi');
-  const nodesToReplace = [];
-
-  while (walker.nextNode()) {
-    if (regex.test(walker.currentNode.nodeValue)) {
-      nodesToReplace.push(walker.currentNode);
-    }
-    regex.lastIndex = 0;
+  if (!dd) return;
+  if (hits.length === 0) {
+    dd.innerHTML = '<div class="sd-empty">No results for &ldquo;' + escH(val) + '&rdquo;</div>';
+  } else {
+    dd.innerHTML = '<div class="sd-section">Results</div>' +
+      hits.slice(0,8).map(d =>
+        '<div class="sd-item" onclick="(' + d.go.toString() + ')();' +
+        'document.getElementById('searchDropdown').classList.add('hidden');' +
+        'document.getElementById('searchInput').value=''">' +
+        '<div class="sd-icon" style="background:' + d.bg + ';color:' + d.ic + '">' +
+        '<i class="fa-solid ' + d.icon + '"></i></div>' +
+        '<div class="sd-text"><h4>' + escH(d.title) + '</h4><p>' + escH(d.desc) + '</p></div>' +
+        '<i class="fa-solid fa-arrow-right" style="color:#cbd5e1;font-size:11px;margin-left:auto;flex-shrink:0"></i></div>'
+      ).join('');
   }
-
-  /* Replace text nodes: wrap matches with <mark class="sh"> */
-  nodesToReplace.forEach(node => {
-    const frag = document.createDocumentFragment();
-    node.nodeValue.split(new RegExp(`(${escRe(q)})`, 'gi')).forEach(part => {
-      if (part.toLowerCase() === q.toLowerCase()) {
-        const m = document.createElement('mark');
-        m.className = 'sh';
-        m.textContent = part;
-        frag.appendChild(m);
-      } else {
-        frag.appendChild(document.createTextNode(part));
-      }
-    });
-    node.parentNode.replaceChild(frag, node);
-  });
-
-  /* Count & show result */
-  const marks = document.querySelectorAll('mark.sh');
-  const count = marks.length;
-
-  if (count === 0) {
-    counter.textContent = 'No match';
-    counter.classList.remove('hidden');
-    counter.style.color = '#ef4444';
-    return;
-  }
-
-  counter.textContent = `${count} match${count>1?'es':''}`;
-  counter.classList.remove('hidden');
-  counter.style.color = '';
-
-  /* Highlight first match as "current" (orange) and scroll to it */
-  currentMatchIdx = 0;
-  marks[0].classList.add('sh-current');
-  marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-/* Navigate matches with Enter key */
-document.getElementById('searchInput')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    const marks = document.querySelectorAll('mark.sh');
-    if (!marks.length) return;
-    marks[currentMatchIdx]?.classList.remove('sh-current');
-    currentMatchIdx = (currentMatchIdx + 1) % marks.length;
-    marks[currentMatchIdx].classList.add('sh-current');
-    marks[currentMatchIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-  if (e.key === 'Escape') { clearSearch(); e.target.blur(); }
-});
-
-function removeHighlights() {
-  document.querySelectorAll('mark.sh').forEach(m => {
-    m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
-  });
-  /* Merge adjacent text nodes */
-  document.body.normalize();
+  dd.classList.remove('hidden');
 }
 
 function clearSearch() {
-  removeHighlights();
   const inp = document.getElementById('searchInput');
   if (inp) inp.value = '';
+  document.getElementById('searchDropdown')?.classList.add('hidden');
   document.getElementById('searchClear')?.classList.add('hidden');
-  document.getElementById('searchCount')?.classList.add('hidden');
 }
 
-function escRe(s) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
+function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+document.addEventListener('click', e => {
+  const dd = document.getElementById('searchDropdown');
+  const wr = document.getElementById('searchWrap');
+  if (dd && wr && !wr.contains(e.target)) dd.classList.add('hidden');
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { clearSearch(); document.getElementById('searchInput')?.blur(); }
+});
 
 /* ══════════════════════════════════════
-   NOTIFICATION BELL
+   DYNAMIC NOTIFICATION BELL
+   Notifications auto-add when chat messages arrive
 ══════════════════════════════════════ */
+const notifications = [
+  { icon:'fa-newspaper',  bg:'#dbeafe', ic:'#1d4ed8', text:'New Blog: Trademark Registration Guide 2025', time:'Just now',  unread:true,  go:()=>switchTab('blogs') },
+  { icon:'fa-flask',      bg:'#d1fae5', ic:'#065f46', text:'Patent Update: PCT Deadline Alert — May 30', time:'2 hrs ago', unread:true,  go:()=>switchTab('patent') },
+  { icon:'fa-folder-open',bg:'#fef3c7', ic:'#92400e', text:'New Case Study: Fashion Brand Protection',   time:'Yesterday', unread:false, go:()=>switchTab('portfolios') },
+];
+
+function renderNotifications() {
+  const list = document.getElementById('notifList');
+  const dot  = document.getElementById('bellDot');
+  if (!list) return;
+  const unread = notifications.filter(n=>n.unread).length;
+  if (dot) dot.classList.toggle('hidden', unread===0);
+  list.innerHTML = notifications.map((n,i) => `
+    <div class="notif-item ${n.unread?'unread':''}" onclick="notifGo(${i})">
+      <div class="notif-icon" style="background:${n.bg};color:${n.ic}">
+        <i class="fa-solid ${n.icon}"></i>
+      </div>
+      <div><p>${n.text}</p><small>${n.time}</small></div>
+    </div>`).join('') ||
+    '<div style="padding:20px;text-align:center;color:#94a3b8;font-size:13px">No notifications</div>';
+}
+
+function notifGo(idx) {
+  notifications[idx].unread = false;
+  renderNotifications();
+  document.getElementById('notifDropdown').classList.add('hidden');
+  notifications[idx].go?.();
+}
+
+function addNotification(text, icon, bg, ic, go) {
+  notifications.unshift({ icon, bg, ic, text, time:'Just now', unread:true, go });
+  renderNotifications();
+}
+
 function toggleNotif() {
   const dd = document.getElementById('notifDropdown');
   dd.classList.toggle('hidden');
+  if (!dd.classList.contains('hidden')) renderNotifications();
 }
 
 function markAllRead() {
-  document.querySelectorAll('.notif-item.unread').forEach(n => n.classList.remove('unread'));
-  document.getElementById('bellDot').classList.add('hidden');
+  notifications.forEach(n => n.unread = false);
+  renderNotifications();
   document.getElementById('notifDropdown').classList.add('hidden');
 }
 
-/* Close notification dropdown on outside click */
+renderNotifications();
+
 document.addEventListener('click', e => {
-  const wrap = document.getElementById('notifDropdown');
-  const btn  = document.getElementById('notifBtn');
-  if (wrap && !wrap.contains(e.target) && !btn.contains(e.target)) {
-    wrap.classList.add('hidden');
+  const dd  = document.getElementById('notifDropdown');
+  const btn = document.getElementById('notifBtn');
+  if (dd && btn && !dd.contains(e.target) && !btn.contains(e.target)) {
+    dd.classList.add('hidden');
+  }
+});
+
+/* ── Duplicate news ticker items for seamless infinite scroll ── */
+window.addEventListener('load', () => {
+  const ticker = document.getElementById('newsTicker');
+  if (ticker) {
+    ticker.innerHTML += ticker.innerHTML; // duplicate for loop
+  }
+  const testi = document.getElementById('testiScroll');
+  if (testi) {
+    testi.innerHTML += testi.innerHTML; // duplicate for loop
   }
 });
 
@@ -209,6 +210,12 @@ function sendChat() {
 
   input.value = '';
   box.scrollTop = box.scrollHeight;
+
+  /* Add notification for new message */
+  addNotification('New message in Chat: "' + msg.slice(0,40) + (msg.length>40?'…':'') + '"',
+    'fa-comment', '#d1fae5', '#065f46',
+    () => document.getElementById('chatInput')?.focus()
+  );
 
   /* Typing indicator */
   const typingId = 'typing-' + Date.now();

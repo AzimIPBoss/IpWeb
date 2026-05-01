@@ -88,16 +88,18 @@
       </button>
     </div>
     <div class="tb-r">
-      <!-- Highlight-in-page search -->
+      <!-- Google-style search -->
       <div class="tb-search" id="searchWrap">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input id="searchInput" type="text" placeholder="Search on this page…"
+        <input id="searchInput" type="text" placeholder="Search services, topics…"
                oninput="handleSearch(this.value)"
-               onkeydown="if(event.key==='Escape'){clearSearch();this.blur()}"/>
-        <span class="search-count hidden" id="searchCount"></span>
+               onkeydown="if(event.key==='Escape'){clearSearch();this.blur()}"
+               autocomplete="off"/>
         <button class="search-clear hidden" id="searchClear" onclick="clearSearch()">
           <i class="fa-solid fa-xmark fa-xs"></i>
         </button>
+        <!-- Results dropdown -->
+        <div class="search-dropdown hidden" id="searchDropdown"></div>
       </div>
 
       <!-- Functional notification bell -->
@@ -112,19 +114,8 @@
             <span>Notifications</span>
             <button onclick="markAllRead()">Mark all read</button>
           </div>
-          <div class="notif-list">
-            <div class="notif-item unread">
-              <div class="notif-icon" style="background:#dbeafe;color:#1d4ed8"><i class="fa-solid fa-trademark"></i></div>
-              <div><p>New trademark filing guide published</p><small>Today</small></div>
-            </div>
-            <div class="notif-item unread">
-              <div class="notif-icon" style="background:#d1fae5;color:#065f46"><i class="fa-solid fa-flask"></i></div>
-              <div><p>PCT patent application update available</p><small>Yesterday</small></div>
-            </div>
-            <div class="notif-item">
-              <div class="notif-icon" style="background:#ede9fe;color:#5b21b6"><i class="fa-solid fa-gavel"></i></div>
-              <div><p>New case study: Fashion brand protection</p><small>2 days ago</small></div>
-            </div>
+          <div class="notif-list" id="notifList">
+            <!-- Dynamic notifications injected by JS -->
           </div>
         </div>
       </div>
@@ -152,30 +143,57 @@
 
       <!-- ── HOME TAB ── -->
       <div class="tab-pane active" id="tab-all">
-        <div class="about-strip">
-          <div class="about-strip-text">
-            <span class="section-label">About IPServiceBD</span>
-            <h2>Bangladesh's Trusted Partner for Intellectual Property</h2>
-            <p>Founded in 2007, IPServiceBD is a specialized IP law firm built on the principle of providing professional, personalized, and prompt IP services to businesses and individuals across Bangladesh and internationally.</p>
-            <p>Our team of seasoned IP attorneys has successfully handled over 500 trademark, patent, design, and copyright cases with a 98% success rate — protecting brands and innovations from startups to multinational corporations.</p>
-            <a href="#" onclick="switchSection('about');return false;" class="btn-outline">Read More About Us</a>
+        <!-- 3-COLUMN HOME LAYOUT -->
+        <div class="home-3col">
+
+          <!-- LEFT: Latest Updates ticker -->
+          <div class="home-col home-col-news">
+            <div class="hcol-head"><i class="fa-solid fa-newspaper"></i> Latest Updates</div>
+            <div class="news-ticker-wrap">
+              <div class="news-ticker" id="newsTicker">
+                <div class="ntick-item" onclick="switchTab('blogs')"><span class="ntick-dot" style="background:#2563eb"></span><div><strong>New Article:</strong> How to Register a Trademark in Bangladesh 2025<span class="ntick-date">Jan 12</span></div></div>
+                <div class="ntick-item" onclick="switchTab('patent')"><span class="ntick-dot" style="background:#059669"></span><div><strong>Patent Update:</strong> PCT Deadline Alert — File Before May 30<span class="ntick-date">Jan 10</span></div></div>
+                <div class="ntick-item" onclick="switchTab('blogs')"><span class="ntick-dot" style="background:#7c3aed"></span><div><strong>Blog:</strong> Pharmaceutical Patents Post-LDC Transition<span class="ntick-date">Jan 8</span></div></div>
+                <div class="ntick-item" onclick="switchSection('clients')"><span class="ntick-dot" style="background:#d97706"></span><div><strong>Client Win:</strong> Fashion brand protected in 3 countries<span class="ntick-date">Jan 5</span></div></div>
+                <div class="ntick-item" onclick="switchTab('core-team')"><span class="ntick-dot" style="background:#dc2626"></span><div><strong>Team:</strong> Sara Ahmed joins as Senior Patent Attorney<span class="ntick-date">Dec 28</span></div></div>
+                <div class="ntick-item" onclick="switchTab('trademark')"><span class="ntick-dot" style="background:#2563eb"></span><div><strong>Guide:</strong> Madrid Protocol filing — step-by-step<span class="ntick-date">Dec 20</span></div></div>
+                <div class="ntick-item" onclick="switchTab('portfolios')"><span class="ntick-dot" style="background:#d97706"></span><div><strong>Case Study:</strong> Software copyright registration victory<span class="ntick-date">Dec 15</span></div></div>
+                <div class="ntick-item" onclick="switchSection('services')"><span class="ntick-dot" style="background:#059669"></span><div><strong>Service:</strong> New international IP portfolio management<span class="ntick-date">Dec 10</span></div></div>
+              </div>
+            </div>
           </div>
-          <div class="about-strip-img">
-            <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80" alt="IPServiceBD Office"/>
+
+          <!-- CENTER: Portfolio Slider (50% size) -->
+          <div class="home-col home-col-slider">
+            <div class="hcol-head"><i class="fa-solid fa-folder-open"></i> Case Studies</div>
+            <div class="portfolio-section" style="padding:0">
+              <div class="swiper portfolioSwiper">
+                <div class="swiper-wrapper" id="swiperSlides"></div>
+                <div class="swiper-button-prev portfolio-prev"></div>
+                <div class="swiper-button-next portfolio-next"></div>
+                <div class="swiper-pagination portfolio-pagination"></div>
+              </div>
+            </div>
+            <div style="text-align:center;padding:10px 0 4px">
+              <a href="#" onclick="openAllPortfolios();return false;" class="btn-primary" style="font-size:12px;padding:8px 16px"><i class="fa-solid fa-folder-open"></i> View All</a>
+            </div>
           </div>
-        </div>
-        <div class="portfolio-section">
-          <div class="swiper portfolioSwiper">
-            <div class="swiper-wrapper" id="swiperSlides"></div>
-            <div class="swiper-button-prev portfolio-prev"></div>
-            <div class="swiper-button-next portfolio-next"></div>
-            <div class="swiper-pagination portfolio-pagination"></div>
+
+          <!-- RIGHT: Auto-scrolling testimonials -->
+          <div class="home-col home-col-testi">
+            <div class="hcol-head"><i class="fa-solid fa-star"></i> What Clients Say</div>
+            <div class="testi-scroll-wrap">
+              <div class="testi-scroll" id="testiScroll">
+                <div class="testi-item"><div class="ti-stars">★★★★★</div><p>"IPServiceBD handled our entire trademark portfolio with exceptional professionalism. They secured our brand in Bangladesh and 8 other countries seamlessly."</p><div class="ti-author"><div class="ti-av" style="background:#1d4ed8">MR</div><div><strong>Mr. Rafiq</strong><span>CEO, TechBD Ltd</span></div></div></div>
+                <div class="testi-item"><div class="ti-stars">★★★★★</div><p>"They secured our pharmaceutical patent in record time. Their deep understanding of Bangladesh's IP laws and the TRIPS framework is truly unparalleled."</p><div class="ti-author"><div class="ti-av" style="background:#059669">SK</div><div><strong>Ms. Sultana</strong><span>Director, MediCare BD</span></div></div></div>
+                <div class="testi-item"><div class="ti-stars">★★★★★</div><p>"Our fashion brand is now protected in 12 countries thanks to IPServiceBD. Their Madrid Protocol expertise saved us time and money. Outstanding service."</p><div class="ti-author"><div class="ti-av" style="background:#7c3aed">FH</div><div><strong>Fahmida Hossain</strong><span>Owner, Fashion Hub BD</span></div></div></div>
+                <div class="testi-item"><div class="ti-stars">★★★★★</div><p>"Our fintech startup's patent portfolio now valued at USD 2.4M thanks to IPServiceBD's expert patent strategy and filing support."</p><div class="ti-author"><div class="ti-av" style="background:#d97706">KA</div><div><strong>Karim Ahmed</strong><span>CEO, FinTechBD</span></div></div></div>
+              </div>
+            </div>
           </div>
-          <div class="portfolio-cta">
-            <a href="#" onclick="openAllPortfolios();return false;" class="btn-primary"><i class="fa-solid fa-folder-open"></i> View All Case Studies</a>
-          </div>
-        </div>
-      </div>
+
+        </div><!-- /home-3col -->
+      </div><!-- /tab-all -->
 
       <!-- ── PATENT TAB ── -->
       <div class="tab-pane" id="tab-patent">
