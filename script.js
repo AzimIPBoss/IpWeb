@@ -116,6 +116,23 @@ window.addEventListener('pageshow', () => {
 });
 
 /* ══════════════════════════════════════
+   LOGO → HOME
+   Clicking logo always goes to Home tab
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  const logoLink = document.getElementById('logoLink');
+  if (logoLink) {
+    logoLink.addEventListener('click', e => {
+      e.preventDefault();
+      /* Reset to home section + home tab */
+      switchSection('home');
+      switchTab('all');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+});
+
+/* ══════════════════════════════════════
    SIDEBAR TOGGLE
 ══════════════════════════════════════ */
 const lsb      = document.getElementById('sidebar');
