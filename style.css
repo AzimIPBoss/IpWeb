@@ -466,16 +466,19 @@ mark.sh.sh-current {
   grid-template-columns: 1fr 1.6fr 1fr;
   gap: 0;
   border-top: 1px solid var(--border);
-  /* All columns same height — driven by center slider column */
-  align-items: stretch;
+  align-items: start;   /* don't stretch — each col natural height */
 }
 .home-col {
   border-right: 1px solid var(--border);
-  display: flex; flex-direction: column;
-  overflow: hidden;
-  /* Each column limited to slider height so page ends together */
+  display: flex;
+  flex-direction: column;
+  /* overflow:visible on slider column so coverflow 3D isn't clipped */
+  overflow: visible;
   max-height: 520px;
 }
+/* Re-clip only the scroll columns, NOT the slider */
+.home-col-news,
+.home-col-testi { overflow: hidden; }
 .home-col:last-child { border-right: none; }
 .hcol-head {
   font-size: 12px; font-weight: 700; color: var(--navy);
@@ -510,8 +513,9 @@ mark.sh.sh-current {
 .ntick-date { display: block; font-size: 10.5px; color: #94a3b8; margin-top: 3px; }
 
 /* Center slider column */
+.home-col-slider { min-height: 340px; overflow: visible !important; }
 .home-col-slider .portfolio-section { padding: 0 !important; }
-.home-col-slider .portfolioSwiper { padding-bottom: 40px !important; }
+.home-col-slider .portfolioSwiper { padding-bottom: 40px !important; overflow: visible !important; }
 .home-col-slider .port-slide-img { height: 150px; }
 
 /* Testimonials auto-scroll */
