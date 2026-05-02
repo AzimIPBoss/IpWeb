@@ -331,7 +331,6 @@ mark.sh.sh-current {
   display:flex;
   flex-direction:column;
   flex-shrink:0;
-  max-height:280px;  /* cap total chat height so nav always has room */
 }
 
 .sb-chat-header{
@@ -355,9 +354,9 @@ mark.sh.sh-current {
 
 .sb-chat-messages{
   flex:1;overflow-y:auto;
-  padding:10px;
+  padding:12px 10px;
   display:flex;flex-direction:column;gap:8px;
-  min-height:100px;max-height:160px;  /* reduced so nav items always visible */
+  min-height:200px;max-height:260px;
   background:#f8fafc;
   scrollbar-width:thin;scrollbar-color:#e2e8f0 transparent;
 }
@@ -466,13 +465,16 @@ mark.sh.sh-current {
   display: grid;
   grid-template-columns: 1fr 1.6fr 1fr;
   gap: 0;
-  min-height: 480px;
   border-top: 1px solid var(--border);
+  /* All columns same height — driven by center slider column */
+  align-items: stretch;
 }
 .home-col {
   border-right: 1px solid var(--border);
   display: flex; flex-direction: column;
   overflow: hidden;
+  /* Each column limited to slider height so page ends together */
+  max-height: 520px;
 }
 .home-col:last-child { border-right: none; }
 .hcol-head {
