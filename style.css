@@ -309,7 +309,7 @@ mark.sh.sh-current {
 /* Home about — text LEFT + image RIGHT */
 .home-about-text{
   display:grid;
-  grid-template-columns:1fr 420px;
+  grid-template-columns:1fr 560px;
   gap:0;
   align-items:stretch;
   border-bottom:1px solid var(--border);
@@ -350,7 +350,7 @@ mark.sh.sh-current {
   display:block;
 }
 @media(max-width:1000px){
-  .home-about-text{ grid-template-columns:1fr 320px; }
+  .home-about-text{ grid-template-columns:1fr 380px; }
 }
 @media(max-width:768px){
   .home-about-text{ grid-template-columns:1fr; }
