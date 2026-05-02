@@ -825,14 +825,4 @@ document.addEventListener('keydown', e => {
 /* Load any data saved by admin panel */
 loadAdminData();
 
-/* ── Logo click → Home (placed after all functions are defined) ── */
-(function() {
-  const logo = document.getElementById('logoLink');
-  if (!logo) return;
-  logo.addEventListener('click', function(e) {
-    e.preventDefault();
-    switchSection('home');
-    switchTab('all');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-})();
+/* Logo uses href="/" — full page reload, no JS needed */
