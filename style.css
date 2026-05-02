@@ -316,7 +316,7 @@ mark.sh.sh-current {
   background:#fff;
 }
 .hat-left{
-  padding:36px 20px 32px 40px; /* reduced right padding to close gap with image */
+  padding:36px 0 32px 40px; /* no right padding — text flush against image */
   display:flex;flex-direction:column;justify-content:center;
 }
 .hat-left h2{
