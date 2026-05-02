@@ -309,12 +309,11 @@ mark.sh.sh-current {
 /* Home about — text 55% LEFT + image 45% RIGHT */
 .home-about-text{
   display:grid;
-  grid-template-columns:55fr 45fr;  /* 55:45 text:image ratio */
+  grid-template-columns:55fr 45fr;
   gap:0;
   align-items:stretch;
   border-bottom:1px solid var(--border);
   background:#fff;
-  min-height:320px;
 }
 .hat-left{
   padding:36px 0 32px 40px;
@@ -339,21 +338,22 @@ mark.sh.sh-current {
 }
 .hat-mini-stat span{ font-size:11px;color:var(--muted);font-weight:500; }
 
-/* Image column — fills entire area, no empty space */
+/* Image column — full image visible, no cropping */
 .hat-img-col{
   overflow:hidden;
-  position:relative;
   background:linear-gradient(135deg,#0c2461 0%,#1e40af 60%,#0ea5e9 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .hat-img-col img{
   width:100%;
-  height:100%;
-  object-fit:cover;       /* fills full area — no empty top/bottom */
-  object-position:center;
+  height:auto;            /* preserve natural landscape ratio — no side crop */
+  object-fit:contain;
   display:block;
 }
 @media(max-width:1000px){
-  .home-about-text{ grid-template-columns:55fr 45fr; min-height:280px; }
+  .home-about-text{ grid-template-columns:55fr 45fr; }
 }
 @media(max-width:768px){
   .home-about-text{ grid-template-columns:1fr; min-height:auto; }
