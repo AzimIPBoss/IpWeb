@@ -289,7 +289,7 @@ mark.sh.sh-current {
 ═══════════════════════════════════ */
 .section-block{padding:52px 40px}
 .section-block.section-gray{background:#fff}
-.section-label{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:block}
+.section-label{font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.4px;margin-bottom:8px;display:block}
 .section-title{font-family:'Source Serif 4',serif;font-size:1.75rem;font-weight:700;color:var(--navy);margin-bottom:8px}
 .section-desc{font-size:13.5px;color:var(--muted);margin-bottom:28px}
 
