@@ -1231,3 +1231,11 @@ mark.sh.sh-current {
   .swiper-slide.port-slide{ opacity:0.6; }
   .swiper-slide-active.port-slide{ opacity:1 !important; }
 }
+
+/* ── iOS: prevent auto-zoom on input focus (font-size must be ≥16px) ── */
+@media(max-width:768px){
+  .tb-search input,
+  .sb-chat-input input,
+  .fg input, .fg select, .fg textarea,
+  .rsb-search input { font-size:16px !important; }
+}
