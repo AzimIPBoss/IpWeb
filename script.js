@@ -653,17 +653,24 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
     slideShadows:  true,
   },
 
-  /* Autoplay with proper delay so arrows work clearly */
+  /* Autoplay */
   autoplay: {
     delay:                3500,
     disableOnInteraction: false,
     pauseOnMouseEnter:    true,
+    waitForTransition:    true,   /* never starts new slide while one is running */
   },
 
-  /* Arrows — working navigation */
+  /* Arrows */
   navigation: {
     nextEl: '.portfolio-next',
     prevEl: '.portfolio-prev',
+  },
+
+  /* ── One move per click: reset the autoplay timer on every arrow click ── */
+  on: {
+    navigationNext() { this.autoplay.stop(); this.autoplay.start(); },
+    navigationPrev() { this.autoplay.stop(); this.autoplay.start(); },
   },
 
   pagination: {
