@@ -306,17 +306,18 @@ mark.sh.sh-current {
 .svc-ov-link{font-size:12.5px;font-weight:700;color:var(--blue);transition:color .15s}
 .svc-ov:hover .svc-ov-link{color:var(--navy)}
 
-/* Home about — text LEFT + image RIGHT */
+/* Home about — text 55% LEFT + image 45% RIGHT */
 .home-about-text{
   display:grid;
-  grid-template-columns:1fr 560px;
+  grid-template-columns:55fr 45fr;  /* 55:45 text:image ratio */
   gap:0;
   align-items:stretch;
   border-bottom:1px solid var(--border);
   background:#fff;
+  min-height:320px;
 }
 .hat-left{
-  padding:36px 0 32px 40px; /* no right padding — text flush against image */
+  padding:36px 0 32px 40px;
   display:flex;flex-direction:column;justify-content:center;
 }
 .hat-left h2{
@@ -337,23 +338,25 @@ mark.sh.sh-current {
   display:block;font-size:1.25rem;font-weight:800;color:var(--navy);line-height:1;
 }
 .hat-mini-stat span{ font-size:11px;color:var(--muted);font-weight:500; }
+
+/* Image column — fills entire area, no empty space */
 .hat-img-col{
   overflow:hidden;
-  display:flex;
-  align-items:center;
-  background:#f0f6ff;   /* light bg for letterbox areas */
+  position:relative;
+  background:linear-gradient(135deg,#0c2461 0%,#1e40af 60%,#0ea5e9 100%);
 }
 .hat-img-col img{
   width:100%;
-  height:auto;          /* let landscape image show at natural ratio */
-  object-fit:contain;   /* no cropping — full image visible */
+  height:100%;
+  object-fit:cover;       /* fills full area — no empty top/bottom */
+  object-position:center;
   display:block;
 }
 @media(max-width:1000px){
-  .home-about-text{ grid-template-columns:1fr 380px; }
+  .home-about-text{ grid-template-columns:55fr 45fr; min-height:280px; }
 }
 @media(max-width:768px){
-  .home-about-text{ grid-template-columns:1fr; }
+  .home-about-text{ grid-template-columns:1fr; min-height:auto; }
   .hat-img-col{ min-height:200px; }
   .hat-left{ padding:24px 20px 20px; }
 }
