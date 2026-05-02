@@ -482,16 +482,28 @@ document.querySelector('[data-tab="portfolios"]')?.addEventListener('click', () 
 /* ══════════════════════════════════════
    SECTION SWITCHING
 ══════════════════════════════════════ */
+/* Maps each section to its closest top tab so the tab stays highlighted */
+const sectionTabMap = {
+  home:    'all',
+  about:   'core-team',
+  clients: 'portfolios',
+  contact: 'contact-us',
+  services:'patent',
+  gallery:  null       /* no matching tab — deactivate all */
+};
+
 function switchSection(name) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
   const t = document.getElementById('section-' + name);
   if (t) t.classList.add('active');
   document.querySelectorAll('.lsb-item').forEach(l => l.classList.toggle('active', l.dataset.section === name));
-  /* If going home, preserve whichever tab pane is active (don't reset) */
-  if (name !== 'home') {
-    /* Deactivate all home tab buttons when on another page */
-    document.querySelectorAll('.htab').forEach(b => b.classList.remove('active'));
-  }
+
+  /* Sync tab highlight to match the section being shown */
+  const activeTab = sectionTabMap[name] ?? null;
+  document.querySelectorAll('.htab').forEach(b =>
+    b.classList.toggle('active', activeTab !== null && b.dataset.tab === activeTab)
+  );
+
   if (mob()) closeSidebar();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

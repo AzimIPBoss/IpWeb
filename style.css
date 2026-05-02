@@ -352,7 +352,7 @@ mark.sh.sh-current {
   display:block;
 }
 @media(max-width:1000px){
-  .home-about-text{ grid-template-columns:55fr 45fr; }
+  .home-about-text{ grid-template-columns:1fr 1fr; } /* 50-50 on tablet too */
 }
 @media(max-width:768px){
   .home-about-text{ grid-template-columns:1fr; min-height:auto; }
