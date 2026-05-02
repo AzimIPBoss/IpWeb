@@ -309,7 +309,7 @@ mark.sh.sh-current {
 /* Home about — text 55% LEFT + image 45% RIGHT */
 .home-about-text{
   display:grid;
-  grid-template-columns:55fr 45fr;
+  grid-template-columns:42fr 58fr;
   gap:0;
   align-items:stretch;
   border-bottom:1px solid var(--border);
