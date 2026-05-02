@@ -393,6 +393,14 @@ function sendChat() {
 ══════════════════════════════════════ */
 /* ── TAB PANE SWITCHING ── */
 function switchTab(tabKey) {
+  /* Contact Us tab → go to the same section as sidebar Contact Us */
+  if (tabKey === 'contact-us') {
+    document.querySelectorAll('.htab').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-tab="contact-us"]')?.classList.add('active');
+    switchSection('contact');
+    return;
+  }
+
   /* Highlight the correct tab button */
   document.querySelectorAll('.htab').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
 
