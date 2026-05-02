@@ -116,21 +116,8 @@ window.addEventListener('pageshow', () => {
 });
 
 /* ══════════════════════════════════════
-   LOGO → HOME
-   Clicking logo always goes to Home tab
+   LOGO → HOME  (runs at bottom of body — DOM is ready)
 ══════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-  const logoLink = document.getElementById('logoLink');
-  if (logoLink) {
-    logoLink.addEventListener('click', e => {
-      e.preventDefault();
-      /* Reset to home section + home tab */
-      switchSection('home');
-      switchTab('all');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-});
 
 /* ══════════════════════════════════════
    SIDEBAR TOGGLE
@@ -837,3 +824,15 @@ document.addEventListener('keydown', e => {
 
 /* Load any data saved by admin panel */
 loadAdminData();
+
+/* ── Logo click → Home (placed after all functions are defined) ── */
+(function() {
+  const logo = document.getElementById('logoLink');
+  if (!logo) return;
+  logo.addEventListener('click', function(e) {
+    e.preventDefault();
+    switchSection('home');
+    switchTab('all');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
