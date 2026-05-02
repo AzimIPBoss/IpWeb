@@ -655,10 +655,10 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
 
   /* Autoplay */
   autoplay: {
-    delay:                3500,
+    delay:             3500,
     disableOnInteraction: false,
-    pauseOnMouseEnter:    true,
-    waitForTransition:    true,   /* never starts new slide while one is running */
+    pauseOnMouseEnter: true,
+    waitForTransition: true,
   },
 
   /* Arrows */
@@ -667,10 +667,33 @@ const portfolioSwiper = new Swiper('.portfolioSwiper', {
     prevEl: '.portfolio-prev',
   },
 
-  /* ── One move per click: reset the autoplay timer on every arrow click ── */
+  /* ── Strictly one slide per click ──
+     Lock arrows for the full transition duration after each click.
+     This prevents queuing a second slide if clicked rapidly. ── */
   on: {
-    navigationNext() { this.autoplay.stop(); this.autoplay.start(); },
-    navigationPrev() { this.autoplay.stop(); this.autoplay.start(); },
+    navigationNext() {
+      /* Block both directions during transition */
+      this.allowSlideNext = false;
+      this.allowSlidePrev = false;
+      /* Reset autoplay timer so it doesn't also fire right after */
+      this.autoplay.stop();
+      this.autoplay.start();
+      /* Unlock after transition finishes (speed + small buffer) */
+      setTimeout(() => {
+        this.allowSlideNext = true;
+        this.allowSlidePrev = true;
+      }, this.params.speed + 100);
+    },
+    navigationPrev() {
+      this.allowSlideNext = false;
+      this.allowSlidePrev = false;
+      this.autoplay.stop();
+      this.autoplay.start();
+      setTimeout(() => {
+        this.allowSlideNext = true;
+        this.allowSlidePrev = true;
+      }, this.params.speed + 100);
+    },
   },
 
   pagination: {
